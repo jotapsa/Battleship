@@ -3,18 +3,32 @@ package com.battleship;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.battleship.view.MainMenuView;
 
 public class Battleship extends Game {
 	private SpriteBatch batch;
 	private AssetManager assetManager;
-	
+
+    /**
+     * Creates the game. Initializes the sprite batch and asset manager.
+     * Also shows the menu.
+     */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
+		
+		showMenu();
 	}
 
-	@Override
+    /**
+     * Show menu.
+     */
+    private void showMenu() {
+        setScreen(new MainMenuView());
+    }
+
+    @Override
 	public void render () {
 		super.render();
 	}

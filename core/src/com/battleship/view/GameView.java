@@ -3,7 +3,7 @@ package com.battleship.view;
 import com.badlogic.gdx.ScreenAdapter;
 import com.battleship.Battleship;
 
-public class GameScreen extends ScreenAdapter {
+public class GameView extends ScreenAdapter {
     private Battleship game;
 
     /**
@@ -11,7 +11,7 @@ public class GameScreen extends ScreenAdapter {
      *
      * @param game The game this screen belongs to
      */
-    public GameScreen(Battleship game){
+    public GameView(Battleship game){
         this.game = game;
 
         loadAssets();
