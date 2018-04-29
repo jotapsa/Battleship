@@ -22,12 +22,24 @@ public abstract class EntityModel {
      *
      * @param x The x-coordinate of this entity.
      * @param y The y-coordinate of this entity.
+     * @param rotation The current rotation of this entity in radians.
      */
     EntityModel(float x, float y, float rotation) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;
     }
+
+    /**
+     * Constructs a model without a position.
+     *
+     */
+    EntityModel() {
+        this.x = 0;
+        this.y = 0;
+        this.rotation = 0;
+    }
+
 
     /**
      * Returns the x-coordinate of this entity.
