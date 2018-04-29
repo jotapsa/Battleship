@@ -6,7 +6,7 @@
 
 #### 1.2 Design Patterns
 *   [State Pattern](https://en.wikipedia.org/wiki/State_pattern) - Restricts the slime movement && controls the game flow .
-*   [Strategy Pattern](https://en.wikipedia.org/wiki/Strategy_pattern) - Controls the AI behavioural and the Menu Appeareance.
+*   [Strategy Pattern](https://en.wikipedia.org/wiki/Strategy_pattern) - Controls the AI behaviour.
 *   [DoubleBuffer]() - Implemented by Libgdx in Graphics Management (in GameView Class)
 *   [Template Method](https://en.wikipedia.org/wiki/Template_method_pattern) - Implemented by Libgdx in GameLoop (GameView, GameModel, Game Controller classes)
 

@@ -3,6 +3,7 @@ package com.battleship;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 
 public class Battleship extends Game {
@@ -25,8 +26,16 @@ public class Battleship extends Game {
      * Show menu.
      */
     private void showMenu() {
-        setScreen(new MainMenuView());
+        setScreen(new MainMenuView(this));
     }
+
+    /**
+     * Start Game.
+     */
+    private void startGame() {
+        setScreen(new GameView(this));
+    }
+
 
     @Override
 	public void render () {
