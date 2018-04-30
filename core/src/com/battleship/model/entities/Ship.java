@@ -1,6 +1,6 @@
 package com.battleship.model.entities;
 
-public class ShipModel extends EntityModel {
+public class Ship extends EntityModel {
 
     private int size;
     private int timesHit;
@@ -12,7 +12,7 @@ public class ShipModel extends EntityModel {
      *
      * @param size
      */
-    ShipModel(int size) {
+    Ship(int size) {
         super();
 
         this.size = size;

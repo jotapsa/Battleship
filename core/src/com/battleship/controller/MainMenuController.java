@@ -6,13 +6,22 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.battleship.model.Game;
-import com.battleship.view.GameView;
 
-public class GameController implements ContactListener {
+public class MainMenuController implements ContactListener{
+    /**
+     * The singleton instance of this controller
+     */
+    private static MainMenuController instance;
 
-    private Game model;
-    private GameView view;
+    /**
+     * The arena width in meters.
+     */
+    public static final int ARENA_WIDTH = 100;
+
+    /**
+     * The arena height in meters.
+     */
+    public static final int ARENA_HEIGHT = 50;
 
     /**
      * The physics world controlled by this controller.
@@ -23,29 +32,25 @@ public class GameController implements ContactListener {
      * Creates a new GameController that controls the physics of a certain GameModel.
      *
      */
-    GameController() {
+    private MainMenuController() {
         world = new World(new Vector2(0, 0), true);
 
         world.setContactListener(this);
     }
 
     /**
-     * Calculates the next physics step of duration delta (in seconds).
+     * Returns a singleton instance of a main menu controller
      *
-     * @param delta The size of this physics step in seconds.
+     * @return the singleton instance
      */
-    public void update(float delta) {
-
+    public static MainMenuController getInstance() {
+        if (instance == null){
+            instance = new MainMenuController();
+        }
+        return instance;
     }
 
-    /**
-     * Returns the world controlled by this controller. Needed for debugging purposes only.
-     *
-     * @return The world controlled by this controller.
-     */
-    public World getWorld() {
-        return world;
-    }
+
 
     @Override
     public void beginContact(Contact contact) {

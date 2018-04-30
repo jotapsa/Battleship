@@ -55,7 +55,7 @@ public class MainMenuView extends ScreenAdapter {
      * Loads the assets needed by this screen.
      */
     private void loadAssets(){
-        this.game.getAssetManager().load("example.png", Texture.class);
+        this.game.getAssetManager().load("badlogic.jpg", Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
@@ -99,6 +99,9 @@ public class MainMenuView extends ScreenAdapter {
      * Draws the background
      */
     private void drawBackground() {
+        Texture background = game.getAssetManager().get("badlogic.jpg", Texture.class);
+        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        game.getBatch().draw(background, 0, 0, 0, 0, 200, 200);
 
     }
 }

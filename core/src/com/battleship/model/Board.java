@@ -1,11 +1,11 @@
 package com.battleship.model;
 
-public class BoardModel {
+public class Board {
 
     private final int size;
     int[][] map;
 
-    BoardModel(int size){
+    Board(int size){
         this.size = size;
         this.map = new int[size][size];
     }
