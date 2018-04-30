@@ -18,6 +18,10 @@
 
 ### 2.GUI Design
 
+![Menu](img/menu.png "Game Menu")
+
+![Game](img/gameExample.png "Game")
+
 ### 3.Test Design
 
 We expect to test this application by devoloping JUnit tests for:
