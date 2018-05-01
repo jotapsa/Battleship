@@ -5,5 +5,9 @@ package com.battleship.model;
  */
 
 public class Game {
+    private int turn;
 
+    Game(){
+        
+    }
 }

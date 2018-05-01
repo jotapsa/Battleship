@@ -55,11 +55,6 @@ public class MainMenuView extends ScreenAdapter {
      * Loads the assets needed by this screen.
      */
     private void loadAssets(){
-        this.game.getAssetManager().load("badlogic.jpg", Texture.class);
-        this.game.getAssetManager().load("menu/button.jpg", Texture.class);
-        this.game.getAssetManager().load("menu/multiplayer.jpg", Texture.class);
-        this.game.getAssetManager().load("menu/exit.jpg", Texture.class);
-        this.game.getAssetManager().load("menu/singleplayer.jpg", Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
@@ -74,14 +69,12 @@ public class MainMenuView extends ScreenAdapter {
 
         handleInputs(delta);
 
-        Gdx.gl.glClearColor( 0, 0, 1f, 1 );
+        Gdx.gl.glClearColor( 0, 0, 0f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
-
-
         game.getBatch().begin();
+        drawButtons();
         drawBackground();
-        drawEntities();
         game.getBatch().end();
 
     }
@@ -92,13 +85,16 @@ public class MainMenuView extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        
+
+
     }
 
     /**
-     * Draws the entities to the screen.
+     * Draws the buttons to the screen.
      */
-    private void drawEntities() {
+    private void drawButtons() {
+
+
     }
 
 
@@ -106,9 +102,6 @@ public class MainMenuView extends ScreenAdapter {
      * Draws the background
      */
     private void drawBackground() {
-//        Texture background = game.getAssetManager().get(".jpg", Texture.class);
-//        background.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-//        game.getBatch().draw(background, 0, 0, 0, 0, 200, 200);
 
     }
 }
