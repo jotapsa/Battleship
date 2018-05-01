@@ -3,6 +3,7 @@ package com.battleship.model.entities;
 public class Ship extends EntityModel {
 
     private int size;
+    private int orientation;
     private int timesHit;
     private boolean isPlaced;
     private boolean sank;
@@ -20,5 +21,6 @@ public class Ship extends EntityModel {
         this.sank = false;
         this.isPlaced = false;
     }
+
 
 }

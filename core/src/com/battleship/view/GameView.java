@@ -17,7 +17,7 @@ public class GameView extends ScreenAdapter {
      * The width of the viewport in meters. The height is
      * automatically calculated using the screen ratio.
      */
-    private static final float VIEWPORT_WIDTH = 30;
+    private static final float VIEWPORT_WIDTH = 25;
 
     /**
      * The game this screen belongs to.
@@ -55,6 +55,9 @@ public class GameView extends ScreenAdapter {
      */
     private void loadAssets(){
 
+        this.game.getAssetManager().load("blue_square.png", Texture.class);
+        this.game.getAssetManager().load("white_square.png", Texture.class);
+
         this.game.getAssetManager().finishLoading();
     }
 
@@ -73,7 +76,7 @@ public class GameView extends ScreenAdapter {
 
         game.getBatch().begin();
         drawBackground();
-        drawEntities();
+        drawBoard();
         game.getBatch().end();
 
     }
@@ -89,7 +92,7 @@ public class GameView extends ScreenAdapter {
     /**
      * Draws the entities to the screen.
      */
-    private void drawEntities() {
+    private void drawBoard() {
     }
 
 

@@ -5,9 +5,15 @@ package com.battleship.model;
  */
 
 public class Game {
+    private Player p1;
+    private Player p2;
+
     private int turn;
 
     Game(){
-        
+        this.turn = 0;
     }
+
+
+
 }

@@ -1,8 +1,9 @@
 package com.battleship.model;
 
 public class Player {
-    //TODO: Give a player his "ships"
+    private Board board;
 
-    //place ship
-
+    Player(){
+        this.board = new Board(10);
+    }
 }
