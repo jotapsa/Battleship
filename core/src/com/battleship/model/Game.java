@@ -19,6 +19,10 @@ public class Game {
     }
 
     public void changeTurn(){
-
+        if (this.turn == Turn.Blue){
+            this.turn = Turn.Red;
+        } else if (this.turn == Turn.Red){
+            this.turn = Turn.Blue;
+        }
     }
 }

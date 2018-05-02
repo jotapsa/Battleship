@@ -1,7 +1,9 @@
 package com.battleship.controller;
 
 import com.battleship.model.Board;
+import com.battleship.model.CellType;
 import com.battleship.model.Coord;
+import com.battleship.model.Orientation;
 import com.battleship.model.Ship;
 
 public class BoardController {
@@ -20,7 +22,20 @@ public class BoardController {
             return false;
         }
 
-        
+        if(ship.getOrientation() == Orientation.Vertical){
+            for(int i=0; i<ship.getShipType().getSize(); i++){
+                if(this.board.getCell(new Coord(pos.getX(), pos.getY()+i)) != CellType.Free){
+                    return false;
+                }
+            }
+        } else if(ship.getOrientation() == Orientation.Horizontal){
+            for(int i=0; i<ship.getShipType().getSize(); i++){
+                if(this.board.getCell(new Coord(pos.getX()+i, pos.getY())) != CellType.Free){
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 

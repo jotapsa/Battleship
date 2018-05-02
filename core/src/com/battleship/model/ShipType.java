@@ -1,15 +1,15 @@
 package com.battleship.model;
 
-public enum ShipModel {
+public enum ShipType {
     Carrier(5), Battleship(4), Cruiser(3), Submarine(2);
 
     private int size;
 
-     ShipModel(int size) {
+     ShipType(int size) {
         this.size = size;
     }
 
-    int getSize(){
+    public int getSize(){
          return this.size;
     }
 }
