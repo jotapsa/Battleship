@@ -17,7 +17,7 @@ public abstract class EntityModel {
      * @param x The x-coordinate of this entity.
      * @param y The y-coordinate of this entity.
      */
-    EntityModel(int x, int y, float rotation) {
+    EntityModel(int x, int y) {
         this.x = x;
         this.y = y;
     }

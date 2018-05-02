@@ -24,8 +24,7 @@ public abstract class EntityBody {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(model.getX(), model.getY());
-        bodyDef.angle = model.getRotation();
-
+        
         body = world.createBody(bodyDef);
         body.setUserData(model);
     }

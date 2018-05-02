@@ -56,7 +56,7 @@ public class GameView extends ScreenAdapter {
     private void loadAssets(){
 
         this.game.getAssetManager().load("blue_square.png", Texture.class);
-        this.game.getAssetManager().load("white_square.png", Texture.class);
+        this.game.getAssetManager().load("white_square.jpg", Texture.class);
 
         this.game.getAssetManager().finishLoading();
     }
