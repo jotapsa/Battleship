@@ -1,7 +1,5 @@
 package com.battleship.model;
 
-import com.battleship.model.entities.Ship;
-
 import java.util.ArrayList;
 
 public class Board {

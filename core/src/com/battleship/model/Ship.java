@@ -1,8 +1,10 @@
-package com.battleship.model.entities;
+package com.battleship.model;
 
-public class Ship extends EntityModel {
+public class Ship {
 
     private int size;
+    private boolean[] ship;
+
     private int orientation;
     private int timesHit;
     private boolean isPlaced;
@@ -14,9 +16,9 @@ public class Ship extends EntityModel {
      * @param size
      */
     Ship(int size) {
-        super();
-
         this.size = size;
+        this.ship = new boolean[size];
+
         this.timesHit = 0;
         this.sank = false;
         this.isPlaced = false;

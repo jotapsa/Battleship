@@ -8,10 +8,10 @@ public class Game {
     private Player p1;
     private Player p2;
 
-    private int turn;
+    private Turn turn;
 
     Game(){
-        this.turn = 0;
+        this.turn = Turn.Blue;
     }
 
 

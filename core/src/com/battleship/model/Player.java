@@ -6,4 +6,8 @@ public class Player {
     Player(){
         this.board = new Board(10);
     }
+
+    public Board getBoard(){
+        return this.board;
+    }
 }
