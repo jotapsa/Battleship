@@ -1,5 +1,15 @@
 package com.battleship.controller;
 
+import com.battleship.model.Coord;
+import com.battleship.model.Ship;
+
 public class BoardController {
-    //TODO: add ship
+    public void placeShip(Ship ship, Coord pos){
+
+    }
+
+    public boolean canPlaceShip(Ship ship, Coord pos){
+        
+        return true;
+    }
 }

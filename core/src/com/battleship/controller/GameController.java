@@ -1,7 +1,5 @@
 package com.battleship.controller;
 
-import com.badlogic.gdx.math.Vector2;
-
 public class GameController {
 
     /**
@@ -17,6 +15,10 @@ public class GameController {
      * @param delta The size of this physics step in seconds.
      */
     public void update(float delta) {
+
+    }
+
+    public void changeTurn(){
 
     }
 }

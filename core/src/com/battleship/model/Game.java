@@ -14,6 +14,11 @@ public class Game {
         this.turn = Turn.Blue;
     }
 
+    public Turn getTurn(){
+        return this.turn;
+    }
 
+    public void changeTurn(){
 
+    }
 }
