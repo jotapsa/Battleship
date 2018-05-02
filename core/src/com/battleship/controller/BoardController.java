@@ -25,6 +25,6 @@ public class BoardController {
     }
 
     public boolean isValidCoord(Coord pos){
-        return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize())
+        return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
     }
 }
