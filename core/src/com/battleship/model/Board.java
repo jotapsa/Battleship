@@ -15,6 +15,10 @@ public class Board {
         this.ships = new ArrayList<Ship>();
     }
 
+    public int getSize(){
+        return this.size;
+    }
+
     public void addShip(Ship ship){
         this.ships.add(ship);
     }
