@@ -5,7 +5,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.battleship.Battleship;
+
+import javax.xml.soap.Text;
 
 public class MainMenuView extends ScreenAdapter {
 
@@ -30,15 +36,26 @@ public class MainMenuView extends ScreenAdapter {
      */
     private final OrthographicCamera camera;
 
+    private Stage stage;
+    private Table table;
+    private Skin skin;
+
+
     /**
      * Creates this screen.
      */
     public MainMenuView(Battleship game){
         this.game = game;
-
-        loadAssets();
-
         this.camera = createCamera();
+
+        this.stage = new Stage();
+        this.stage.clear();
+        Gdx.input.setInputProcessor(stage);
+
+        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon-ui.json"));
+        this.table = new Table();
+
+        createButtons();
     }
 
     private OrthographicCamera createCamera() {
@@ -51,12 +68,21 @@ public class MainMenuView extends ScreenAdapter {
         return camera;
     }
 
-    /**
-     * Loads the assets needed by this screen.
-     */
-    private void loadAssets(){
+    private void createButtons(){
+        table.setFillParent(true);
+        stage.addActor(table);
 
-        this.game.getAssetManager().finishLoading();
+        table.row();
+        TextButton singleplayerBtn  = new TextButton("SinglePlayer", skin, "default");
+        table.add(singleplayerBtn);
+
+        table.row();
+        TextButton multiplayerBtn = new TextButton("Multiplayer", skin, "default");
+        table.add(multiplayerBtn);
+
+        table.row();
+        TextButton exitBtn = new TextButton("Exit", skin, "default");
+        table.add(exitBtn);
     }
 
     /**
@@ -72,11 +98,8 @@ public class MainMenuView extends ScreenAdapter {
         Gdx.gl.glClearColor( 0, 0, 0f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
-        game.getBatch().begin();
-        drawButtons();
-        drawBackground();
-        game.getBatch().end();
-
+//        stage.act();
+        stage.draw();
     }
 
     /**
@@ -86,22 +109,6 @@ public class MainMenuView extends ScreenAdapter {
      */
     private void handleInputs(float delta) {
 
-
-    }
-
-    /**
-     * Draws the buttons to the screen.
-     */
-    private void drawButtons() {
-
-
-    }
-
-
-    /**
-     * Draws the background
-     */
-    private void drawBackground() {
 
     }
 }

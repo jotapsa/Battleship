@@ -19,7 +19,7 @@ public class Battleship extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		
-		startGame();
+		showMenu();
 	}
 
     /**
