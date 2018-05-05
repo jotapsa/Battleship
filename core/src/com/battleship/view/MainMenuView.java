@@ -26,6 +26,7 @@ public class MainMenuView extends ScreenAdapter {
 
 
     private TextButton singleplayerBtn;
+    private TextButton multiplayerLocalBtn;
     private TextButton multiplayerBtn;
     private TextButton exitBtn;
 
@@ -35,7 +36,7 @@ public class MainMenuView extends ScreenAdapter {
     /**
      * Creates this screen.
      */
-    public MainMenuView(Battleship game){
+    public MainMenuView(Battleship game) {
         this.game = game;
 
         this.stage = new Stage();
@@ -52,51 +53,67 @@ public class MainMenuView extends ScreenAdapter {
         createButtons();
     }
 
-    private void setUpButtons(){
-        singleplayerBtn  = new TextButton("SinglePlayer", skin, "default");
-        singleplayerBtn.setColor(0,0,1,1);
+    private void setUpButtons() {
+        singleplayerBtn = new TextButton("SinglePlayer", skin, "default");
+        singleplayerBtn.setColor(0, 0, 1, 1);
         singleplayerBtn.getLabel().setFontScale(2);
-        singleplayerBtn.addListener( new ClickListener(){
+        singleplayerBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent e, float x, float y){
+            public void clicked(InputEvent e, float x, float y) {
+                dispose();
                 game.startSingleplayerGame();
             }
         });
 
-        multiplayerBtn = new TextButton("Multiplayer", skin, "default");
-        multiplayerBtn.setColor(0,0,1,1);
-        multiplayerBtn.getLabel().setFontScale(2);
-        multiplayerBtn.addListener( new ClickListener(){
+        multiplayerLocalBtn = new TextButton("Local Multiplayer", skin, "default");
+        multiplayerLocalBtn.setColor(0, 0, 1, 1);
+        multiplayerLocalBtn.getLabel().setFontScale(2);
+        multiplayerLocalBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent e, float x, float y){
+            public void clicked(InputEvent e, float x, float y) {
+                dispose();
+                game.startMultiplayerLocal();
+            }
+        });
+
+        multiplayerBtn = new TextButton("Multiplayer", skin, "default");
+        multiplayerBtn.setColor(0, 0, 1, 1);
+        multiplayerBtn.getLabel().setFontScale(2);
+        multiplayerBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent e, float x, float y) {
+                dispose();
                 game.startMultiplayer();
             }
         });
 
         exitBtn = new TextButton("Exit", skin, "default");
-        exitBtn.setColor(0,0,1,1);
+        exitBtn.setColor(0, 0, 1, 1);
         exitBtn.getLabel().setFontScale(2);
-        exitBtn.addListener( new ClickListener(){
+        exitBtn.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent e, float x, float y){
+            public void clicked(InputEvent e, float x, float y) {
                 //TODO: Exit stuff
                 System.exit(0);
             }
         });
     }
 
-    private void createButtons(){
+    private void createButtons() {
         table.setFillParent(true);
         stage.addActor(table);
 
         table.row();
-        table.add(singleplayerBtn).width(Gdx.graphics.getWidth()/2).height(100);
+        table.add(singleplayerBtn).width(Gdx.graphics.getWidth() / 2).height(100);
 
         table.row();
-        table.add(multiplayerBtn).width(Gdx.graphics.getWidth()/2).height(100);
+        table.add(multiplayerLocalBtn).width(Gdx.graphics.getWidth() / 2).height(100);
 
         table.row();
-        table.add(exitBtn).width(Gdx.graphics.getWidth()/2).height(100);
+        table.add(multiplayerBtn).width(Gdx.graphics.getWidth() / 2).height(100);
+
+        table.row();
+        table.add(exitBtn).width(Gdx.graphics.getWidth() / 2).height(100);
     }
 
     /**
@@ -104,29 +121,29 @@ public class MainMenuView extends ScreenAdapter {
      *
      * @param delta time since last renders in seconds.
      */
-    public void render(float delta){
+    public void render(float delta) {
         super.render(delta);
 
-        handleInputs(delta);
-
-        Gdx.gl.glClearColor( 0, 0, 1f, 1 );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+        Gdx.gl.glClearColor(0, 0, 1f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         game.getBatch().begin();
-        game.getBatch().draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        game.getBatch().draw(title,200,1200, 700, 400);
+        game.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.getBatch().draw(title, 200, 1200, 700, 400);
         game.getBatch().end();
 
         stage.draw();
     }
 
-    /**
-     * Handles any inputs and passes them to the controller.
-     *
-     * @param delta time since last time inputs where handled in seconds
-     */
-    private void handleInputs(float delta) {
+    @Override
+    public void dispose() {
+        super.dispose();
 
+        stage.dispose();
 
+        background.dispose();
+        title.dispose();
+
+        skin.dispose();
     }
 }

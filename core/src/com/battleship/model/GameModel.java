@@ -1,5 +1,7 @@
 package com.battleship.model;
 
+import com.battleship.BattleShipState;
+
 /**
  * A model representing a game.
  */
@@ -12,8 +14,6 @@ public class GameModel {
     private Player p1;
     private Player p2;
 
-    private GameState gameState;
-
     private Board player1Board;
     private Board player2Board;
 
@@ -21,11 +21,10 @@ public class GameModel {
 
     private boolean gameOver;
 
-    GameModel(GameType gameType){
+    public GameModel(GameType gameType){
         this.gameType = gameType;
 
         this.turn = Turn.Blue;
-        this.gameState = GameState.Player1_Placing;
         setGameOver(false);
 
         this.player1Board = new Board(boardSize);

@@ -3,10 +3,14 @@ package com.battleship;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.battleship.model.GameModel;
+import com.battleship.model.GameType;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
+import com.battleship.view.PlacingView;
 
 public class Battleship extends Game {
+    private GameModel gameModel;
 
 	private SpriteBatch batch;
 	private AssetManager assetManager;
@@ -20,8 +24,12 @@ public class Battleship extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		
-		startSingleplayerGame();
+		showMenu();
 	}
+
+	public GameModel getGameModel(){
+	    return this.gameModel;
+    }
 
     /**
      * Show menu.
@@ -34,13 +42,15 @@ public class Battleship extends Game {
      * Start GameModel.
      */
     public void startSingleplayerGame() {
-        setScreen(new GameView(this));
+        this.gameModel = new GameModel(GameType.SinglePlayer);
+        setScreen(new PlacingView(this));
     }
 
     /**
      * Start GameModel.
      */
     public void startMultiplayerLocal() {
+        this.gameModel = new GameModel(GameType.Multiplayer_local);
         setScreen(new GameView(this));
     }
 
@@ -48,6 +58,7 @@ public class Battleship extends Game {
      * Start GameModel.
      */
     public void startMultiplayer() {
+        this.gameModel = new GameModel(GameType.Multiplayer);
         setScreen(new GameView(this));
     }
 

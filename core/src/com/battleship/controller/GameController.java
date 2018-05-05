@@ -1,5 +1,8 @@
 package com.battleship.controller;
 
+import com.badlogic.gdx.Game;
+import com.battleship.model.GameModel;
+
 public class GameController {
 
     private static GameController instance;
