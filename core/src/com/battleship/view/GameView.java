@@ -4,20 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.battleship.Battleship;
 
 public class GameView extends ScreenAdapter {
-    /**
-     * How much meters does a pixel represent.
-     */
-    public final static float PIXEL_TO_METER = 1f;
 
-    /**
-     * The width of the viewport in meters. The height is
-     * automatically calculated using the screen ratio.
-     */
-    private static final float VIEWPORT_WIDTH = 25;
 
     /**
      * The game this screen belongs to.
@@ -28,6 +23,13 @@ public class GameView extends ScreenAdapter {
      * The camera used to show the viewport.
      */
     private final OrthographicCamera camera;
+    private Viewport gamePort;
+    //TODO: Hud
+
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+
 
     /**
      * Creates this screen.
@@ -38,11 +40,22 @@ public class GameView extends ScreenAdapter {
         loadAssets();
 
         this.camera = createCamera();
+
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("board.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
     }
 
+    /**
+     * Creates the camera used to show the viewport.
+     *
+     * @return the camera
+     */
     private OrthographicCamera createCamera() {
-        OrthographicCamera camera = new OrthographicCamera(VIEWPORT_WIDTH / PIXEL_TO_METER,
-                VIEWPORT_WIDTH / PIXEL_TO_METER * ((float) Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+        //create a FitViewport to maintain virtual aspect ratio despite screen size
+//        gamePort = new FitViewport(20, 20, gamecam);
+
+        OrthographicCamera camera = new OrthographicCamera(20, 20);
 
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
@@ -55,9 +68,6 @@ public class GameView extends ScreenAdapter {
      */
     private void loadAssets(){
 
-        this.game.getAssetManager().load("blue_square.png", Texture.class);
-        this.game.getAssetManager().load("white_square.jpg", Texture.class);
-
         this.game.getAssetManager().finishLoading();
     }
 
@@ -68,17 +78,19 @@ public class GameView extends ScreenAdapter {
      */
     public void render(float delta){
         super.render(delta);
-
-        handleInputs(delta);
+        update(delta);
 
         Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
-        game.getBatch().begin();
-        drawBackground();
-        drawBoard();
-        game.getBatch().end();
+        renderer.render();
+    }
 
+    private void update(float delta) {
+        handleInputs(delta);
+
+        camera.update();
+        renderer.setView(camera);
     }
 
     /**

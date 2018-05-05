@@ -20,11 +20,6 @@ public class MainMenuView extends ScreenAdapter {
      */
     private Battleship game;
 
-    /**
-     * The camera used to show the viewport.
-     */
-//    private final OrthographicCamera camera;
-
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -122,7 +117,6 @@ public class MainMenuView extends ScreenAdapter {
         game.getBatch().draw(title,200,1200, 700, 400);
         game.getBatch().end();
 
-//        stage.act();
         stage.draw();
     }
 
