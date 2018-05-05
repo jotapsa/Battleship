@@ -20,7 +20,7 @@ public class Battleship extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		
-		startMultiplayer();
+		startSingleplayerGame();
 	}
 
     /**
@@ -31,14 +31,21 @@ public class Battleship extends Game {
     }
 
     /**
-     * Start Game.
+     * Start GameModel.
      */
-    public void startSingleplayer() {
+    public void startSingleplayerGame() {
         setScreen(new GameView(this));
     }
 
-        /**
-     * Start Game.
+    /**
+     * Start GameModel.
+     */
+    public void startMultiplayerLocal() {
+        setScreen(new GameView(this));
+    }
+
+    /**
+     * Start GameModel.
      */
     public void startMultiplayer() {
         setScreen(new GameView(this));

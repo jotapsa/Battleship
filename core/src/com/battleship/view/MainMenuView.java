@@ -59,7 +59,7 @@ public class MainMenuView extends ScreenAdapter {
         singleplayerBtn.addListener( new ClickListener(){
             @Override
             public void clicked(InputEvent e, float x, float y){
-                game.startSingleplayer();
+                game.startSingleplayerGame();
             }
         });
 

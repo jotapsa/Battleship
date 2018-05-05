@@ -91,7 +91,7 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last renders in seconds.
      */
     public void render(float delta){
-//        super.render(delta);
+        super.render(delta);
         update(delta);
 
         Gdx.gl.glClearColor( 1f, 1f, 1f, 1 );
@@ -122,17 +122,9 @@ public class GameView extends ScreenAdapter {
         }
     }
 
-    /**
-     * Draws the entities to the screen.
-     */
-    private void drawBoard() {
-    }
-
-
-    /**
-     * Draws the background
-     */
-    private void drawBackground() {
-
+    @Override
+    public void dispose(){
+        super.dispose();
+        map.dispose();
     }
 }

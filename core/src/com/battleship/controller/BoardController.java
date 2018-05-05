@@ -14,7 +14,24 @@ public class BoardController {
     }
 
     public void placeShip(Ship ship, Coord pos){
+        if(!canPlaceShip(ship, pos)){
+            return;
+        }
 
+        if(ship.getOrientation() == Orientation.Horizontal){
+            for(int i=0; i<ship.getShipType().getSize(); i++){
+                this.board.setCell(new Coord(pos.getX()+i, pos.getY()), CellType.Ship);
+            }
+        }
+
+        if(ship.getOrientation() == Orientation.Vertical){
+            for(int i=0; i<ship.getShipType().getSize(); i++){
+                this.board.setCell(new Coord(pos.getX(), pos.getY()+i), CellType.Ship);
+            }
+        }
+
+        ship.setIsPlaced(true);
+        board.addShip(ship);
     }
 
     public boolean canPlaceShip(Ship ship, Coord pos){
@@ -41,5 +58,9 @@ public class BoardController {
 
     public boolean isValidCoord(Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
+    }
+
+    public void shootAt(Coord pos){
+
     }
 }

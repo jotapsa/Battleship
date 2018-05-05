@@ -32,6 +32,10 @@ public class Ship {
         return this.orientation;
     }
 
+    public void setIsPlaced(boolean placed){
+        this.isPlaced = placed;
+    }
+
     public void setOrientation(Orientation orientation){
         this.orientation = orientation;
     }

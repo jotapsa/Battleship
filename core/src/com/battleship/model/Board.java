@@ -25,6 +25,10 @@ public class Board {
         return this.map[pos.getY()][pos.getX()];
     }
 
+    public void setCell(Coord pos, CellType cellType){
+        this.map[pos.getY()][pos.getX()] = cellType;
+    }
+
     public void addShip(Ship ship){
         this.ships.add(ship);
     }
