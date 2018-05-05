@@ -7,6 +7,7 @@ import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 
 public class Battleship extends Game {
+
 	private SpriteBatch batch;
 	private AssetManager assetManager;
 
@@ -19,7 +20,7 @@ public class Battleship extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		
-		showMenu();
+		startMultiplayer();
 	}
 
     /**

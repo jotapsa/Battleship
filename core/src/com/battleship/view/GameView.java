@@ -20,6 +20,22 @@ public class GameView extends ScreenAdapter {
      */
     private Battleship game;
 
+
+    /**
+     * The width of the viewport in cells.
+     */
+    private static final float VIEWPORT_WIDTH = 16;
+
+    /**
+     * The width of the viewport in cells.
+     */
+    private static final float VIEWPORT_HEIGHT = 20;
+
+    /**
+     * Pixels per cell (square cell)
+     */
+    private static final float PPC = 32;
+
     /**
      * The camera used to show the viewport.
      */
@@ -53,9 +69,9 @@ public class GameView extends ScreenAdapter {
      * @return the camera
      */
     private void createCamera() {
-        this.camera = new OrthographicCamera(20*32, 20*32);
+        this.camera = new OrthographicCamera(VIEWPORT_WIDTH * PPC, VIEWPORT_HEIGHT*PPC);
 
-        this.gamePort = new ExtendViewport(20*32, 20*32, camera);
+        this.gamePort = new ExtendViewport(VIEWPORT_WIDTH * PPC, VIEWPORT_HEIGHT*PPC, camera);
 
 //        camera.position.set(gamePort.getWorldWidth() / 2f, gamePort.getWorldHeight() / 2f, 0);
         camera.position.set(camera.viewportWidth/2f, camera.viewportHeight/2f, 0);
@@ -100,7 +116,9 @@ public class GameView extends ScreenAdapter {
         if(Gdx.input.isTouched()){
             Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePos); // mousePos is now in world coordinates
-            Gdx.app.log("Battleship", mousePos.x + " -x " + mousePos.y + " -y");
+            Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
+
+            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
         }
     }
 
