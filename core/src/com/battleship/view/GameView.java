@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
+import com.battleship.controller.GameController;
 
 public class GameView extends ScreenAdapter {
 
@@ -22,8 +23,8 @@ public class GameView extends ScreenAdapter {
     /**
      * The camera used to show the viewport.
      */
-    private final OrthographicCamera camera;
-    private Viewport gamePort;
+    private OrthographicCamera camera;
+    private ExtendViewport gamePort;
     //TODO: Hud
 
     private TmxMapLoader mapLoader;
@@ -39,7 +40,7 @@ public class GameView extends ScreenAdapter {
 
         loadAssets();
 
-        this.camera = createCamera();
+        createCamera();
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("board.tmx");
@@ -51,16 +52,13 @@ public class GameView extends ScreenAdapter {
      *
      * @return the camera
      */
-    private OrthographicCamera createCamera() {
-        //create a FitViewport to maintain virtual aspect ratio despite screen size
-//        gamePort = new FitViewport(20, 20, gamecam);
+    private void createCamera() {
+        this.camera = new OrthographicCamera(20*32, 20*32);
 
-        OrthographicCamera camera = new OrthographicCamera(20, 20);
+        this.gamePort = new ExtendViewport(20*32, 20*32, camera);
 
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
-
-        return camera;
+//        camera.position.set(gamePort.getWorldWidth() / 2f, gamePort.getWorldHeight() / 2f, 0);
+        camera.position.set(camera.viewportWidth/2f, camera.viewportHeight/2f, 0);
     }
 
     /**
@@ -77,10 +75,10 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last renders in seconds.
      */
     public void render(float delta){
-        super.render(delta);
+//        super.render(delta);
         update(delta);
 
-        Gdx.gl.glClearColor( 103/255f, 69/255f, 117/255f, 1 );
+        Gdx.gl.glClearColor( 1f, 1f, 1f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         renderer.render();
@@ -99,6 +97,11 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
+        if(Gdx.input.isTouched()){
+            Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(mousePos); // mousePos is now in world coordinates
+            Gdx.app.log("Battleship", mousePos.x + " -x " + mousePos.y + " -y");
+        }
     }
 
     /**
