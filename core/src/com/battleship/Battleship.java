@@ -32,7 +32,14 @@ public class Battleship extends Game {
     /**
      * Start Game.
      */
-    private void startGame() {
+    public void startSingleplayer() {
+        setScreen(new GameView(this));
+    }
+
+        /**
+     * Start Game.
+     */
+    public void startMultiplayer() {
         setScreen(new GameView(this));
     }
 
