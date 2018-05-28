@@ -40,6 +40,15 @@ public class Ship {
         this.orientation = orientation;
     }
 
+    public void flipOrientation() {
+        if(this.orientation == Orientation.Vertical){
+            this.orientation =  Orientation.Horizontal;
+        }
+        else{
+            this.orientation = Orientation.Vertical;
+        }
+    }
+
     public void hit (int pos){
         this.ship[pos] = true;
         this.timesHit++;
