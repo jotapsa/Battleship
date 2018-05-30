@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.battleship.controller.BoardController;
+import com.battleship.controller.GameController;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
 import com.battleship.view.GameView;
@@ -11,7 +12,9 @@ import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
 
 public class Battleship extends Game {
+
     private GameModel gameModel;
+    private GameController gameController;
 
 	private SpriteBatch batch;
 	private AssetManager assetManager;
@@ -44,7 +47,8 @@ public class Battleship extends Game {
      */
     public void startSingleplayerGame() {
         this.gameModel = new GameModel(GameType.SinglePlayer);
-        setScreen(new PlacingView(this));
+        this.gameController = new GameController(gameModel);
+        setScreen(new GameView(this, gameController));
     }
 
     /**
@@ -52,7 +56,8 @@ public class Battleship extends Game {
      */
     public void startMultiplayerLocal() {
         this.gameModel = new GameModel(GameType.Multiplayer_local);
-        setScreen(new GameView(this));
+        this.gameController = new GameController(gameModel);
+        setScreen(new GameView(this, gameController));
     }
 
     /**
@@ -60,7 +65,8 @@ public class Battleship extends Game {
      */
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
-        setScreen(new GameView(this));
+        this.gameController = new GameController(gameModel);
+        setScreen(new GameView(this, gameController));
     }
 
 
@@ -93,7 +99,7 @@ public class Battleship extends Game {
         return batch;
     }
 
-    public void setGameView(){
-        setScreen(new GameView(this));
-    }
+//    public void setGameView(){
+//        setScreen(new GameView(this));
+//    }
 }

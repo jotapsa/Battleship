@@ -1,32 +1,25 @@
 package com.battleship.controller;
 
-import com.badlogic.gdx.Game;
 import com.battleship.model.GameModel;
+import com.battleship.model.Player;
+import com.battleship.model.Turn;
 
 public class GameController {
-
-    private static GameController instance;
+    private GameModel gameModel;
 
     /**
      * Creates a new GameController that controls the physics of a certain GameModel.
      *
      */
-    private GameController() {
+    public GameController(GameModel gameModel) {
+        this.gameModel = gameModel;
     }
 
-    /**
-     * Returns a singleton instance of a game controller
-     *
-     * @return the singleton instance
-     */
-    public static GameController getInstance() {
-        if (instance == null){
-            instance = new GameController();
-        }
-        return instance;
-    }
 
     public void handleClick(int x, int y) {
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Player){
+
+        }
 
     }
 

@@ -1,7 +1,5 @@
 package com.battleship.model;
 
-import com.battleship.BattleShipState;
-
 /**
  * A model representing a game.
  */
@@ -11,11 +9,11 @@ public class GameModel {
 
     private GameType gameType;
 
-    private Player p1;
-    private Player p2;
+    private Player playerBlue;
+    private Player playerRed;
 
-    private Board player1Board;
-    private Board player2Board;
+    private Board playerBlueBoard;
+    private Board playerRedBoard;
 
     private Turn turn;
 
@@ -24,20 +22,22 @@ public class GameModel {
     public GameModel(GameType gameType){
         this.gameType = gameType;
 
+        switch (this.gameType){
+            case SinglePlayer:
+                break;
+            case Multiplayer:
+                break;
+            case Multiplayer_local:
+                break;
+            default:
+                break;
+        }
+
         this.turn = Turn.Blue;
         setGameOver(false);
 
-        this.p1 = new Player();
-
-        if(gameType == GameType.SinglePlayer){
-            this.p2 = new Computer();
-        }
-        else{
-            this.p2 = new Player();
-        }
-
-        this.player1Board = new Board(boardSize);
-        this.player2Board = new Board(boardSize);
+        this.playerBlueBoard = new Board(boardSize);
+        this.playerRedBoard = new Board(boardSize);
     }
 
     public GameType getGameType() {
@@ -46,6 +46,14 @@ public class GameModel {
 
     public Turn getTurn(){
         return this.turn;
+    }
+
+    public Player getPlayerBlue(){
+        return this.playerBlue;
+    }
+
+    public Player getPlayerRed(){
+        return this.playerRed;
     }
 
     public void setGameOver(boolean gameOver){
@@ -60,20 +68,13 @@ public class GameModel {
         }
     }
 
-    public Player getPlayer1(){
-        return this.p1;
+
+    public Board getPlayerBlueBoard(){
+        return this.playerBlueBoard;
     }
 
-    public Player getPlayer2(){
-        return this.p2;
-    }
-
-    public Board getPlayer1Board(){
-        return this.player1Board;
-    }
-
-    public Board getPlayer2Board(){
-        return this.player2Board;
+    public Board getPlayerRedBoard(){
+        return this.playerRedBoard;
     }
 
 

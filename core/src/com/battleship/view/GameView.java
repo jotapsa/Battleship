@@ -14,11 +14,8 @@ import com.battleship.controller.GameController;
 
 public class GameView extends ScreenAdapter {
 
-
-    /**
-     * The game this screen belongs to.
-     */
     private Battleship game;
+    private GameController gameController;
 
 
     /**
@@ -51,8 +48,9 @@ public class GameView extends ScreenAdapter {
     /**
      * Creates this screen.
      */
-    public GameView(Battleship game){
+    public GameView(Battleship game, GameController gameController){
         this.game = game;
+        this.gameController = gameController;
 
         loadAssets();
 
@@ -118,7 +116,7 @@ public class GameView extends ScreenAdapter {
             camera.unproject(mousePos); // mousePos is now in world coordinates
             Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
 
-            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
+            this.gameController.handleClick((int)mousePos.x/32, (int)mousePos.y/32);
         }
     }
 

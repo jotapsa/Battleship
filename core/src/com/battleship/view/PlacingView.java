@@ -124,7 +124,7 @@ public class PlacingView extends ScreenAdapter{
             Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
 
 //            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
-            if(boardController.canPlaceShip(null, new Coord((int)mousePos.x/32, (int)mousePos.y/32) ))){
+            if(boardController.canPlaceShip(null, new Coord((int)mousePos.x/32, (int)mousePos.y/32) )){
 
             }
         }
@@ -137,8 +137,8 @@ public class PlacingView extends ScreenAdapter{
     }
 
     public void placingShips(){
-        this.player = this.gameModel.getPlayer1();
-        boardController = new BoardController(this.gameModel.getPlayer1Board());
+        this.player = this.gameModel.getPlayerBlue();
+        boardController = new BoardController(this.gameModel.getPlayerBlueBoard());
 
         for(Ship ship : this.player.getShips()){
             // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
@@ -153,12 +153,12 @@ public class PlacingView extends ScreenAdapter{
 
         if(this.gameModel.getGameType() == GameType.SinglePlayer
                 || this.gameModel.getGameType() == GameType.Multiplayer){
-            this.game.setGameView();
+//            this.game.setGameView();
             return;
         }
 
-        this.player = this.gameModel.getPlayer2();
-        boardController = new BoardController(this.gameModel.getPlayer2Board());
+        this.player = this.gameModel.getPlayerRed();
+        boardController = new BoardController(this.gameModel.getPlayerRedBoard());
 
         for(Ship ship : this.player.getShips()){
             // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
