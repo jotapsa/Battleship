@@ -10,7 +10,10 @@ public class BoardController {
     private Board board;
 
     public BoardController(Board board){
-        this.board = board;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public void placeShip(Ship ship, Coord pos){

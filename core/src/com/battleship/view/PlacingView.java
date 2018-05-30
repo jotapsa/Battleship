@@ -10,14 +10,25 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
+import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
+import com.battleship.model.Coord;
+import com.battleship.model.GameModel;
+import com.battleship.model.GameType;
+import com.battleship.model.Player;
+import com.battleship.model.Ship;
 
 public class PlacingView extends ScreenAdapter{
+
 
     /**
      * The game this screen belongs to.
      */
     private Battleship game;
+
+    private BoardController boardController;
+    private GameModel gameModel;
+    private Player player;
 
 
     /**
@@ -52,12 +63,15 @@ public class PlacingView extends ScreenAdapter{
      */
     public PlacingView(Battleship game){
         this.game = game;
+        this.gameModel = game.getGameModel();
 
         createCamera();
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("placing_board.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
+
+//        this.placingShips();
     }
 
     /**
@@ -109,7 +123,10 @@ public class PlacingView extends ScreenAdapter{
             camera.unproject(mousePos); // mousePos is now in world coordinates
             Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
 
-            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
+//            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
+            if(boardController.canPlaceShip(null, new Coord((int)mousePos.x/32, (int)mousePos.y/32) ))){
+
+            }
         }
     }
 
@@ -117,5 +134,42 @@ public class PlacingView extends ScreenAdapter{
     public void dispose(){
         super.dispose();
         map.dispose();
+    }
+
+    public void placingShips(){
+        this.player = this.gameModel.getPlayer1();
+        boardController = new BoardController(this.gameModel.getPlayer1Board());
+
+        for(Ship ship : this.player.getShips()){
+            // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
+
+            // Print PLAYER 1 UNDER TILEMAP
+
+            //After User Input
+//            while(!boardController.canPlaceShip(ship, new Coord(x, y))){
+//                boardController.placeShip(ship, new Coord(x, y));
+//            }
+        }
+
+        if(this.gameModel.getGameType() == GameType.SinglePlayer
+                || this.gameModel.getGameType() == GameType.Multiplayer){
+            this.game.setGameView();
+            return;
+        }
+
+        this.player = this.gameModel.getPlayer2();
+        boardController = new BoardController(this.gameModel.getPlayer2Board());
+
+        for(Ship ship : this.player.getShips()){
+            // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
+
+            // Print PLAYER 2 UNDER TILEMAP
+
+            //After User Input
+//            while(!boardController.canPlaceShip(ship, new Coord(x, y))){
+//                boardController.placeShip(ship, new Coord(x, y));
+//            }
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package com.battleship;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.battleship.controller.BoardController;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
 import com.battleship.view.GameView;
@@ -90,5 +91,9 @@ public class Battleship extends Game {
      */
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public void setGameView(){
+        setScreen(new GameView(this));
     }
 }

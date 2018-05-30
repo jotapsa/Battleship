@@ -27,6 +27,15 @@ public class GameModel {
         this.turn = Turn.Blue;
         setGameOver(false);
 
+        this.p1 = new Player();
+
+        if(gameType == GameType.SinglePlayer){
+            this.p2 = new Computer();
+        }
+        else{
+            this.p2 = new Player();
+        }
+
         this.player1Board = new Board(boardSize);
         this.player2Board = new Board(boardSize);
     }
@@ -50,4 +59,22 @@ public class GameModel {
             this.turn = Turn.Blue;
         }
     }
+
+    public Player getPlayer1(){
+        return this.p1;
+    }
+
+    public Player getPlayer2(){
+        return this.p2;
+    }
+
+    public Board getPlayer1Board(){
+        return this.player1Board;
+    }
+
+    public Board getPlayer2Board(){
+        return this.player2Board;
+    }
+
+
 }

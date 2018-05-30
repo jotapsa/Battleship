@@ -1,6 +1,8 @@
 package com.battleship.controller;
 
 import com.badlogic.gdx.math.Vector2;
+import com.battleship.model.Player;
+import com.battleship.model.Ship;
 
 public class PlacingController{
     /**
@@ -37,4 +39,5 @@ public class PlacingController{
         }
         return instance;
     }
+
 }
