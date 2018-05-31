@@ -39,7 +39,7 @@ public class GameModel {
                 break;
         }
 
-        this.turn = Turn.Blue;
+        this.turn = Turn.Red;
         setGameOver(false);
 
         this.playerBlueBoard = new Board(boardSize);

@@ -37,6 +37,9 @@ public class GameController {
             if(!move.getHitShip()){
                 gameModel.nextTurn();
             }
+            else {
+                // do another move
+            }
         }
     }
 }

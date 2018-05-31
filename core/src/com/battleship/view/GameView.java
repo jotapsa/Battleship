@@ -12,17 +12,21 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
+import com.battleship.model.GameModel;
+import com.battleship.model.GameType;
+import com.battleship.model.Turn;
 
 public class GameView extends ScreenAdapter {
 
     private Battleship game;
+    private GameModel gameModel;
     private GameController gameController;
 
 
     /**
      * The width of the viewport in cells.
      */
-    private static final float VIEWPORT_WIDTH = 16;
+    private static final float VIEWPORT_WIDTH = 13;
 
     /**
      * The width of the viewport in cells.
@@ -51,6 +55,7 @@ public class GameView extends ScreenAdapter {
      */
     public GameView(Battleship game, GameController gameController){
         this.game = game;
+        this.gameModel = game.getGameModel();
         this.gameController = gameController;
 
         loadAssets();
@@ -58,7 +63,7 @@ public class GameView extends ScreenAdapter {
         createCamera();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("board.tmx");
+        map = mapLoader.load("gameboard.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
     }
 
@@ -112,12 +117,34 @@ public class GameView extends ScreenAdapter {
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.justTouched()){
             Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePos); // mousePos is now in world coordinates
-            Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
 
-            Coord coord = new Coord((int) mousePos.x/32, (int) mousePos.y/32);
+            int x = (int)mousePos.x/32;
+            int y = (int)mousePos.y/32;
+
+            if(this.gameModel.getGameType() == GameType.Multiplayer_local){
+                if(this.gameModel.getTurn() == Turn.Blue){
+                    //play in Red Board
+                    x -= 3;
+                    y -= 10;
+                }
+                else{
+                    //play in Blue Board
+                    x -= 0;
+                    y -= 0;
+                }
+            }
+            else{
+                //play in Red Board
+                x -= 3;
+                y -= 10;
+            }
+
+            Gdx.app.log("Battleship", "x - " + x + " y - " + y);
+
+            Coord coord = new Coord(x, y);
             this.gameController.handleClick(coord);
         }
     }
