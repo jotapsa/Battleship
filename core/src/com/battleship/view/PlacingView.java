@@ -172,7 +172,7 @@ public class PlacingView extends ScreenAdapter{
     }
 
     public void nextShip(){
-        if(shipIndex < player.getShips().size()){
+        if(shipIndex < player.getShips().size()-1){
             shipIndex++;
             ship = this.player.getShips().get(shipIndex);
             return;
@@ -184,7 +184,7 @@ public class PlacingView extends ScreenAdapter{
 
         if(this.gameModel.getGameType() == GameType.Multiplayer_local){
           this.player = this.gameModel.getPlayerRed();
-         boardController.setBoard(this.gameModel.getPlayerRedBoard());
+          boardController.setBoard(this.gameModel.getPlayerRedBoard());
         }
     }
 }

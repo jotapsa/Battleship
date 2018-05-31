@@ -1,8 +1,7 @@
 package com.battleship.model;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board {
 
@@ -13,6 +12,7 @@ public class Board {
     Board(int size){
         this.size = size;
         this.map = new CellType[size][size];
+        this.fillMap(CellType.Free);
 
         this.ships = new ArrayList<Ship>();
     }
@@ -31,5 +31,11 @@ public class Board {
 
     public void addShip(Ship ship){
         this.ships.add(ship);
+    }
+
+    public void fillMap(CellType cellType){
+        for(CellType[] row : this.map){
+            Arrays.fill(row, cellType);
+        }
     }
 }

@@ -65,13 +65,17 @@ public class BoardController {
 
         if(ship.getOrientation() == Orientation.Vertical){
             for(int i=0; i<ship.getShipType().getSize(); i++){
-                if(this.board.getCell(new Coord(pos.getX(), pos.getY()+i)) != CellType.Free){
+                Coord shipPos = new Coord(pos.getX(), pos.getY()-i);
+
+                if(isValidCoord(shipPos) && this.board.getCell(pos) != CellType.Free){
                     return false;
                 }
             }
         } else if(ship.getOrientation() == Orientation.Horizontal){
             for(int i=0; i<ship.getShipType().getSize(); i++){
-                if(this.board.getCell(new Coord(pos.getX()+i, pos.getY())) != CellType.Free){
+                Coord shipPos = new Coord(pos.getX()-i, pos.getY());
+
+                if(isValidCoord(shipPos) && this.board.getCell(shipPos) != CellType.Free){
                     return false;
                 }
             }
