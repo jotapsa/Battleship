@@ -39,12 +39,12 @@ public class PlacingView extends ScreenAdapter{
     /**
      * The width of the viewport in cells.
      */
-    private static final float VIEWPORT_WIDTH = 14;
+    private static final float VIEWPORT_WIDTH = 12;
 
     /**
      * The width of the viewport in cells.
      */
-    private static final float VIEWPORT_HEIGHT = 14;
+    private static final float VIEWPORT_HEIGHT = 16;
 
     /**
      * Pixels per cell (square cell)
@@ -77,7 +77,7 @@ public class PlacingView extends ScreenAdapter{
         createCamera();
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("placing_board.tmx");
+        map = mapLoader.load("placingBoard.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
         init();
@@ -146,15 +146,15 @@ public class PlacingView extends ScreenAdapter{
         if(Gdx.input.justTouched()){
             Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePos); // mousePos is now in world coordinates
-            int x = (int)mousePos.x/32 - 2;
+            int x = (int)mousePos.x/32 - 1;
             int y = (int)mousePos.y/32 - 2;
             Gdx.app.log("Battleship", "x - " + x + " y - " + y);
 
-            if(boardController.canPlaceShip(ship, new Coord(x, y ))){
+            if(boardController.placeShip(ship, new Coord(x, y ))){
                 Gdx.app.log("Battleship", "Ship " + ship.getShipType() + "Placed!");
-                boardController.placeShip(ship, new Coord(x, y ) );
                 nextShip();
             }
+
         }
     }
 

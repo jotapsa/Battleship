@@ -37,25 +37,23 @@ public class BoardController {
         this.board = board;
     }
 
-    public void placeShip(Ship ship, Coord pos){
+    public boolean placeShip(Ship ship, Coord pos){
         if(!canPlaceShip(ship, pos)){
-            return;
+            return false;
         }
 
-        if(ship.getOrientation() == Orientation.Vertical){
-            for(int i=0; i<ship.getShipType().getSize(); i++){
+        for(int i=0; i<ship.getShipType().getSize(); i++){
+            if(ship.getOrientation() == Orientation.Vertical){
                 this.board.setCell(new Coord(pos.getX(), pos.getY()-i), CellType.Ship);
             }
-        }
-
-        if(ship.getOrientation() == Orientation.Horizontal){
-            for(int i=0; i<ship.getShipType().getSize(); i++){
+            else{
                 this.board.setCell(new Coord(pos.getX()-i, pos.getY()), CellType.Ship);
             }
         }
 
         ship.setIsPlaced(true);
         board.addShip(ship);
+        return true;
     }
 
     public boolean canPlaceShip(Ship ship, Coord pos){
@@ -63,21 +61,18 @@ public class BoardController {
             return false;
         }
 
-        if(ship.getOrientation() == Orientation.Vertical){
-            for(int i=0; i<ship.getShipType().getSize(); i++){
-                Coord shipPos = new Coord(pos.getX(), pos.getY()-i);
+        Coord shipPos;
 
-                if(isValidCoord(shipPos) && this.board.getCell(pos) != CellType.Free){
-                    return false;
-                }
+        for(int i=0; i<ship.getShipType().getSize(); i++){
+            if(ship.getOrientation() == Orientation.Vertical){
+                shipPos = new Coord(pos.getX(), pos.getY()-i);
             }
-        } else if(ship.getOrientation() == Orientation.Horizontal){
-            for(int i=0; i<ship.getShipType().getSize(); i++){
-                Coord shipPos = new Coord(pos.getX()-i, pos.getY());
+            else{
+                shipPos = new Coord(pos.getX()-i, pos.getY());
+            }
 
-                if(isValidCoord(shipPos) && this.board.getCell(shipPos) != CellType.Free){
-                    return false;
-                }
+            if(!isValidCoord(shipPos) || this.board.getCell(shipPos) != CellType.Free){
+                return false;
             }
         }
 
