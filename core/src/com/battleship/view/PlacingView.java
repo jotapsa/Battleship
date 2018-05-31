@@ -2,8 +2,11 @@ package com.battleship.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -29,6 +32,8 @@ public class PlacingView extends ScreenAdapter{
     private BoardController boardController;
     private GameModel gameModel;
     private Player player;
+    private Ship ship;
+    private int shipIndex;
 
 
     /**
@@ -58,6 +63,9 @@ public class PlacingView extends ScreenAdapter{
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    private SpriteBatch batch;
+    private BitmapFont font;
+
     /**
      * Creates this screen.
      */
@@ -72,7 +80,13 @@ public class PlacingView extends ScreenAdapter{
         map = mapLoader.load("placing_board.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
-//        this.placingShips();
+        init();
+
+
+        //FONTS
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+        this.font.setColor(Color.BLUE);
     }
 
     /**
@@ -100,10 +114,20 @@ public class PlacingView extends ScreenAdapter{
         super.render(delta);
         update(delta);
 
+
         Gdx.gl.glClearColor( 1f, 1f, 1f, 1 );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
 
         renderer.render();
+
+        this.batch.begin();
+        // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
+        //        this.font.draw( this.batch, "Hello World!", 250, 1900);
+
+        // Print PLAYER UNDER TILEMAP
+        //        this.font.draw( this.batch, "Hello World!", 250, 1900);
+
+        this.batch.end();
     }
 
     private void update(float delta) {
@@ -122,11 +146,13 @@ public class PlacingView extends ScreenAdapter{
         if(Gdx.input.isTouched()){
             Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePos); // mousePos is now in world coordinates
-            Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
+            int x = (int)mousePos.x/32 - 2;
+            int y = (int)mousePos.y/32 - 2;
+            Gdx.app.log("Battleship", "x - " + x + " y - " + y);
 
-//            GameController.getInstance().handleClick((int)mousePos.x/32, (int)mousePos.y/32);
-            if(boardController.canPlaceShip(null, new Coord((int)mousePos.x/32, (int)mousePos.y/32) )){
-
+            if(boardController.canPlaceShip(ship, new Coord(x, y ))){
+                Gdx.app.log("Battleship", "Ship " + ship.getShipType() + "Placed!");
+                nextShip();
             }
         }
     }
@@ -137,40 +163,28 @@ public class PlacingView extends ScreenAdapter{
         map.dispose();
     }
 
-    public void placingShips(){
+    public void init(){
         this.player = this.gameModel.getPlayerBlue();
         boardController.setBoard(this.gameModel.getPlayerBlueBoard());
+        shipIndex = 0;
 
-        for(Ship ship : this.player.getShips()){
-            // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
+        ship = this.player.getShips().get(shipIndex);
+    }
 
-            // Print PLAYER 1 UNDER TILEMAP
-
-            //After User Input
-//            while(!boardController.canPlaceShip(ship, new Coord(x, y))){
-//                boardController.placeShip(ship, new Coord(x, y));
-//            }
-        }
-
-        if(this.gameModel.getGameType() == GameType.SinglePlayer
-                || this.gameModel.getGameType() == GameType.Multiplayer){
-//            this.game.setGameView();
+    public void nextShip(){
+        if(shipIndex < player.getShips().size()){
+            shipIndex++;
+            ship = this.player.getShips().get(shipIndex);
             return;
         }
 
-        this.player = this.gameModel.getPlayerRed();
-        boardController.setBoard(this.gameModel.getPlayerRedBoard());
-
-        for(Ship ship : this.player.getShips()){
-            // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
-
-            // Print PLAYER 2 UNDER TILEMAP
-
-            //After User Input
-//            while(!boardController.canPlaceShip(ship, new Coord(x, y))){
-//                boardController.placeShip(ship, new Coord(x, y));
-//            }
+        if(player == this.gameModel.getPlayerRed()){
+//            this.game.setGameView();
         }
 
+        if(this.gameModel.getGameType() == GameType.Multiplayer_local){
+          this.player = this.gameModel.getPlayerRed();
+         boardController.setBoard(this.gameModel.getPlayerRedBoard());
+        }
     }
 }
