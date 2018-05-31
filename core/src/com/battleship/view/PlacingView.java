@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -26,6 +27,10 @@ import com.battleship.model.GameType;
 import com.battleship.model.Orientation;
 import com.battleship.model.Player;
 import com.battleship.model.Ship;
+import com.battleship.model.ShipType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlacingView extends ScreenAdapter{
 
@@ -40,6 +45,10 @@ public class PlacingView extends ScreenAdapter{
     private Player player;
     private Ship ship;
     private int shipIndex;
+    private HashMap<Ship, Coord> ships;
+
+    private int DISPLAY_HEIGHT = Gdx.graphics.getHeight();
+    private int DISPLAY_WIDTH = Gdx.graphics.getWidth();
 
 
     /**
@@ -93,20 +102,6 @@ public class PlacingView extends ScreenAdapter{
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.font.setColor(Color.BLUE);
-
-        TiledMapTileLayer layer = (TiledMapTileLayer) this.map.getLayers().get(1);
-        for(int j = 0; j < 16; j++){
-            for(int i = 0; i < 11; i++){
-                TiledMapTileLayer.Cell cell = layer.getCell(i, j);
-                if(cell != null){
-                    System.out.println("x = " + i + "| y = " + j);
-                    System.out.println(cell.getTile().getId());
-//                    cell.getTile().setId(1152);
-//                    System.out.println(cell.getTile().getId());
-                    System.out.println("--------");
-                }
-            }
-        }
     }
 
     /**
@@ -140,14 +135,28 @@ public class PlacingView extends ScreenAdapter{
 
         renderer.render();
 
-        this.batch.begin();
-        // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
-        //        this.font.draw( this.batch, "Hello World!", 250, 1900);
+        game.getBatch().begin();
 
-        // Print PLAYER UNDER TILEMAP
-        //        this.font.draw( this.batch, "Hello World!", 250, 1900);
+        for(Map.Entry<Ship, Coord> shipBoard : this.ships.entrySet()){
+            Coord pos = shipBoard.getValue();
+            Ship s = shipBoard.getKey();
+            ShipType shipType = s.getShipType();
+            float rotation = s.getOrientation() == Orientation.Vertical ? -90 : 0;
 
-        this.batch.end();
+            Sprite sprite = new Sprite(game.getShipTexture(shipType));
+            if(rotation != 0){
+                sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+3)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
+            else{
+                sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+2)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
+            sprite.setOrigin(0,0);
+            sprite.setRotation(rotation);
+            sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            sprite.draw(game.getBatch());
+        }
+
+        game.getBatch().end();
     }
 
     private void update(float delta) {
@@ -173,6 +182,7 @@ public class PlacingView extends ScreenAdapter{
             if(boardController.placeShip(ship, new Coord(x, y ))){
                 Gdx.app.log("Battleship", "Ship " + ship.getShipType() + "Placed!");
                 addShipMap(ship, new Coord(x, y));
+                ships.put(ship, new Coord(x, y));
                 nextShip();
             }
 
@@ -191,6 +201,7 @@ public class PlacingView extends ScreenAdapter{
         shipIndex = 0;
 
         ship = this.player.getShips().get(shipIndex);
+        ships = new HashMap<Ship, Coord>();
     }
 
     public void nextShip(){
