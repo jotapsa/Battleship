@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
+import com.battleship.model.Coord;
 
 public class GameView extends ScreenAdapter {
 
@@ -116,7 +117,8 @@ public class GameView extends ScreenAdapter {
             camera.unproject(mousePos); // mousePos is now in world coordinates
             Gdx.app.log("Battleship", "x - " + (int)mousePos.x/32 + " y - " + (int)mousePos.y/32);
 
-            this.gameController.handleClick((int)mousePos.x/32, (int)mousePos.y/32);
+            Coord coord = new Coord((int) mousePos.x/32, (int) mousePos.y/32);
+            this.gameController.handleClick(coord);
         }
     }
 

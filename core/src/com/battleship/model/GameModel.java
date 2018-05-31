@@ -24,10 +24,16 @@ public class GameModel {
 
         switch (this.gameType){
             case SinglePlayer:
+                this.playerBlue = new Player();
+                this.playerRed = new Computer();
                 break;
             case Multiplayer:
+                this.playerBlue = new Player();
+                this.playerRed = new Player();
                 break;
             case Multiplayer_local:
+                this.playerBlue = new Player();
+                this.playerRed = new Player();
                 break;
             default:
                 break;

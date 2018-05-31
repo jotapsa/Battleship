@@ -1,6 +1,8 @@
 package com.battleship.controller;
 
+import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
+import com.battleship.model.Move;
 import com.battleship.model.Player;
 import com.battleship.model.Turn;
 
@@ -16,14 +18,23 @@ public class GameController {
     }
 
 
-    public void handleClick(int x, int y) {
+    public void handleClick(Coord coord){
+        Move move = null;
+
         if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Player){
+            move = new Move(coord, gameModel.getTurn());
+        }
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Player){
+            move = new Move(coord, gameModel.getTurn());
+        }
+
+        if(move != null /*&& check valid move */){
+            //do move
+            //force consecutive moves
 
         }
 
-    }
 
-    public void changeTurn(){
 
     }
 }
