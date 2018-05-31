@@ -7,7 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -18,6 +23,7 @@ import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
+import com.battleship.model.Orientation;
 import com.battleship.model.Player;
 import com.battleship.model.Ship;
 
@@ -87,6 +93,20 @@ public class PlacingView extends ScreenAdapter{
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.font.setColor(Color.BLUE);
+
+        TiledMapTileLayer layer = (TiledMapTileLayer) this.map.getLayers().get(1);
+        for(int j = 0; j < 16; j++){
+            for(int i = 0; i < 11; i++){
+                TiledMapTileLayer.Cell cell = layer.getCell(i, j);
+                if(cell != null){
+                    System.out.println("x = " + i + "| y = " + j);
+                    System.out.println(cell.getTile().getId());
+//                    cell.getTile().setId(1152);
+//                    System.out.println(cell.getTile().getId());
+                    System.out.println("--------");
+                }
+            }
+        }
     }
 
     /**
@@ -152,6 +172,7 @@ public class PlacingView extends ScreenAdapter{
 
             if(boardController.placeShip(ship, new Coord(x, y ))){
                 Gdx.app.log("Battleship", "Ship " + ship.getShipType() + "Placed!");
+                addShipMap(ship, new Coord(x, y));
                 nextShip();
             }
 
@@ -187,6 +208,18 @@ public class PlacingView extends ScreenAdapter{
         if(this.gameModel.getGameType() == GameType.Multiplayer_local){
           this.player = this.gameModel.getPlayerRed();
           boardController.setBoard(this.gameModel.getPlayerRedBoard());
+        }
+    }
+
+    public void addShipMap(Ship ship, Coord pos){
+        for(int i=0; i<ship.getShipType().getSize(); i++){
+            if(ship.getOrientation() == Orientation.Vertical){
+//                TiledMapTileLayer layer = (TiledMapTileLayer) this.map.getLayers().get(1);
+//                System.out.println(layer.getCell(pos.getX(), pos.getY()-i).getTile().getId());
+            }
+            else{
+
+            }
         }
     }
 
