@@ -42,15 +42,15 @@ public class BoardController {
             return;
         }
 
-        if(ship.getOrientation() == Orientation.Horizontal){
+        if(ship.getOrientation() == Orientation.Vertical){
             for(int i=0; i<ship.getShipType().getSize(); i++){
-                this.board.setCell(new Coord(pos.getX()+i, pos.getY()), CellType.Ship);
+                this.board.setCell(new Coord(pos.getX(), pos.getY()-i), CellType.Ship);
             }
         }
 
-        if(ship.getOrientation() == Orientation.Vertical){
+        if(ship.getOrientation() == Orientation.Horizontal){
             for(int i=0; i<ship.getShipType().getSize(); i++){
-                this.board.setCell(new Coord(pos.getX(), pos.getY()+i), CellType.Ship);
+                this.board.setCell(new Coord(pos.getX()-i, pos.getY()), CellType.Ship);
             }
         }
 

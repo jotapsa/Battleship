@@ -143,7 +143,7 @@ public class PlacingView extends ScreenAdapter{
      * @param delta time since last time inputs where handled in seconds
      */
     private void handleInputs(float delta) {
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.justTouched()){
             Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(mousePos); // mousePos is now in world coordinates
             int x = (int)mousePos.x/32 - 2;
@@ -152,6 +152,7 @@ public class PlacingView extends ScreenAdapter{
 
             if(boardController.canPlaceShip(ship, new Coord(x, y ))){
                 Gdx.app.log("Battleship", "Ship " + ship.getShipType() + "Placed!");
+                boardController.placeShip(ship, new Coord(x, y ) );
                 nextShip();
             }
         }
@@ -178,13 +179,19 @@ public class PlacingView extends ScreenAdapter{
             return;
         }
 
-        if(player == this.gameModel.getPlayerRed()){
-//            this.game.setGameView();
+        if(player == this.gameModel.getPlayerRed()
+                || this.gameModel.getGameType() != GameType.Multiplayer_local){
+            exit();
         }
 
         if(this.gameModel.getGameType() == GameType.Multiplayer_local){
           this.player = this.gameModel.getPlayerRed();
           boardController.setBoard(this.gameModel.getPlayerRedBoard());
         }
+    }
+
+    public void exit(){
+        this.game.showMenu();
+        dispose();
     }
 }

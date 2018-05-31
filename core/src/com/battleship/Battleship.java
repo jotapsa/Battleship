@@ -38,7 +38,7 @@ public class Battleship extends Game {
     /**
      * Show menu.
      */
-    private void showMenu() {
+    public void showMenu() {
         setScreen(new MainMenuView(this));
     }
 
