@@ -48,7 +48,8 @@ public class Battleship extends Game {
     public void startSingleplayerGame() {
         this.gameModel = new GameModel(GameType.SinglePlayer);
         this.gameController = new GameController(gameModel);
-        setScreen(new GameView(this, gameController));
+//        setScreen(new GameView(this, gameController));
+        setScreen(new PlacingView(this));
     }
 
     /**
