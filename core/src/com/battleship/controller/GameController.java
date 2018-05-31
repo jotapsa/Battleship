@@ -16,7 +16,7 @@ public class GameController {
      */
     public GameController(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.boardController = new BoardController();
+        this.boardController = BoardController.getInstance();
     }
 
 

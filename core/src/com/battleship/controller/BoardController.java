@@ -8,13 +8,25 @@ import com.battleship.model.Orientation;
 import com.battleship.model.Ship;
 
 public class BoardController {
+    /**
+     * The singleton instance of this controller
+     */
+    private static BoardController instance;
+
     private Board board;
 
-    public BoardController(){
+    private BoardController(){
     }
 
-    public BoardController(Board board){
-        this.board = board;
+    /**
+     * Returns a singleton instance of a board controller
+     *
+     * @return the singleton instance
+     */
+    public static BoardController getInstance() {
+        if (instance == null)
+            instance = new BoardController();
+        return instance;
     }
 
     public Board getBoard() {

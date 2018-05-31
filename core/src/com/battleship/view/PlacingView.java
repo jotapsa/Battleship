@@ -64,6 +64,7 @@ public class PlacingView extends ScreenAdapter{
     public PlacingView(Battleship game){
         this.game = game;
         this.gameModel = game.getGameModel();
+        this.boardController = BoardController.getInstance();
 
         createCamera();
 
@@ -138,7 +139,7 @@ public class PlacingView extends ScreenAdapter{
 
     public void placingShips(){
         this.player = this.gameModel.getPlayerBlue();
-        boardController = new BoardController(this.gameModel.getPlayerBlueBoard());
+        boardController.setBoard(this.gameModel.getPlayerBlueBoard());
 
         for(Ship ship : this.player.getShips()){
             // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
@@ -158,7 +159,7 @@ public class PlacingView extends ScreenAdapter{
         }
 
         this.player = this.gameModel.getPlayerRed();
-        boardController = new BoardController(this.gameModel.getPlayerRedBoard());
+        boardController.setBoard(this.gameModel.getPlayerRedBoard());
 
         for(Ship ship : this.player.getShips()){
             // Print ship size ( ship.getShipType().getSize() ) ABOVE TILEMAP
