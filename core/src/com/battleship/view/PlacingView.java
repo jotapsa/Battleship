@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
+import com.battleship.model.Board;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
@@ -95,7 +96,7 @@ public class PlacingView extends ScreenAdapter{
         map = mapLoader.load("placingBoard.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        init();
+        init(this.gameModel.getPlayerBlue(), this.gameModel.getPlayerBlueBoard());
 
 
         //FONTS
@@ -175,7 +176,7 @@ public class PlacingView extends ScreenAdapter{
 
             if(boardController.placeShip(selectedShip, new Coord(x, y))){
                 Gdx.app.log("Battleship", "Ship " + selectedShip.getShipType() + "Placed!");
-                shipsPlaced.put(selectedShip, new Coord(x, y));
+//                shipsPlaced.put(selectedShip, new Coord(x, y));
                 nextShip();
             }
             else if(x == 10 && y == -1){
@@ -192,20 +193,6 @@ public class PlacingView extends ScreenAdapter{
     public void dispose(){
         super.dispose();
         map.dispose();
-    }
-
-    public void init(){
-        this.player = this.gameModel.getPlayerBlue();
-        boardController.setBoard(this.gameModel.getPlayerBlueBoard());
-
-        shipsPlaced = new HashMap<Ship, Coord>();
-
-        ships = new ArrayList<Ship>();
-        for(Ship ship : this.player.getShips()){
-            ships.add(ship);
-        }
-
-        selectedShip = ships.get(0);
     }
 
     public void printOrientation(){
@@ -297,6 +284,16 @@ public class PlacingView extends ScreenAdapter{
         }
     }
 
+    public void init(Player player, Board board){
+        this.player = player;
+        boardController.setBoard(board);
+
+        shipsPlaced = boardController.getBoardShips();
+        ships = this.player.getShips();
+
+        selectedShip = ships.get(0);
+    }
+
     public void nextShip(){
         for(Ship ship : this.ships){
             if(!shipsPlaced.containsKey(ship)){
@@ -311,20 +308,7 @@ public class PlacingView extends ScreenAdapter{
         }
 
         if(this.gameModel.getGameType() == GameType.Multiplayer_local){
-          this.player = this.gameModel.getPlayerRed();
-          boardController.setBoard(this.gameModel.getPlayerRedBoard());
-        }
-    }
-
-    public void addShipMap(Ship ship, Coord pos){
-        for(int i=0; i<ship.getShipType().getSize(); i++){
-            if(ship.getOrientation() == Orientation.Vertical){
-//                TiledMapTileLayer layer = (TiledMapTileLayer) this.map.getLayers().get(1);
-//                System.out.println(layer.getCell(pos.getX(), pos.getY()-i).getTile().getId());
-            }
-            else{
-
-            }
+            init(this.gameModel.getPlayerRed(), this.gameModel.getPlayerRedBoard());
         }
     }
 

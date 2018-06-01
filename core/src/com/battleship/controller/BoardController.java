@@ -7,6 +7,8 @@ import com.battleship.model.Move;
 import com.battleship.model.Orientation;
 import com.battleship.model.Ship;
 
+import java.util.HashMap;
+
 public class BoardController {
     /**
      * The singleton instance of this controller
@@ -33,6 +35,10 @@ public class BoardController {
         return board;
     }
 
+    public HashMap<Ship, Coord> getBoardShips(){
+        return board.getShips();
+    }
+
     public void setBoard(Board board){
         this.board = board;
     }
@@ -52,7 +58,7 @@ public class BoardController {
         }
 
         ship.setIsPlaced(true);
-        board.addShip(ship);
+        board.addShip(ship, pos);
         return true;
     }
 
