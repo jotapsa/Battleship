@@ -23,4 +23,28 @@ public class Coord {
         return this.y;
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + x;
+        result = 31 * result + y;
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if( o == this){
+            return true;
+        }
+
+        if(!(o instanceof Coord)){
+            return false;
+        }
+
+        Coord coord = (Coord) o;
+
+        return (coord.getX() == getX() &&
+        coord.getY() == getY());
+    }
 }
