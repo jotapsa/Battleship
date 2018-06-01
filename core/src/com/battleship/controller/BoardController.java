@@ -47,7 +47,7 @@ public class BoardController {
                 this.board.setCell(new Coord(pos.getX(), pos.getY()-i), CellType.Ship);
             }
             else{
-                this.board.setCell(new Coord(pos.getX()-i, pos.getY()), CellType.Ship);
+                this.board.setCell(new Coord(pos.getX()+i, pos.getY()), CellType.Ship);
             }
         }
 
@@ -68,7 +68,7 @@ public class BoardController {
                 shipPos = new Coord(pos.getX(), pos.getY()-i);
             }
             else{
-                shipPos = new Coord(pos.getX()-i, pos.getY());
+                shipPos = new Coord(pos.getX()+i, pos.getY());
             }
 
             if(!isValidCoord(shipPos) || this.board.getCell(shipPos) != CellType.Free){

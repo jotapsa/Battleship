@@ -13,7 +13,7 @@ public class Ship {
     Ship(ShipType type) {
         this.type= type;
         this.ship = new boolean[type.getSize()]; //array will be initialized to false when it's alocated
-        this.orientation = Orientation.Vertical;
+        this.orientation = Orientation.Horizontal;
 
         this.timesHit = 0;
         this.sank = false;

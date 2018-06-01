@@ -24,6 +24,7 @@ public class Battleship extends Game {
     private Texture battleship;
     private Texture cruiser;
     private Texture submarine;
+    private Texture boat;
 
     /**
      * Creates the game. Initializes the sprite batch and asset manager.
@@ -113,6 +114,7 @@ public class Battleship extends Game {
         this.battleship = new Texture("battleship_ship.png");
         this.cruiser = new Texture("cruiser.png");
         this.submarine = new Texture("submarine.png");
+        this.boat = new Texture("boat.png");
     }
 
     public Texture getShipTexture(ShipType type){
@@ -125,6 +127,8 @@ public class Battleship extends Game {
                 return this.cruiser;
             case Submarine:
                 return this.submarine;
+            case Boat:
+                return this.boat;
             default:
                return this.battleship;
         }
