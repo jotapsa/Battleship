@@ -29,4 +29,10 @@ public class Player {
         return this.ships;
     }
 
+    public ArrayList<Coord> getHitCells() {
+        return this.hitCells;
+    }
+
+
+
 }

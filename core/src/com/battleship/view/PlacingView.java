@@ -1,6 +1,7 @@
 package com.battleship.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -182,7 +183,11 @@ public class PlacingView extends ScreenAdapter{
             else{
                 selectShip(new Coord(x+1 , y+1));
             }
+        }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.showMenu();
+            dispose();
         }
     }
 

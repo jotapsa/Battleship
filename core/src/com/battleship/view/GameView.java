@@ -114,7 +114,7 @@ public class GameView extends ScreenAdapter {
 
         game.getBatch().begin();
 
-        printPlacedShips();
+        printBoard();
 
         game.getBatch().end();
     }
@@ -168,33 +168,65 @@ public class GameView extends ScreenAdapter {
         map.dispose();
     }
 
-    public void printPlacedShips(){
+    public void printBoard(){
         if(this.gameModel.getGameType() != GameType.Multiplayer_local){
-            //just print blue board
+            //blue board
             for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
-                printShipBoard(shipBoard.getKey(), shipBoard.getValue());
+                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
+            }
+
+//            for(Coord cell : this.gameModel.getPlayerRed().getHitCells()){
+//                printBoardCell
+//            }
+
+
+
+
+        }
+        else{
+
+            // print blue board
+            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
+                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
             }
 
 
-
-
+            //print reverse red board
+            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getShips().entrySet()){
+                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
+            }
         }
     }
 
-    public void printShipBoard(Ship ship, Coord pos){
+    public void printShipBoard(Ship ship, Coord pos, boolean reverse){
         ShipType shipType = ship.getShipType();
-        float rotation = ship.getOrientation() == Orientation.Vertical ? -90 : 0;
+        float rotation = (ship.getOrientation() == Orientation.Vertical) ? (reverse ? -270 : -90) : (reverse ? -180 : 0);
 
         Sprite sprite = new Sprite(game.getShipTexture(shipType));
-        if(rotation != 0){
-            sprite.setOrigin(0 ,0);
-            sprite.setRotation(rotation);
-            sprite.setPosition((pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+1)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-            sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+
+        if(reverse){
+             sprite.setOrigin(0 ,0);
+             sprite.setRotation(rotation);
+             if(ship.getOrientation() == Orientation.Vertical){
+                sprite.setPosition((10 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (21 - pos.getY()-1 )*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                 sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+             }
+             else{
+                sprite.setPosition((10 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (21 - pos.getY() )*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                 sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+             }
         }
         else{
-            sprite.setPosition((pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-            sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            if(ship.getOrientation() == Orientation.Vertical){
+                sprite.setOrigin(0 ,0);
+                sprite.setRotation(rotation);
+                sprite.setPosition((pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+1)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+            }
+            else{
+                sprite.setPosition((pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
         }
         sprite.draw(game.getBatch());
     }

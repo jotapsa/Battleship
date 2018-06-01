@@ -42,6 +42,7 @@ public class MainMenuView extends ScreenAdapter {
         this.stage = new Stage();
         this.stage.clear();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchBackKey(true);
 
         this.background = new Texture("background.png");
         this.title = new Texture("battleship.png");
