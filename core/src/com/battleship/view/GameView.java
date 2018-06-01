@@ -174,7 +174,7 @@ public class GameView extends ScreenAdapter {
     public void printBoard(){
         if(this.gameModel.getGameType() != GameType.Multiplayer_local){
             //blue board
-            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
+            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
             }
 
@@ -187,13 +187,13 @@ public class GameView extends ScreenAdapter {
 
             if(this.gameModel.getTurn() == Turn.Blue){
                 //print reverse red board
-                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getShips().entrySet()){
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
                 }
             }
             else{
                 // print blue board
-                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
                 }
             }

@@ -311,8 +311,8 @@ public class PlacingView extends ScreenAdapter{
         this.player = player;
         boardController.setBoard(board);
 
-        shipsPlaced = boardController.getBoardShips();
-        ships = this.player.getShips();
+        shipsPlaced = board.getPlacedShips();
+        ships = board.getShips();
 
         selectedShip = ships.get(0);
     }

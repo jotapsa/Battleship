@@ -35,8 +35,8 @@ public class BoardController {
         return board;
     }
 
-    public HashMap<Ship, Coord> getBoardShips(){
-        return board.getShips();
+    public HashMap<Ship, Coord> getPlacedShips(){
+        return board.getPlacedShips();
     }
 
     public void setBoard(Board board){
@@ -86,11 +86,11 @@ public class BoardController {
     }
 
     public void removeShip(Ship ship){
-        if(ship == null || !this.board.getShips().containsKey(ship)){
+        if(ship == null || !this.board.getPlacedShips().containsKey(ship)){
             return;
         }
 
-        Coord shipPos = this.board.getShips().get(ship);
+        Coord shipPos = this.board.getPlacedShips().get(ship);
 
         for(int i=0; i<ship.getShipType().getSize(); i++){
             if(ship.getOrientation() == Orientation.Vertical){
@@ -101,7 +101,7 @@ public class BoardController {
             }
         }
 
-        this.board.getShips().remove(ship);
+        this.board.getPlacedShips().remove(ship);
     }
 
     public static boolean isValidCoord(Board board, Coord pos){
