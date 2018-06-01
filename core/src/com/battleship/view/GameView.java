@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
+import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
@@ -139,28 +140,19 @@ public class GameView extends ScreenAdapter {
             int x = (int)mousePos.x/32;
             int y = (int)mousePos.y/32;
 
-            if(this.gameModel.getGameType() == GameType.Multiplayer_local){
-                if(this.gameModel.getTurn() == Turn.Blue){
-                    //play in Red Board
-                    y -= 11;
-                }
-                else{
-                    //play in Blue Board
-                    x -= 0;
-                    y -= 0;
-                }
-            }
-            else{
-                //play in Red Board
-                y -= 11;
-            }
-
             Gdx.app.log("Battleship", "x - " + x + " y - " + y);
 
             Coord coord = new Coord(x, y);
-            this.gameController.handleClick(coord);
 
-            camera.rotate(180);
+            if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord)){
+//                this.gameController.handleClick(coord);
+
+                this.gameModel.nextTurn();
+
+                if(this.gameModel.getGameType() == GameType.Multiplayer_local){
+                    camera.rotate(180);
+                }
+            }
         }
     }
 
@@ -181,20 +173,20 @@ public class GameView extends ScreenAdapter {
 //                printBoardCell
 //            }
 
-
-
-
         }
         else{
-            // print blue board
-            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
-                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
+
+            if(this.gameModel.getTurn() == Turn.Blue){
+                //print reverse red board
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getShips().entrySet()){
+                    printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
+                }
             }
-
-
-            //print reverse red board
-            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getShips().entrySet()){
-                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
+            else{
+                // print blue board
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
+                    printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
+                }
             }
         }
     }
