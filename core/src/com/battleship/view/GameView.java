@@ -159,6 +159,8 @@ public class GameView extends ScreenAdapter {
 
             Coord coord = new Coord(x, y);
             this.gameController.handleClick(coord);
+
+            camera.rotate(180);
         }
     }
 
@@ -184,7 +186,6 @@ public class GameView extends ScreenAdapter {
 
         }
         else{
-
             // print blue board
             for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getShips().entrySet()){
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
