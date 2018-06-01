@@ -89,6 +89,10 @@ public class GameView extends ScreenAdapter {
 
 //        camera.position.set(gamePort.getWorldWidth() / 2f, gamePort.getWorldHeight() / 2f, 0);
         camera.position.set(camera.viewportWidth/2f, camera.viewportHeight/2f, 0);
+
+        if(this.gameModel.getGameType() != GameType.Multiplayer_local){
+            camera.rotate(180);
+        }
     }
 
     /**
@@ -145,6 +149,11 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord)){
+                //get reverse coordinates
+                if(this.gameModel.getGameType() != GameType.Multiplayer_local){
+                    coord.setX(Math.abs(x-9));
+                    coord.setY(Math.abs(y-9));
+                }
 //                this.gameController.handleClick(coord);
 
                 this.gameModel.nextTurn();
