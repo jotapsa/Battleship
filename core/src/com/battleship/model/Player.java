@@ -16,9 +16,9 @@ public class Player {
         this.ships.add(new Ship(ShipType.Carrier));
         this.ships.add(new Ship(ShipType.Battleship));
         this.ships.add(new Ship(ShipType.Cruiser));
+        this.ships.add(new Ship(ShipType.Cruiser));
         this.ships.add(new Ship(ShipType.Submarine));
         this.ships.add(new Ship(ShipType.Submarine));
-        this.ships.add(new Ship(ShipType.Boat));
     }
 
     public Turn getTurnToPlay(){

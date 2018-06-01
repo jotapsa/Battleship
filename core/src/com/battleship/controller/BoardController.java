@@ -85,6 +85,25 @@ public class BoardController {
         return true;
     }
 
+    public void removeShip(Ship ship){
+        if(ship == null || !this.board.getShips().containsKey(ship)){
+            return;
+        }
+
+        Coord shipPos = this.board.getShips().get(ship);
+
+        for(int i=0; i<ship.getShipType().getSize(); i++){
+            if(ship.getOrientation() == Orientation.Vertical){
+                this.board.setCell(new Coord(shipPos.getX(), shipPos.getY()-i), CellType.Free);
+            }
+            else{
+                this.board.setCell(new Coord(shipPos.getX()+i, shipPos.getY()), CellType.Free);
+            }
+        }
+
+        this.board.getShips().remove(ship);
+    }
+
     public boolean isValidCoord(Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
     }
