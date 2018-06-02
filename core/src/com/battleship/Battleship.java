@@ -13,6 +13,7 @@ import com.battleship.model.ShipType;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
+import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
     private GameModel gameModel;
@@ -78,7 +79,7 @@ public class Battleship extends Game {
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
         this.gameController = new GameController(gameModel);
-        setScreen(new PlacingView(this));
+        setScreen(new RoomView(this));
     }
 
 
