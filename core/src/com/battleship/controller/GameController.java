@@ -14,6 +14,7 @@ public class GameController {
 
     private GameModel gameModel;
     private BoardController boardController;
+    private boolean isGameOver;
 
     /**
      * Creates a new GameController of a certain GameModel.
@@ -23,6 +24,7 @@ public class GameController {
 
         this.gameModel = gameModel;
         this.boardController = BoardController.getInstance();
+        isGameOver = false;
 
         instance = this;
     }
@@ -40,6 +42,8 @@ public class GameController {
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();
         }
+
+        isGameOver = boardController.allSank();
     }
 
     private void computerPlay() {
@@ -63,24 +67,39 @@ public class GameController {
         }
     }
 
+    public boolean isValidTarget(Coord target){
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
+            boardController.setBoard(gameModel.getPlayerRedBoard());
+        }
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human){
+            boardController.setBoard(gameModel.getPlayerBlueBoard());
+        }
+
+        return boardController.isValidTarget(target);
+    }
+
 
     public void handleClick(Coord target){
         Move move = null;
 
         if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
             move = new Move(target, gameModel.getTurn());
-            boardController.setBoard(gameModel.getPlayerRedBoard());
         }
         else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human){
             move = new Move(target, gameModel.getTurn());
-            boardController.setBoard(gameModel.getPlayerBlueBoard());
         }
 
-        if(move != null && boardController.isValidTarget(target)){
+        if(move != null){
             boardController.doMove(move);
             if(!move.getHitShip()){
                 gameModel.nextTurn();
             }
         }
+
+        isGameOver = boardController.allSank();
+    }
+
+    public boolean isGameOver(){
+        return isGameOver;
     }
 }

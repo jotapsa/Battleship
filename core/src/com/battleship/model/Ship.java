@@ -28,6 +28,8 @@ public class Ship {
         return this.isPlaced;
     }
 
+    public boolean isSank() { return this.sank;}
+
     public Orientation getOrientation(){
         return this.orientation;
     }
@@ -49,8 +51,7 @@ public class Ship {
         }
     }
 
-    public void hit (int pos){
-        this.ship[pos] = true;
+    public void hit (){
         this.timesHit++;
 
         if(this.ship.length == this.timesHit){

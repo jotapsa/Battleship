@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
@@ -155,9 +156,16 @@ public class GameView extends ScreenAdapter {
 
             Coord coord = new Coord(x, y);
 
-            if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord)){
+            //if coord is inside board and it's Ship/Free cell
+            if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord) && this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
+
                 this.gameController.handleClick(coord);
+
+                if(gameController.isGameOver()){
+                    //GAMEOVER
+                    gameOver();
+                }
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local
                         && turn != gameModel.getTurn()){
@@ -277,5 +285,10 @@ public class GameView extends ScreenAdapter {
 
         sprite.setSize((DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
         sprite.draw(game.getBatch());
+    }
+
+    public void gameOver(){
+        this.game.showMenu();
+        dispose();
     }
 }

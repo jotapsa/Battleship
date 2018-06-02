@@ -8,6 +8,7 @@ import com.battleship.model.Orientation;
 import com.battleship.model.Ship;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class BoardController {
@@ -146,6 +147,27 @@ public class BoardController {
         return true;
     }
 
+    public boolean insideShip(Ship ship, Coord shipPos, Coord pos){
+        for(int i=0; i<ship.getShipType().getSize(); i++){
+            if(ship.getOrientation() == Orientation.Vertical && pos.equals(new Coord(shipPos.getX(), shipPos.getY()-i))){
+                return true;
+            }
+            else if(pos.equals(new Coord(shipPos.getX()+i, shipPos.getY()))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Ship getShip(Coord pos){
+        for(Map.Entry<Ship, Coord> shipPlaced : getPlacedShips().entrySet()){
+            if(insideShip(shipPlaced.getKey(), shipPlaced.getValue() ,pos)){
+                return shipPlaced.getKey();
+            }
+        }
+        return null;
+    }
+
     /* Shoot at */
     public void doMove(Move move){
         switch(this.board.getCell(move.getTarget())){
@@ -160,5 +182,19 @@ public class BoardController {
             default:
                 break;
         }
+
+        if(move.getHitShip() && getShip(move.getTarget()) != null){
+            getShip(move.getTarget()).hit();
+        }
+    }
+
+    public boolean allSank(){
+        boolean sank = true;
+
+        for(Ship ship : this.board.getShips()){
+            sank &= ship.isSank();
+        }
+
+        return sank;
     }
 }
