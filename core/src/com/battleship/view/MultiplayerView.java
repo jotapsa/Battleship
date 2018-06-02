@@ -129,6 +129,7 @@ public class MultiplayerView extends ScreenAdapter{
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                     String response = inFromServer.readLine();
+                    System.out.println(response);
 
 //                    switch(response){
 //                        case "ACCEPTED":
