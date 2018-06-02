@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
+import com.battleship.networking.msg.JoinMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -120,14 +121,14 @@ public class MultiplayerView extends ScreenAdapter{
                 //TODO: validate IP
 
                 //join room and go to game
-                String textToSend = "JOIN";
+                JoinMessage msg = new JoinMessage();
                 SocketHints socketHints = new SocketHints();
                 socketHints.connectTimeout = 4000;
 
                 Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
 
                 try {
-                    socket.getOutputStream().write(textToSend.getBytes());
+                    socket.getOutputStream().write(msg.toString().getBytes());
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                     String response = inFromServer.readLine();

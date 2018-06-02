@@ -35,6 +35,11 @@ public class Server implements Runnable{
 
             // Read data from the socket into a BufferedReader
             BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            try {
+                System.out.println(buffer.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 //            switch(buffer.read()){
 //                case "JOIN ROOM":
