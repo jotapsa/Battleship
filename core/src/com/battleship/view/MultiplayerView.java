@@ -6,10 +6,12 @@ import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,6 +26,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 public class MultiplayerView extends ScreenAdapter{
     private Battleship game;
     private Stage stage;
@@ -35,7 +39,6 @@ public class MultiplayerView extends ScreenAdapter{
     private TextButton createRoomBtn;
 
     private Dialog joinRoomDialog;
-    private Dialog createRoomDialog;
 
     private Texture background;
 
@@ -48,6 +51,7 @@ public class MultiplayerView extends ScreenAdapter{
         this.background = new Texture("background.png");
 
         this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon/quantum-horizon-ui.json"));
+        this.skinDialog = new Skin(Gdx.files.internal("skin/neon/neon-ui.json"));
         Gdx.input.setInputProcessor(stage);
 
         this.table = new Table(skin);
@@ -67,7 +71,8 @@ public class MultiplayerView extends ScreenAdapter{
         createRoomBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                showCreateRoomDialog();
+                dispose();
+                game.showRoom();
             }
         });
 
@@ -93,42 +98,18 @@ public class MultiplayerView extends ScreenAdapter{
         table.add(joinRoomBtn).width(Gdx.graphics.getWidth() / 2).height(100);
     }
 
-    private void showCreateRoomDialog() {
-        final Dialog createRoomDialog = new Dialog("Create Room", skin, "default");
-        createRoomDialog.setColor(0, 0, 1, 1);
-
-        TextButton createBtn = new TextButton("Create", skin, "default");
-        createBtn.setColor(0,0,1,1);
-        createBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent e, float x, float y) {
-                //go to roomView where u show only IP to user.
-                dispose();
-                game.showRoom();
-            }
-        });
-        createRoomDialog.add(createBtn);
-
-        TextButton backBtn = new TextButton("Back", skin, "default");
-        backBtn.setColor(0,0,1,1);
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent e, float x, float y) {
-                createRoomDialog.hide();
-            }
-        });
-        createRoomDialog.add(backBtn);
-
-        createRoomDialog.show(stage);
-    }
 
     private void showJoinRoomDialog() {
-        final Dialog joinRoomDialog = new Dialog("Join Room", skin, "default");
-        joinRoomDialog.setColor(0, 0, 1, 1);
+        this.joinRoomDialog = new Dialog("Join Room", skin, "default");
+        joinRoomDialog.getTitleLabel().setColor(1,1,1,1);
+        joinRoomDialog.setColor(0, 0, (float) 0.7, 1);
 
-        final TextField ipInput = new TextField("0.0.0.0", skin, "default");
-        ipInput.setColor(0,0,1,1);
-        joinRoomDialog.add(ipInput);
+        final TextField ipInput = new TextField("0.0.0.0", skinDialog, "default");
+        ipInput.setColor(1,1,1,1);
+        ipInput.setScale(5);
+        ipInput.pack();
+
+        joinRoomDialog.getContentTable().add(ipInput).size(200, 50);
 
         TextButton joinBtn = new TextButton("Join", skin, "default");
         joinBtn.setColor(0,0,1,1);
@@ -165,18 +146,23 @@ public class MultiplayerView extends ScreenAdapter{
                 }
             }
         });
-        joinRoomDialog.add(joinBtn);
+        joinRoomDialog.getButtonTable().add(joinBtn);
 
         TextButton backBtn = new TextButton("Back", skin, "default");
         backBtn.setColor(0,0,1,1);
         backBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                joinRoomDialog.hide();
+//                joinRoomDialog.hide();
+                joinRoomDialog.setVisible(false);
             }
         });
-        joinRoomDialog.add(backBtn);
-        joinRoomDialog.show(stage);
+
+        joinRoomDialog.getButtonTable().add(backBtn);
+
+        joinRoomDialog.setScale(2);
+        joinRoomDialog.setPosition(100, Gdx.graphics.getHeight()/3);
+        joinRoomDialog.show(stage, sequence(Actions.alpha(0), Actions.fadeIn(0.4f, Interpolation.fade)));
     }
 
     public void resize(int width, int height) {
