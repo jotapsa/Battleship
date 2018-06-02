@@ -1,8 +1,10 @@
 package com.battleship.model;
 
+import com.battleship.model.aux.ShipType;
+
 public class Ship {
 
-    private ShipType type;
+    private com.battleship.model.aux.ShipType type;
     private boolean[] ship;
     private int timesHit;
 
@@ -10,7 +12,7 @@ public class Ship {
     private boolean isPlaced;
     private boolean sank;
 
-    Ship(ShipType type) {
+    Ship(com.battleship.model.aux.ShipType type) {
         this.type= type;
         this.ship = new boolean[type.getSize()]; //array will be initialized to false when it's alocated
         this.orientation = Orientation.Horizontal;

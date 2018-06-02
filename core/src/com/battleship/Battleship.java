@@ -5,10 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.battleship.controller.GameController;
-import com.battleship.model.CellType;
+import com.battleship.model.aux.CellType;
 import com.battleship.model.GameModel;
-import com.battleship.model.GameType;
-import com.battleship.model.ShipType;
+import com.battleship.model.aux.GameType;
+import com.battleship.model.aux.ShipType;
 import com.battleship.model.Turn;
 import com.battleship.networking.Server;
 import com.battleship.view.GameView;
@@ -93,6 +93,7 @@ public class Battleship extends Game {
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
         this.gameController = new GameController(gameModel);
+        startGameServer();
         setScreen(new MultiplayerView(this));
     }
 

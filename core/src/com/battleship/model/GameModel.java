@@ -1,6 +1,7 @@
 package com.battleship.model;
 
 import com.battleship.controller.BoardController;
+import com.battleship.model.aux.GameType;
 
 /**
  * A model representing a game.
@@ -9,7 +10,7 @@ import com.battleship.controller.BoardController;
 public class GameModel {
     private static int boardSize = 10;
 
-    private GameType gameType;
+    private com.battleship.model.aux.GameType gameType;
 
     private Player playerBlue;
     private Player playerRed;
@@ -18,13 +19,12 @@ public class GameModel {
     private Board playerRedBoard;
 
     private Turn turn;
-    private boolean host;
 
     private Turn player;
 
     private boolean gameOver;
 
-    public GameModel(GameType gameType){
+    public GameModel(com.battleship.model.aux.GameType gameType){
         this.gameType = gameType;
 
         this.playerBlueBoard = new Board(boardSize);
@@ -49,14 +49,7 @@ public class GameModel {
                 break;
         }
 
-        if(gameType == GameType.Multiplayer){
-            this.turn = Turn.randomTurn();
-        }
-        else{
-            this.turn = Turn.Blue;
-        }
-
-        this.host = false;
+        this.turn = Turn.Blue;
 
         setGameOver(false);
     }
@@ -83,10 +76,6 @@ public class GameModel {
 
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
-    }
-
-    public void setHost(boolean host){
-        this.host = host;
     }
 
     public void nextTurn(){

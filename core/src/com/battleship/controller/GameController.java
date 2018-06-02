@@ -42,10 +42,6 @@ public class GameController {
         return boardController;
     }
 
-    public void setHost(boolean host){
-        this.gameModel.setHost(host);
-    }
-
     public void update(float delta){
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();

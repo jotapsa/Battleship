@@ -1,4 +1,4 @@
-package com.battleship.model;
+package com.battleship.model.aux;
 
 public enum ShipType {
     Carrier(5), Battleship(4), Cruiser(3) ,Submarine(2);

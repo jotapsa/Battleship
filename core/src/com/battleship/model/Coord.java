@@ -56,4 +56,9 @@ public class Coord {
         return (coord.getX() == getX() &&
         coord.getY() == getY());
     }
+
+    @Override
+    public String toString(){
+        return "" + x + " " + y;
+    }
 }

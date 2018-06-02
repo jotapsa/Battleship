@@ -1,7 +1,7 @@
 package com.battleship.controller;
 
 import com.battleship.model.Board;
-import com.battleship.model.CellType;
+import com.battleship.model.aux.CellType;
 import com.battleship.model.Coord;
 import com.battleship.model.Move;
 import com.battleship.model.Orientation;
