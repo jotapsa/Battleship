@@ -127,6 +127,8 @@ public class GameView extends ScreenAdapter {
     private void update(float delta) {
         handleInputs(delta);
 
+        GameController.getInstance().update(delta);
+
         camera.update();
         renderer.setView(camera);
     }
