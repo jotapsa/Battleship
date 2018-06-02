@@ -170,7 +170,6 @@ public class PlacingView extends ScreenAdapter{
 
             if(boardController.placeShip(selectedShip, new Coord(x, y))){
                 Gdx.app.log("Battleship", "Ship " + selectedShip.getShipType() + "Placed!");
-//                shipsPlaced.put(selectedShip, new Coord(x, y));
                 nextShip();
             }
             else if(x == 10 && y == -1){

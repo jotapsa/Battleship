@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
+import com.battleship.model.Board;
+import com.battleship.model.CellType;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
@@ -152,13 +154,12 @@ public class GameView extends ScreenAdapter {
 
             if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord)){
                 //get reverse coordinates
-                if(this.gameModel.getGameType() != GameType.Multiplayer_local){
-                    coord.setX(Math.abs(x-9));
-                    coord.setY(Math.abs(y-9));
-                }
-//                this.gameController.handleClick(coord);
+//                if(this.gameModel.getGameType() != GameType.Multiplayer_local){
+//                    coord.setX(Math.abs(x-9));
+//                    coord.setY(Math.abs(y-9));
+//                }
 
-                this.gameModel.nextTurn();
+                this.gameController.handleClick(coord);
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local){
                     camera.rotate(180);
@@ -180,15 +181,16 @@ public class GameView extends ScreenAdapter {
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
             }
 
+            //red board
             for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
             }
 
+            //blue board map
+            printBoardMap(this.gameModel.getPlayerBlueBoard(), false);
 
-//            for(Coord cell : this.gameModel.getPlayerRed().getHitCells()){
-//                printBoardCell
-//            }
-
+            //red board map
+            printBoardMap(this.gameModel.getPlayerRedBoard(), true);
         }
         else{
 
@@ -237,6 +239,33 @@ public class GameView extends ScreenAdapter {
                 sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
             }
         }
+        sprite.draw(game.getBatch());
+    }
+
+    public void printBoardMap(Board board, boolean reverse){
+        for(int j=0; j < board.getSize(); j++){
+            for(int i=0; i < board.getSize(); i++){
+                Coord cell = new Coord(i, j);
+                CellType cellType = board.getCell(cell);
+                if(cellType == CellType.FreeHit
+                        || cellType == CellType.ShipHit){
+                    printCell(cellType, cell, reverse);
+                }
+            }
+        }
+    }
+
+    public void printCell(CellType cellType, Coord pos, boolean reverse){
+        Sprite sprite = new Sprite(game.getCellTexture(cellType));
+
+        if(reverse){
+            sprite.setPosition(Math.abs(pos.getX()-9)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (Math.abs(pos.getY() - 20))*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+        }
+        else{
+            sprite.setPosition((pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+        }
+
+        sprite.setSize((DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
         sprite.draw(game.getBatch());
     }
 }

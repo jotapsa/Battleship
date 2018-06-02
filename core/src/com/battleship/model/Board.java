@@ -7,9 +7,9 @@ import java.util.HashMap;
 public class Board {
 
     private final int size;
-    CellType[][] map;
-    ArrayList<Ship> ships;
-    HashMap<Ship, Coord> shipsPlaced;
+    private CellType[][] map;
+    private ArrayList<Ship> ships;
+    private HashMap<Ship, Coord> shipsPlaced;
 
     Board(int size){
         this.size = size;
