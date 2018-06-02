@@ -7,7 +7,7 @@ public class AcceptMessage extends Message{
 
     @Override
     public String toString() {
-        String str = String.format("%s",
+        String str = String.format("%s\n",
                 type
         );
 

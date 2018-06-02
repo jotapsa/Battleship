@@ -6,10 +6,13 @@ import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.battleship.Battleship;
+import com.battleship.networking.msg.AcceptMessage;
+import com.battleship.networking.msg.MsgType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class Server implements Runnable{
     private Battleship game;
@@ -34,21 +37,33 @@ public class Server implements Runnable{
             Socket socket = serverSocket.accept(null);
 
             // Read data from the socket into a BufferedReader
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Send data
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+
             try {
-                System.out.println(buffer.readLine());
+                String response = inFromClient.readLine();
+                System.out.println(response);
+
+                if(response.equals("JOIN")){
+                    out.write(new AcceptMessage().toString());
+                    // PLACING VIEW ----> TURN BLUE
+                }
+                else if(response.equals("MOVE")){
+
+                }
+                else{
+
+                }
+                out.flush();
+
+//                out.close();
+//                inFromClient.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-//            switch(buffer.read()){
-//                case "JOIN ROOM":
-//                    break;
-//                case "MOVE":
-//                    break;
-//                default:
-//                    break;
-//            }
         }
     }
 

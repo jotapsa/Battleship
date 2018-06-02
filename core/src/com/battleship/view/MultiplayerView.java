@@ -22,11 +22,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
+import com.battleship.networking.msg.AcceptMessage;
 import com.battleship.networking.msg.JoinMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
@@ -122,25 +124,28 @@ public class MultiplayerView extends ScreenAdapter{
                 //join room and go to game
                 JoinMessage msg = new JoinMessage();
                 SocketHints socketHints = new SocketHints();
-                socketHints.connectTimeout = 4000;
+                socketHints.connectTimeout = 0;
 
                 try {
                     socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
-                    socket.getOutputStream().write(msg.toString().getBytes());
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
+                    out.write(msg.toString());
+                    out.flush();
+
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
                     String response = inFromServer.readLine();
                     System.out.println(response);
 
-//                    switch(response){
-//                        case "ACCEPTED":
-//                            //START GAME
-//                            break;
-//                        case "DENIED":
-//                            break;
-//                        default:
-//                            break;
-//                    }
+
+                    if(response.equals("ACCEPT")){
+                        //PLACING VIEW ----> TURN RED
+                    }
+
+
+//                    inFromServer.close();
+//                    out.close();
+
                 }
                 catch (IOException ex) {
                     ex.printStackTrace();
@@ -149,6 +154,8 @@ public class MultiplayerView extends ScreenAdapter{
                     System.out.println("Fail to open " + ip);
                     stage.setKeyboardFocus(ipInput);
                 }
+
+
             }
         });
         joinRoomDialog.getButtonTable().add(joinBtn);

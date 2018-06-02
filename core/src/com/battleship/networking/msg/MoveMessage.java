@@ -12,7 +12,7 @@ public class MoveMessage extends Message{
 
     @Override
     public String toString() {
-        String str = String.format("%s %s",
+        String str = String.format("%s %s\n",
                 type,
                 target
         );
