@@ -38,6 +38,10 @@ public class GameController {
         return instance;
     }
 
+    public BoardController getBoardController() {
+        return boardController;
+    }
+
     public void update(float delta){
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();

@@ -51,6 +51,10 @@ public class Computer extends Player{
                         case Horizontal:
                             while(!freeHit){
                                 distanceFromTarget++;
+                                if(!boardController.isValidCoord(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()))){
+//                                    return move;
+                                }
+
                                 switch (boardController.getBoard().getCell(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()))){
                                     case ShipHit:
                                         break;
@@ -68,6 +72,10 @@ public class Computer extends Player{
                         case Vertical:
                             while(!freeHit){
                                 distanceFromTarget++;
+                                if(!boardController.isValidCoord(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()))){
+//                                    return move;
+                                }
+
                                 switch (boardController.getBoard().getCell(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()))){
                                     case ShipHit:
                                         break;

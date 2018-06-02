@@ -162,7 +162,7 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             //if coord is inside board and it's Ship/Free cell
-            if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord) && this.gameController.isValidTarget(coord)){
+            if(gameController.getBoardController().isValidCoord(coord) && this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
                 if(gameModel.getGameType() != GameType.Multiplayer){

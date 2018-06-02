@@ -72,7 +72,7 @@ public class BoardController {
     }
 
     public boolean canPlaceShip(Ship ship, Coord pos){
-        if (!isValidCoord(board, pos)){
+        if (!isValidCoord(pos)){
             return false;
         }
 
@@ -86,7 +86,7 @@ public class BoardController {
                 shipPos = new Coord(pos.getX()+i, pos.getY());
             }
 
-            if(!isValidCoord(board, shipPos) || this.board.getCell(shipPos) != CellType.Free){
+            if(!isValidCoord(shipPos) || this.board.getCell(shipPos) != CellType.Free){
                 return false;
             }
         }
@@ -113,7 +113,7 @@ public class BoardController {
         this.board.getPlacedShips().remove(ship);
     }
 
-    public static boolean isValidCoord(Board board, Coord pos){
+    public boolean isValidCoord(Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
     }
 
@@ -136,7 +136,7 @@ public class BoardController {
     }
 
     public boolean isValidTarget(Coord target){
-        if(!isValidCoord(board, target)){
+        if(!isValidCoord(target)){
             return false;
         }
 
