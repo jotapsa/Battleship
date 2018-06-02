@@ -135,6 +135,11 @@ public class GameView extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
+        if(gameController.isGameOver()){
+            //GAMEOVER
+            gameOver();
+        }
+
         camera.update();
         renderer.setView(camera);
     }
@@ -160,11 +165,11 @@ public class GameView extends ScreenAdapter {
             if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord) && this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
-                this.gameController.handleClick(coord);
-
-                if(gameController.isGameOver()){
-                    //GAMEOVER
-                    gameOver();
+                if(gameModel.getGameType() != GameType.Multiplayer){
+                    this.gameController.handleClick(coord);
+                }
+                else{
+                    // ----  Multiplayer Connection ----
                 }
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local
@@ -194,9 +199,9 @@ public class GameView extends ScreenAdapter {
             }
 
             //red board
-            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
-                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
-            }
+//            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
+//                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
+//            }
 
             //blue board map
             printBoardMap(this.gameModel.getPlayerBlueBoard(), false);
