@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
 import com.battleship.networking.msg.JoinMessage;
@@ -115,6 +116,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 String ip = ipInput.getText();
+                Socket socket;
                 //TODO: validate IP
 
                 //join room and go to game
@@ -122,9 +124,8 @@ public class MultiplayerView extends ScreenAdapter{
                 SocketHints socketHints = new SocketHints();
                 socketHints.connectTimeout = 4000;
 
-                Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
-
                 try {
+                    socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
                     socket.getOutputStream().write(msg.toString().getBytes());
                     BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -139,8 +140,13 @@ public class MultiplayerView extends ScreenAdapter{
 //                        default:
 //                            break;
 //                    }
-                } catch (IOException ex) {
+                }
+                catch (IOException ex) {
                     ex.printStackTrace();
+                }
+                catch(GdxRuntimeException ex){
+                    System.out.println("Fail to open " + ip);
+                    stage.setKeyboardFocus(ipInput);
                 }
             }
         });
@@ -151,7 +157,6 @@ public class MultiplayerView extends ScreenAdapter{
         backBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-//                joinRoomDialog.hide();
                 joinRoomDialog.setVisible(false);
             }
         });
@@ -161,6 +166,7 @@ public class MultiplayerView extends ScreenAdapter{
         joinRoomDialog.setScale(2);
         joinRoomDialog.setPosition(100, Gdx.graphics.getHeight()/3);
         joinRoomDialog.show(stage, sequence(Actions.alpha(0), Actions.fadeIn(0.4f, Interpolation.fade)));
+        stage.setKeyboardFocus(ipInput);
     }
 
     public void resize(int width, int height) {
