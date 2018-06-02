@@ -13,6 +13,7 @@ import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
 import com.battleship.view.MultiplayerView;
+import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
     private GameModel gameModel;
@@ -53,6 +54,15 @@ public class Battleship extends Game {
     public void showMenu() {
         setScreen(new MainMenuView(this));
     }
+
+
+    /**
+     * Show Room.
+     */
+    public void showRoom() {
+        setScreen(new RoomView(this));
+    }
+
 
     /**
      * Start GameModel.

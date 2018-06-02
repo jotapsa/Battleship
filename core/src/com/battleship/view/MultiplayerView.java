@@ -120,6 +120,8 @@ public class MultiplayerView extends ScreenAdapter{
                 //validate roomName
 
                 //go to roomView where u show only IP to user.
+                dispose();
+                game.showRoom();
             }
         });
         createRoomDialog.add(createBtn);

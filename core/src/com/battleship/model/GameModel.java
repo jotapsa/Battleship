@@ -46,7 +46,13 @@ public class GameModel {
                 break;
         }
 
-        this.turn = Turn.Blue;
+        if(gameType == GameType.Multiplayer){
+            this.turn = Turn.randomTurn();
+        }
+        else{
+            this.turn = Turn.Blue;
+        }
+
         setGameOver(false);
     }
 
