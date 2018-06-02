@@ -13,7 +13,6 @@ import java.util.Random;
 
 public class Computer extends Player{
     private Random generator;
-    Orientation orientation = Orientation.randomOrientation(); //inclined to always go with the same dir.
 
     BoardController boardController;
 
@@ -32,25 +31,61 @@ public class Computer extends Player{
 
     public Move createMove(Board enemyBoard){
         int x, y;
+        Orientation orientation;
         Coord target;
         Move move = null;
         int distanceFromTarget;
+        boolean freeHit;
 
         BoardController boardController = BoardController.getInstance();
         boardController.setBoard(enemyBoard);
 
-        for(int i=0; i<moves.size(); i++){
-            if(moves.get(i).getHitShip()){
-                target = moves.get(i).getTarget();
-                distanceFromTarget = 0;
-                do{
-                    if(generator.nextBoolean()){
-                        distanceFromTarget +=1;
+        for(Move m : moves){
+            if(m.getHitShip()){
+                while(!m.isProcessed()){
+                    //ellaborate on guess
+                    distanceFromTarget = 0;
+                    freeHit = false;
+
+                    switch(m.getOrientation()){
+                        case Horizontal:
+                            while(!freeHit){
+                                distanceFromTarget++;
+                                switch (boardController.getBoard().getCell(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()))){
+                                    case ShipHit:
+                                        break;
+                                    case FreeHit:
+                                        freeHit = true;
+                                        m.flip();
+                                        break;
+                                    default:
+                                        move = new Move(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()), getTurnToPlay(), true);
+                                        moves.add(move);
+                                        return move;
+                                }
+                            }
+                            break;
+                        case Vertical:
+                            while(!freeHit){
+                                distanceFromTarget++;
+                                switch (boardController.getBoard().getCell(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()))){
+                                    case ShipHit:
+                                        break;
+                                    case FreeHit:
+                                        freeHit = true;
+                                        m.flip();
+                                        break;
+                                    default:
+                                        move = new Move(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()), getTurnToPlay(), true);
+                                        moves.add(move);
+                                        return move;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
                     }
-                    else{
-                        distanceFromTarget -=1;
-                    }
-                }while(boardController.getBoard().getCell(target) != CellType.ShipHit && boardController.getBoard().getCell(target) != CellType.FreeHit);
+                }
             }
         }
 
@@ -61,7 +96,7 @@ public class Computer extends Player{
             target = new Coord(x, y);
         }while(!boardController.isValidTarget(target));
 
-        move = new Move(target, getTurnToPlay());
+        move = new Move(target, getTurnToPlay(), false);
 
         moves.add(move);
 
