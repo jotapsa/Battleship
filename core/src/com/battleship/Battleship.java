@@ -1,7 +1,6 @@
 package com.battleship;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +12,7 @@ import com.battleship.model.ShipType;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
-import com.battleship.view.RoomView;
+import com.battleship.view.MultiplayerView;
 
 public class Battleship extends Game {
     private GameModel gameModel;
@@ -79,7 +78,7 @@ public class Battleship extends Game {
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
         this.gameController = new GameController(gameModel);
-        setScreen(new RoomView(this));
+        setScreen(new MultiplayerView(this));
     }
 
 
