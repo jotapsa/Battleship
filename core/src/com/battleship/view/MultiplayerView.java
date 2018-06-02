@@ -1,8 +1,10 @@
 package com.battleship.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -19,6 +21,7 @@ public class MultiplayerView extends ScreenAdapter{
     private Stage stage;
     private Table table;
     private Skin skin;
+    private Skin skinDialog;
 
     private TextButton joinRoomBtn;
     private TextButton createRoomBtn;
@@ -26,13 +29,17 @@ public class MultiplayerView extends ScreenAdapter{
     private Dialog joinRoomDialog;
     private Dialog createRoomDialog;
 
+    private Texture background;
+
     public MultiplayerView(Battleship game){
         this.game = game;
 
         this.stage = new Stage();
         this.stage.clear();
 
-        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon-ui.json"));
+        this.background = new Texture("background.png");
+
+        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon/quantum-horizon-ui.json"));
         Gdx.input.setInputProcessor(stage);
 
         this.table = new Table(skin);
@@ -46,41 +53,81 @@ public class MultiplayerView extends ScreenAdapter{
     }
 
     private void setupButtons() {
-        this.joinRoomBtn = new TextButton("Join Room", skin, "default");
-        joinRoomBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent e, float x, float y) {
-                showJoinRoomDialog();
-            }
-        });
-
         this.createRoomBtn = new TextButton("Create Room", skin , "default");
+        createRoomBtn.setColor(0, 0, 1, 1);
+        createRoomBtn.getLabel().setFontScale(2);
         createRoomBtn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 showCreateRoomDialog();
             }
         });
+
+        this.joinRoomBtn = new TextButton("Join Room", skin, "default");
+        joinRoomBtn.setColor(0, 0, 1, 1);
+        joinRoomBtn.getLabel().setFontScale(2);
+        joinRoomBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent e, float x, float y) {
+                showJoinRoomDialog();
+            }
+        });
     }
 
     private void addButtons() {
-        table.add(joinRoomBtn).width(100).height(40).pad(20);
-        table.row();
+        table.setFillParent(true);
+        stage.addActor(table);
 
-        table.add(createRoomBtn).width(100).height(40).pad(20);
         table.row();
+        table.add(createRoomBtn).width(Gdx.graphics.getWidth() / 2).height(100);
+
+        table.row();
+        table.add(joinRoomBtn).width(Gdx.graphics.getWidth() / 2).height(100);
+    }
+
+    private void showCreateRoomDialog() {
+        final Dialog createRoomDialog = new Dialog("Create Room", skin, "default");
+        createRoomDialog.setColor(0, 0, 1, 1);
+
+        TextButton createBtn = new TextButton("Create", skin, "default");
+        createBtn.setColor(0,0,1,1);
+        createBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent e, float x, float y) {
+                //go to roomView where u show only IP to user.
+                dispose();
+                game.showRoom();
+            }
+        });
+        createRoomDialog.add(createBtn);
+
+        TextButton backBtn = new TextButton("Back", skin, "default");
+        backBtn.setColor(0,0,1,1);
+        backBtn.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent e, float x, float y) {
+                createRoomDialog.hide();
+            }
+        });
+        createRoomDialog.add(backBtn);
+
+        createRoomDialog.show(stage);
     }
 
     private void showJoinRoomDialog() {
-        joinRoomDialog = new Dialog("Join Room", skin, "default");
+        final Dialog joinRoomDialog = new Dialog("Join Room", skin, "default");
+        joinRoomDialog.setColor(0, 0, 1, 1);
 
         final TextField ipInput = new TextField("0.0.0.0", skin, "default");
+        ipInput.setColor(0,0,1,1);
         joinRoomDialog.add(ipInput);
 
         final TextField portInput = new TextField("7777", skin, "default");
+        portInput.setColor(0,0,1,1);
         joinRoomDialog.add(portInput);
 
         TextButton joinBtn = new TextButton("Join", skin, "default");
+        joinBtn.setColor(0,0,1,1);
         joinBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
@@ -95,6 +142,7 @@ public class MultiplayerView extends ScreenAdapter{
         joinRoomDialog.add(joinBtn);
 
         TextButton backBtn = new TextButton("Back", skin, "default");
+        backBtn.setColor(0,0,1,1);
         backBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
@@ -105,38 +153,6 @@ public class MultiplayerView extends ScreenAdapter{
         joinRoomDialog.show(stage);
     }
 
-    private void showCreateRoomDialog() {
-        createRoomDialog = new Dialog("Create Room", skin, "default");
-
-        final TextField roomNameInput = new TextField("Name", skin, "default");
-        createRoomDialog.add(roomNameInput);
-
-        TextButton createBtn = new TextButton("Create", skin, "default");
-        createBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent e, float x, float y) {
-                // Create room with room name
-                String roomName = roomNameInput.getText();
-                //validate roomName
-
-                //go to roomView where u show only IP to user.
-                dispose();
-                game.showRoom();
-            }
-        });
-        createRoomDialog.add(createBtn);
-
-        TextButton backBtn = new TextButton("Back", skin, "default");
-        backBtn.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent e, float x, float y) {
-                createRoomDialog.hide();
-            }
-        });
-        createRoomDialog.add(backBtn);
-        createRoomDialog.show(stage);
-    }
-
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
@@ -144,11 +160,27 @@ public class MultiplayerView extends ScreenAdapter{
     @Override
     public void render(float delta){
         super.render(delta);
+        update(delta);
 
         Gdx.gl.glClearColor(1,1,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        game.getBatch().begin();
+        game.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.getBatch().end();
+
         stage.draw();
+    }
+
+    private void update(float delta) {
+        handleInputs(delta);
+    }
+
+    private void handleInputs(float delta) {
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.showMenu();
+            dispose();
+        }
     }
 
 
@@ -156,6 +188,7 @@ public class MultiplayerView extends ScreenAdapter{
     public void dispose() {
         super.dispose();
         stage.dispose();
+        background.dispose();
         skin.dispose();
     }
 }

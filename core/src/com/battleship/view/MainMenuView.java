@@ -47,7 +47,7 @@ public class MainMenuView extends ScreenAdapter {
         this.background = new Texture("background.png");
         this.title = new Texture("battleship.png");
 
-        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon-ui.json"));
+        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon/quantum-horizon-ui.json"));
         this.table = new Table();
 
         setUpButtons();
