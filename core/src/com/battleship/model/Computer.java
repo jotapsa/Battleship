@@ -15,6 +15,8 @@ public class Computer extends Player{
     private Random generator;
     Orientation orientation = Orientation.randomOrientation(); //inclined to always go with the same dir.
 
+    BoardController boardController;
+
     private ArrayList<Move> moves;
 
 
@@ -22,6 +24,8 @@ public class Computer extends Player{
         super(turnToPlay);
 
         this.generator = new Random(System.currentTimeMillis());
+
+        this.boardController = BoardController.getInstance();
 
         this.moves = new ArrayList<Move>();
     }

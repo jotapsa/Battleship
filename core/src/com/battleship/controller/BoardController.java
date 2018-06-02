@@ -8,6 +8,7 @@ import com.battleship.model.Orientation;
 import com.battleship.model.Ship;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class BoardController {
     /**
@@ -15,9 +16,12 @@ public class BoardController {
      */
     private static BoardController instance;
 
+    private Random generator;
+
     private Board board;
 
     private BoardController(){
+        this.generator = new Random(System.currentTimeMillis());
     }
 
     /**
@@ -106,6 +110,24 @@ public class BoardController {
 
     public static boolean isValidCoord(Board board, Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
+    }
+
+    public void placeShipsRandomly(){
+        Orientation orientation;
+        int x, y;
+        Coord pos;
+
+        for(Ship s : board.getShips()){
+            do {
+                orientation = Orientation.randomOrientation();
+                s.setOrientation(orientation);
+
+                x = generator.nextInt(10);
+                y = generator.nextInt(10);
+
+                pos = new Coord(x, y);
+            }while(!placeShip(s, pos));
+        }
     }
 
     public boolean isValidTarget(Coord target){

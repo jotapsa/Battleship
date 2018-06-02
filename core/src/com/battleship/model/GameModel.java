@@ -1,5 +1,7 @@
 package com.battleship.model;
 
+import com.battleship.controller.BoardController;
+
 /**
  * A model representing a game.
  */
@@ -22,10 +24,15 @@ public class GameModel {
     public GameModel(GameType gameType){
         this.gameType = gameType;
 
+        this.playerBlueBoard = new Board(boardSize);
+        this.playerRedBoard = new Board(boardSize);
+
         switch (this.gameType){
             case SinglePlayer:
                 this.playerBlue = new Human(Turn.Blue);
                 this.playerRed = new Computer(Turn.Red);
+                BoardController.getInstance().setBoard(playerRedBoard);
+                BoardController.getInstance().placeShipsRandomly();
                 break;
             case Multiplayer:
                 this.playerBlue = new Human(Turn.Blue);
@@ -41,9 +48,6 @@ public class GameModel {
 
         this.turn = Turn.Blue;
         setGameOver(false);
-
-        this.playerBlueBoard = new Board(boardSize);
-        this.playerRedBoard = new Board(boardSize);
     }
 
     public GameType getGameType() {

@@ -178,6 +178,11 @@ public class GameView extends ScreenAdapter {
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
             }
 
+            for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
+                printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
+            }
+
+
 //            for(Coord cell : this.gameModel.getPlayerRed().getHitCells()){
 //                printBoardCell
 //            }

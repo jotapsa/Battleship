@@ -99,7 +99,6 @@ public class PlacingView extends ScreenAdapter{
 
         init(this.gameModel.getPlayerBlue(), this.gameModel.getPlayerBlueBoard());
 
-
         //FONTS
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
