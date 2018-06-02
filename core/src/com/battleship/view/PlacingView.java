@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
@@ -44,6 +45,7 @@ public class PlacingView extends ScreenAdapter{
     private Ship selectedShip;
     private HashMap<Ship, Coord> shipsPlaced;
     private ArrayList<Ship> ships;
+    private boolean confirm;
 
     private int DISPLAY_HEIGHT = Gdx.graphics.getHeight();
     private int DISPLAY_WIDTH = Gdx.graphics.getWidth();
@@ -172,14 +174,15 @@ public class PlacingView extends ScreenAdapter{
                 Gdx.app.log("Battleship", "Ship " + selectedShip.getShipType() + "Placed!");
                 nextShip();
             }
-            else if(x == 10 && y == -1){
+            else if(removePlacedShip(new Coord(x, y)) || selectShip(new Coord(x+1 , y+1))){
+//
+            }
+            else if(x == 10 && y == -1 && selectedShip != null){
                 selectedShip.flipOrientation();
             }
-            else if(removePlacedShip(new Coord(x, y))){
-
-            }
-            else{
-                selectShip(new Coord(x+1 , y+1));
+            else if(!confirm && shipsPlaced.size() == ships.size() && selectedShip == null){
+                confirm = true;
+                nextShip();
             }
         }
 
@@ -196,8 +199,13 @@ public class PlacingView extends ScreenAdapter{
     }
 
     public void printOrientation(){
+        if(selectedShip == null){
+            return;
+        }
+
         //arrow of selectedShip orientation to place
         Sprite arrowSprite = new Sprite(this.arrow);
+
         if(selectedShip.getOrientation() == Orientation.Horizontal){
             arrowSprite.setPosition((3)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (0)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
             arrowSprite.setSize(6*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
@@ -288,24 +296,27 @@ public class PlacingView extends ScreenAdapter{
         return false;
     }
 
-    public void selectShip(Coord pos){
+    public boolean selectShip(Coord pos){
         Ship ship;
         for(int i=0; i < ships.size(); i+=2){
             ship = ships.get(i);
             if( pos.getX() >= 1 && pos.getX() < 1 + ship.getShipType().getSize() && pos.getY() == 16-i && !shipsPlaced.containsKey(ship)){
                 selectedShip = ship;
-                return;
+                return true;
             }
 
             ship = i+1 < ships.size() ? ships.get(i+1) : null;
             if( ship != null && pos.getX() >= 7 && pos.getX() < 7 + ship.getShipType().getSize() && pos.getY() == 16-i && !shipsPlaced.containsKey(ship)){
                 selectedShip = ship;
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public void init(Player player, Board board){
+        this.confirm = false;
+
         this.player = player;
         boardController.setBoard(board);
 
@@ -323,12 +334,15 @@ public class PlacingView extends ScreenAdapter{
             }
         }
 
-        if(player == this.gameModel.getPlayerRed()
-                || this.gameModel.getGameType() != GameType.Multiplayer_local){
+        selectedShip = null;
+
+        if((player == this.gameModel.getPlayerRed()
+                || this.gameModel.getGameType() != GameType.Multiplayer_local) && confirm){
+//            Timer.instance().delay(2000);
             exit();
         }
 
-        if(this.gameModel.getGameType() == GameType.Multiplayer_local){
+        if(this.gameModel.getGameType() == GameType.Multiplayer_local && confirm){
             init(this.gameModel.getPlayerRed(), this.gameModel.getPlayerRedBoard());
         }
     }

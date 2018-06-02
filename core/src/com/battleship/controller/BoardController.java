@@ -48,6 +48,10 @@ public class BoardController {
     }
 
     public boolean placeShip(Ship ship, Coord pos){
+        if(ship == null){
+            return false;
+        }
+
         if(!canPlaceShip(ship, pos)){
             return false;
         }

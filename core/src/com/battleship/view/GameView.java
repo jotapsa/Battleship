@@ -1,6 +1,7 @@
 package com.battleship.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,6 +31,8 @@ public class GameView extends ScreenAdapter {
     private Battleship game;
     private GameModel gameModel;
     private GameController gameController;
+
+    private Turn turn;
 
     private int DISPLAY_HEIGHT = Gdx.graphics.getHeight();
     private int DISPLAY_WIDTH = Gdx.graphics.getWidth();
@@ -121,7 +124,7 @@ public class GameView extends ScreenAdapter {
 
         game.getBatch().begin();
 
-        printBoard();
+        printBoards();
 
         game.getBatch().end();
     }
@@ -153,18 +156,19 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             if(BoardController.isValidCoord(this.gameModel.getPlayerBlueBoard(), coord)){
-                //get reverse coordinates
-//                if(this.gameModel.getGameType() != GameType.Multiplayer_local){
-//                    coord.setX(Math.abs(x-9));
-//                    coord.setY(Math.abs(y-9));
-//                }
-
+                turn = gameModel.getTurn(); // save turn before Move
                 this.gameController.handleClick(coord);
 
-                if(this.gameModel.getGameType() == GameType.Multiplayer_local){
+                if(this.gameModel.getGameType() == GameType.Multiplayer_local
+                        && turn != gameModel.getTurn()){
                     camera.rotate(180);
                 }
             }
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            game.showMenu();
+            dispose();
         }
     }
 
@@ -174,7 +178,7 @@ public class GameView extends ScreenAdapter {
         map.dispose();
     }
 
-    public void printBoard(){
+    public void printBoards(){
         if(this.gameModel.getGameType() != GameType.Multiplayer_local){
             //blue board
             for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
@@ -199,12 +203,18 @@ public class GameView extends ScreenAdapter {
                 for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), true);
                 }
+
+                //print red board map
+                printBoardMap(this.gameModel.getPlayerRedBoard(), false);
             }
             else{
                 // print blue board
                 for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
                 }
+
+                //print blue board map
+                printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
             }
         }
     }
