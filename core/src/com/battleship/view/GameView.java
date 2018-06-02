@@ -164,9 +164,7 @@ public class GameView extends ScreenAdapter {
                     &&  this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
-                if(gameModel.getGameType() != GameType.Multiplayer){
-                    this.gameController.handleClick(coord);
-                }
+                this.gameController.handleClick(coord);
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local
                         && turn != gameModel.getTurn()){

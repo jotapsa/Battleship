@@ -106,9 +106,6 @@ public class MultiplayerView extends ScreenAdapter{
 
         final TextField ipInput = new TextField("0.0.0.0", skinDialog, "default");
         ipInput.setColor(1,1,1,1);
-        ipInput.setScale(5);
-        ipInput.pack();
-
         joinRoomDialog.getContentTable().add(ipInput).size(200, 50);
 
         TextButton joinBtn = new TextButton("Join", skin, "default");
