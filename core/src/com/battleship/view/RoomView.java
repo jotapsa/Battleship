@@ -71,7 +71,7 @@ public class RoomView extends ScreenAdapter{
 
         ipLbl = new Label(ipAddress,skin, "title", "white");
         group.addActor(ipLbl);
-        group.setScale(3);
+        group.setScale((float) 2.5);
         group.setPosition(50, Gdx.graphics.getHeight()/3);
     }
 

@@ -86,6 +86,10 @@ public class GameController {
     public void handleClick(Coord target){
         Move move = null;
 
+        if(!isValidTarget(target)){
+            return;
+        }
+
         if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
             move = new Move(target, gameModel.getTurn());
         }

@@ -51,11 +51,16 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
+    sourceSets.test.java.srcDirs = ["/test"]
+
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        
+
+        testCompile "junit:junit:4.12"
+        testCompile "org.mockito:mockito-core:2.2.7"
+
     }
 }
 
@@ -78,7 +83,6 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        
     }
 }
 
