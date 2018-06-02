@@ -9,6 +9,7 @@ import com.battleship.model.CellType;
 import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
 import com.battleship.model.ShipType;
+import com.battleship.model.Turn;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
@@ -70,7 +71,7 @@ public class Battleship extends Game {
     public void startSingleplayerGame() {
         this.gameModel = new GameModel(GameType.SinglePlayer);
         this.gameController = new GameController(gameModel);
-        setScreen(new PlacingView(this));
+        setScreen(new PlacingView(this, Turn.Blue));
     }
 
     /**
@@ -79,7 +80,7 @@ public class Battleship extends Game {
     public void startMultiplayerLocal() {
         this.gameModel = new GameModel(GameType.Multiplayer_local);
         this.gameController = new GameController(gameModel);
-        setScreen(new PlacingView(this));
+        setScreen(new PlacingView(this, Turn.Blue));
     }
 
     /**
@@ -157,7 +158,8 @@ public class Battleship extends Game {
         }
     }
 
-    public void startGameView(){
+    public void startGameView(Turn playerTurn){
+        this.gameModel.setPlayerTurn(playerTurn);
         setScreen(new GameView(this, this.gameController));
     }
 }

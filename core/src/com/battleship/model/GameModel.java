@@ -19,6 +19,8 @@ public class GameModel {
 
     private Turn turn;
 
+    private Turn player;
+
     private boolean gameOver;
 
     public GameModel(GameType gameType){
@@ -71,6 +73,10 @@ public class GameModel {
     public Player getPlayerRed(){
         return this.playerRed;
     }
+
+    public Turn getPlayerTurn() { return this.player;}
+
+    public void setPlayerTurn(Turn playerTurn) { this.player = playerTurn;}
 
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;

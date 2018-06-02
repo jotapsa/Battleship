@@ -26,6 +26,7 @@ import com.battleship.model.Orientation;
 import com.battleship.model.Player;
 import com.battleship.model.Ship;
 import com.battleship.model.ShipType;
+import com.battleship.model.Turn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +46,8 @@ public class PlacingView extends ScreenAdapter{
     private Ship selectedShip;
     private HashMap<Ship, Coord> shipsPlaced;
     private ArrayList<Ship> ships;
+    private Turn playerTurn;
+
     private boolean reverse;
     private boolean confirm;
 
@@ -89,10 +92,11 @@ public class PlacingView extends ScreenAdapter{
     /**
      * Creates this screen.
      */
-    public PlacingView(Battleship game){
+    public PlacingView(Battleship game, Turn playerTurn){
         this.game = game;
         this.gameModel = game.getGameModel();
         this.boardController = BoardController.getInstance();
+        this.playerTurn = playerTurn;
 
         createCamera();
 
@@ -100,7 +104,14 @@ public class PlacingView extends ScreenAdapter{
         map = mapLoader.load("placingBoard.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        init(this.gameModel.getPlayerBlue(), this.gameModel.getPlayerBlueBoard());
+        if(playerTurn == Turn.Blue){
+            init(this.gameModel.getPlayerBlue(), this.gameModel.getPlayerBlueBoard());
+        }
+        else{
+            init(this.gameModel.getPlayerRed(), this.gameModel.getPlayerRedBoard());
+        }
+
+
 
         //FONTS
         this.batch = new SpriteBatch();
@@ -416,7 +427,7 @@ public class PlacingView extends ScreenAdapter{
     }
 
     public void exit(){
-        this.game.startGameView();
+        this.game.startGameView(playerTurn);
         dispose();
     }
 }

@@ -162,20 +162,22 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             //if coord is inside board and it's Ship/Free cell
-            if(gameController.getBoardController().isValidCoord(coord) && this.gameController.isValidTarget(coord)){
+            if(gameModel.getGameType() != GameType.Multiplayer
+                    &&  this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
                 if(gameModel.getGameType() != GameType.Multiplayer){
                     this.gameController.handleClick(coord);
-                }
-                else{
-                    // ----  Multiplayer Connection ----
                 }
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local
                         && turn != gameModel.getTurn()){
                     camera.rotate(180);
                 }
+            }
+            else if(gameModel.getPlayerTurn() == gameModel.getTurn()
+                     && this.gameController.isValidTarget(coord)){
+                // ----  Multiplayer Connection ----
             }
         }
 
