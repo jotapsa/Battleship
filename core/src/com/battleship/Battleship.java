@@ -18,7 +18,7 @@ import com.battleship.view.MultiplayerView;
 import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
-    public int defaultPort = 9021;
+    public int defaultPort = 5000;
     private Server gameServer;
     private Thread gameServerThread;
 
