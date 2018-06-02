@@ -135,6 +135,11 @@ public class GameView extends ScreenAdapter {
 
         GameController.getInstance().update(delta);
 
+        if(gameController.isGameOver()){
+            //GAMEOVER
+            gameOver();
+        }
+
         camera.update();
         renderer.setView(camera);
     }
@@ -165,12 +170,6 @@ public class GameView extends ScreenAdapter {
                 }
                 else{
                     // ----  Multiplayer Connection ----
-                }
-
-
-                if(gameController.isGameOver()){
-                    //GAMEOVER
-                    gameOver();
                 }
 
                 if(this.gameModel.getGameType() == GameType.Multiplayer_local
