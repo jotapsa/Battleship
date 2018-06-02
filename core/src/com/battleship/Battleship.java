@@ -20,6 +20,7 @@ import com.battleship.view.RoomView;
 public class Battleship extends Game {
     public int defaultPort = 9021;
     private Server gameServer;
+    private Thread gameServerThread;
 
     private GameModel gameModel;
     private GameController gameController;
@@ -99,7 +100,8 @@ public class Battleship extends Game {
 
     public void startGameServer(){
         this.gameServer = new Server(this);
-        this.gameServer.run();
+        this.gameServerThread = new Thread(gameServer);
+        this.gameServerThread.start();
     }
 
 
