@@ -10,6 +10,7 @@ import com.battleship.model.GameModel;
 import com.battleship.model.GameType;
 import com.battleship.model.ShipType;
 import com.battleship.model.Turn;
+import com.battleship.networking.Server;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;
 import com.battleship.view.PlacingView;
@@ -17,6 +18,9 @@ import com.battleship.view.MultiplayerView;
 import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
+    public int defaultPort = 9021;
+    private Server gameServer;
+
     private GameModel gameModel;
     private GameController gameController;
 
@@ -90,6 +94,11 @@ public class Battleship extends Game {
         this.gameModel = new GameModel(GameType.Multiplayer);
         this.gameController = new GameController(gameModel);
         setScreen(new MultiplayerView(this));
+    }
+
+    public void startGameServer(){
+        this.gameServer = new Server(this);
+        this.gameServer.run();
     }
 
 

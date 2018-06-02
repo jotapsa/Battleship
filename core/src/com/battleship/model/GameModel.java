@@ -18,6 +18,7 @@ public class GameModel {
     private Board playerRedBoard;
 
     private Turn turn;
+    private boolean host;
 
     private Turn player;
 
@@ -55,6 +56,8 @@ public class GameModel {
             this.turn = Turn.Blue;
         }
 
+        this.host = false;
+
         setGameOver(false);
     }
 
@@ -80,6 +83,10 @@ public class GameModel {
 
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
+    }
+
+    public void setHost(boolean host){
+        this.host = host;
     }
 
     public void nextTurn(){

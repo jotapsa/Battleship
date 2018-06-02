@@ -2,9 +2,12 @@ package com.battleship.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Net.Protocol;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -15,6 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.battleship.Battleship;
+import com.battleship.controller.GameController;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MultiplayerView extends ScreenAdapter{
     private Battleship game;
@@ -122,21 +130,39 @@ public class MultiplayerView extends ScreenAdapter{
         ipInput.setColor(0,0,1,1);
         joinRoomDialog.add(ipInput);
 
-        final TextField portInput = new TextField("7777", skin, "default");
-        portInput.setColor(0,0,1,1);
-        joinRoomDialog.add(portInput);
-
         TextButton joinBtn = new TextButton("Join", skin, "default");
         joinBtn.setColor(0,0,1,1);
         joinBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 String ip = ipInput.getText();
-                String portText = portInput.getText();
-
-                //validate IP & port
+                //TODO: validate IP
 
                 //join room and go to game
+                String textToSend = "JOIN";
+                SocketHints socketHints = new SocketHints();
+                socketHints.connectTimeout = 4000;
+
+                Socket socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
+
+                try {
+                    socket.getOutputStream().write(textToSend.getBytes());
+                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                    String response = inFromServer.readLine();
+
+//                    switch(response){
+//                        case "ACCEPTED":
+//                            //START GAME
+//                            break;
+//                        case "DENIED":
+//                            break;
+//                        default:
+//                            break;
+//                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         joinRoomDialog.add(joinBtn);
