@@ -243,11 +243,11 @@ public class GameView extends ScreenAdapter {
              sprite.setRotation(rotation);
              if(ship.getOrientation() == Orientation.Vertical){
                 sprite.setPosition((10 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (21 - pos.getY()-1 )*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-                 sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+                sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
              }
              else{
                 sprite.setPosition((10 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (21 - pos.getY() )*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-                 sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
              }
         }
         else{

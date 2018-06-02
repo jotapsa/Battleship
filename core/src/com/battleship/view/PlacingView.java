@@ -45,6 +45,7 @@ public class PlacingView extends ScreenAdapter{
     private Ship selectedShip;
     private HashMap<Ship, Coord> shipsPlaced;
     private ArrayList<Ship> ships;
+    private boolean reverse;
     private boolean confirm;
 
     private int DISPLAY_HEIGHT = Gdx.graphics.getHeight();
@@ -207,21 +208,41 @@ public class PlacingView extends ScreenAdapter{
         Sprite arrowSprite = new Sprite(this.arrow);
 
         if(selectedShip.getOrientation() == Orientation.Horizontal){
-            arrowSprite.setPosition((3)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (0)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            if(reverse){
+                arrowSprite.setOrigin(0,0);
+                arrowSprite.setRotation(180);
+                arrowSprite.setPosition((9)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (18)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
+            else{
+                arrowSprite.setPosition((3)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (0)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
             arrowSprite.setSize(6*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
             arrowSprite.draw(game.getBatch());
         }
         else{
             arrowSprite.setOrigin(0,0);
-            arrowSprite.setRotation(-90);
-            arrowSprite.setPosition((11)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (10)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            if(reverse){
+                arrowSprite.setRotation(-270);
+                arrowSprite.setPosition((1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (9)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
+            else{
+                arrowSprite.setRotation(-90);
+                arrowSprite.setPosition((11)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (9)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
             arrowSprite.setSize((6)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
             arrowSprite.draw(game.getBatch());
         }
 
         //print Rotate Button
         Sprite rotateSprite = new Sprite(this.rotate);
-        rotateSprite.setPosition((11)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (0)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+        if(reverse){
+            rotateSprite.setOrigin(0,0);
+            rotateSprite.setRotation(180);
+            rotateSprite.setPosition((1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (18)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+        }
+        else{
+            rotateSprite.setPosition((11)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (0)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+        }
         rotateSprite.setSize((DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
         rotateSprite.draw(game.getBatch());
     }
@@ -229,52 +250,97 @@ public class PlacingView extends ScreenAdapter{
     public void printPlacedShips(){
         //shipsPlaced placed
         for(Map.Entry<Ship, Coord> shipBoard : this.shipsPlaced.entrySet()){
-            printShipBoard(shipBoard.getKey(), shipBoard.getValue());
+            printShipBoard(shipBoard.getKey(), shipBoard.getValue(), reverse);
         }
     }
 
 
     public void printShips(){
-        int i=0, j=1;
+        int i=0;
+        int j = reverse ? 6 : 1;
+        float rotation = reverse ? 180 : 0;
+
         Sprite selected = new Sprite(this.selected);
         for(Ship ship : this.ships){
             if(!shipsPlaced.containsKey(ship)){
                 Sprite shipSprite = new Sprite(game.getShipTexture(ship.getShipType()));
-                shipSprite.setPosition((j)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (16-i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-                shipSprite.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+
+                if(reverse){
+                    shipSprite.setOrigin(0,0);
+                    shipSprite.setRotation(rotation);
+                    shipSprite.setPosition((j+5)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (2+i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                    shipSprite.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                }
+                else{
+                    shipSprite.setPosition((j)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (16-i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                    shipSprite.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                }
                 shipSprite.draw(game.getBatch());
 
                 if(ship == selectedShip){
-                    selected.setPosition((j)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (16-i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-                    selected.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                    if(reverse){
+                        selected.setOrigin(0,0);
+                        selected.setRotation(rotation);
+                        selected.setPosition((j+5)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (2+i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                        selected.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                    }
+                    else{
+                        selected.setPosition((j)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (16-i)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                        selected.setSize(ship.getShipType().getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                    }
                     selected.draw(game.getBatch());
                 }
             }
 
-            if(j==1){
-                j+=6;
+            if(reverse){
+                if(j==6){
+                    j=0;
+                }
+                else{
+                    i+=2;
+                    j=6;
+                }
             }
             else{
-                i+=2;
-                j=1;
+                if(j==1){
+                    j+=6;
+                }
+                else{
+                    i+=2;
+                    j=1;
+                }
             }
         }
     }
 
-    public void printShipBoard(Ship ship, Coord pos){
+    public void printShipBoard(Ship ship, Coord pos, boolean reverse){
         ShipType shipType = ship.getShipType();
-        float rotation = ship.getOrientation() == Orientation.Vertical ? -90 : 0;
+        float rotation = (ship.getOrientation() == Orientation.Vertical) ? (reverse ? -270 : -90) : (reverse ? -180 : 0);
 
         Sprite sprite = new Sprite(game.getShipTexture(shipType));
-        if(rotation != 0){
+        if(reverse){
             sprite.setOrigin(0 ,0);
             sprite.setRotation(rotation);
-            sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+2)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-            sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+            if(ship.getOrientation() == Orientation.Vertical){
+                sprite.setPosition(( 11 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (17 - pos.getY()-1)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+            }
+            else{
+                sprite.setPosition(( 11 - pos.getX())*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (17 - pos.getY())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
         }
         else{
-            sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+1)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
-            sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            if(ship.getOrientation() == Orientation.Vertical){
+                sprite.setOrigin(0 ,0);
+                sprite.setRotation(rotation);
+                sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+2)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize((shipType.getSize())*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT), (DISPLAY_WIDTH/VIEWPORT_WIDTH));
+            }
+            else{
+                sprite.setPosition((pos.getX()+1)*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (pos.getY()+1)*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+                sprite.setSize(shipType.getSize()*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (DISPLAY_HEIGHT/VIEWPORT_HEIGHT));
+            }
         }
         sprite.draw(game.getBatch());
     }
@@ -316,6 +382,7 @@ public class PlacingView extends ScreenAdapter{
 
     public void init(Player player, Board board){
         this.confirm = false;
+        this.reverse = false;
 
         this.player = player;
         boardController.setBoard(board);
@@ -338,12 +405,13 @@ public class PlacingView extends ScreenAdapter{
 
         if((player == this.gameModel.getPlayerRed()
                 || this.gameModel.getGameType() != GameType.Multiplayer_local) && confirm){
-//            Timer.instance().delay(2000);
             exit();
         }
 
         if(this.gameModel.getGameType() == GameType.Multiplayer_local && confirm){
             init(this.gameModel.getPlayerRed(), this.gameModel.getPlayerRedBoard());
+            camera.rotate(180);
+            reverse=true;
         }
     }
 
