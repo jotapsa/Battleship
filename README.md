@@ -2,12 +2,15 @@
 
 [Javadoc Documentation](https://jotapsa.github.io/Battleship/) :books:
 
+
 ### 1. Setup/Instalation
 #### 1.1 Setup (Development)
 
 Just clone this git repository and import the graddle project to your favorite IDE.
 
 #### 1.2 Instalation
+
+[Download APK](http://web.fe.up.pt/~up201503477/battleship.apk) :robot:
 
 ### 2. Architecture Design
 #### 2.1 UML
