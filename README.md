@@ -1,18 +1,21 @@
 ## Final Project Delivery
 
-[Javadoc Documentation](https://bernardomcbarbosa.github.io/LPOO1718_T2G05) :books:
+[Javadoc Documentation](https://jotapsa.github.io/Battleship/) :books:
 
 ### 1. Setup/Instalation
 #### 1.1 Setup (Development)
 
 Just clone this git repository and import the graddle project to your favorite IDE.
 
-
 #### 1.2 Instalation
 
 ### 2. Architecture Design
 #### 2.1 UML
-![UML](docs/UML.png "Battleship UML")
+##### Package structure:
+![UML](img/uml/package_overview.png "Battleship UML")
+
+##### Type Hierarchy
+![UML](img/uml/type_hierarchy.png "Battleship UML")
 
 #### 2.2 Design Patterns
 *   [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) - Avoid creating more than one intance of a object.
