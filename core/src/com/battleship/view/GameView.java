@@ -353,16 +353,48 @@ public class GameView extends ScreenAdapter {
 
     public void gameOver(){
         Label lbl;
-        if(gameModel.getPlayerTurn() == gameController.getWinner()){
-            lbl = new Label("YOU WIN!", skin, "title", "white");
+        Label lbl2;
+
+        if(gameModel.getGameType() != GameType.Multiplayer_local){
+            if(gameModel.getPlayerTurn() == gameController.getWinner()){
+                lbl = new Label("YOU WIN!", skin, "title", "white");
+            }
+            else{
+                lbl = new Label("YOU LOSE!", skin, "title", "white");
+            }
+
+            lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+            lbl.setFontScale(2,2);
+            lbl.draw(game.getBatch(), 1);
         }
         else{
-            lbl = new Label("YOU LOSE!", skin, "title", "white");
+            lbl = new Label("YOU WIN!", skin, "title", "white");
+            lbl2 = new Label("YOU LOSE!", skin, "title", "white");
+
+            if(this.gameModel.getTurn() == Turn.Blue){
+                lbl.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+
+                lbl2.setOrigin(0,0);
+                lbl2.setRotation(-180);
+                lbl2.setPosition(6*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+
+                lbl.draw(game.getBatch(), 1);
+                lbl2.draw(game.getBatch(), 1);
+            }
+            else{
+                lbl2.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+
+                lbl.setOrigin(0,0);
+                lbl.setRotation(-180);
+                lbl.setPosition(6*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+
+                lbl.draw(game.getBatch(), 1);
+                lbl2.draw(game.getBatch(), 1);
+            }
+
         }
 
-        lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
-        lbl.setFontScale(2,2);
-        lbl.draw(game.getBatch(), 1);
+
     }
 
     public void exit(){
