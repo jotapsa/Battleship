@@ -16,8 +16,6 @@ Just clone this git repository and import the graddle project to your favorite I
 
 #### 2.2 Design Patterns
 *   [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) - Avoid creating more than one intance of a object.
-*   [State Pattern](https://en.wikipedia.org/wiki/State_pattern) - Controls the game flow .
-*   [Strategy Pattern](https://en.wikipedia.org/wiki/Strategy_pattern) - Controls the AI behaviour.
 *   [DoubleBuffer]() - Implemented by Libgdx in Graphics Management (in GameView Class)
 *   [Template Method](https://en.wikipedia.org/wiki/Template_method_pattern) - Implemented by Libgdx in GameLoop (GameView, GameModel, Game Controller classes)
 
@@ -32,10 +30,65 @@ Since we are both 3rd year students who attend LBAW class, we only had 4 days to
 The work was shared equally.
 
 ### 3. User Manual
-![Menu](img/menu.png "Game Menu")
+The game starts on the main menu where you can choose Singleplayer (vs Computer), Local Multiplayer (on the same device), Multiplayer (over lan).
 
-![Game](img/gameExample.png "Game")
+![Menu](img/MainMenu.png "Game Menu")
 
+If you choose Singleplayer you are taken to the Placing Screen where you can place your ships.
+
+![PlacingViewSinglePlayer1](img/PlacingViewSinglePlayer1.png "PlacingViewSinglePlayer1")
+
+![PlacingViewSinglePlayer2](img/PlacingViewSinglePlayer2.png "PlacingViewSinglePlayer2")
+
+After placing your ships, press on the screen again and you are taken to the Game Screen, to play just press a cell to choose your target.
+
+![GameViewSinglePlayer1](img/GameViewSinglePlayer1.png "GameViewSinglePlayer1")
+
+![GameViewSinglePlayer2](img/GameViewSinglePlayer2.png "GameViewSinglePlayer2")
+
+If you choose Multiplayer Local you are taken to the Placing screen for the "blue" player
+
+![PlacingViewMultiplayerLocal1](img/PlacingViewMultiplayerLocal1.png "PlacingViewMultiplayerLocal1")
+
+Then to the Placing screen for the "red" player
+
+![PlacingViewMultiplayerLocal2](img/PlacingViewMultiplayerLocal2.png "PlacingViewMultiplayerLocal2")
+
+The screen then rotates accordingly to the turn.
+
+![GameViewMultiPlayerLocal1](img/GameViewMultiPlayerLocal1.png "GameViewMultiPlayerLocal1")
+
+![GameViewMultiPlayerLocal2](img/GameViewMultiPlayerLocal2.png "GameViewMultiPlayerLocal2")
+
+If you choose Multiplayer you are taken to the MultiplayerMenu
+
+![MultiplayerView](img/MultiplayerView.png "MultiplayerView")
+
+Click create room (you become the blue player). shows your ip so that the other player can connect
+
+![CreateRoomView](img/CreateRoomView.png "CreateRoomView")
+
+Click Join room and a dialog asking for ip shows up.
+
+![JoinRoomDialog](img/JoinRoomDialog.png "JoinRoomDialog")
+
+When the connection is established each player is taken to their respective Placing screens
+
+![PlacingViewMultiplayer](img/PlacingViewMultiplayer.png "PlacingViewMultiplayer")
+
+Then the fun starts!
+
+![GamePlayerMultiplayer1](img/GamePlayerMultiplayer1.png "GamePlayerMultiplayer1")
+![GamePlayerMultiplayer2](img/GamePlayerMultiplayer2.png "GamePlayerMultiplayer2")
+![GamePlayerMultiplayer3](img/GamePlayerMultiplayer3.png "GamePlayerMultiplayer3")
+
+Sometimes you win :)
+
+![GamePlayerMultiplayerWin](img/GamePlayerMultiplayerWin.png "GamePlayerMultiplayerWin")
+
+Sometimes you lose :(
+
+![GamePlayerMultiplayerLost](img/GamePlayerMultiplayerLost.png "GamePlayerMultiplayerLost")
 
 ----
 
