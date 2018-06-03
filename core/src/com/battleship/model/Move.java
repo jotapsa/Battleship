@@ -1,5 +1,8 @@
 package com.battleship.model;
 
+import com.battleship.model.aux.Orientation;
+import com.battleship.model.aux.Turn;
+
 public class Move {
     private boolean processed;
     public boolean processedVerticalPos;

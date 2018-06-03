@@ -9,14 +9,12 @@ import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
-import com.battleship.model.Human;
 import com.battleship.model.Move;
-import com.battleship.model.Turn;
+import com.battleship.model.aux.Turn;
 import com.battleship.model.aux.CellType;
 import com.battleship.networking.msg.AcceptMessage;
 import com.battleship.networking.msg.GameOverMessage;
 import com.battleship.networking.msg.HitMessage;
-import com.battleship.networking.msg.MsgType;
 
 import java.io.BufferedReader;
 import java.io.IOException;

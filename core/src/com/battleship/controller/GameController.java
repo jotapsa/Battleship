@@ -12,18 +12,14 @@ import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.Human;
 import com.battleship.model.Move;
-import com.battleship.model.Turn;
+import com.battleship.model.aux.Turn;
 import com.battleship.model.aux.CellType;
-import com.battleship.model.aux.GameType;
-import com.battleship.networking.msg.JoinMessage;
 import com.battleship.networking.msg.MoveMessage;
-import com.battleship.view.GameView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Random;
 
 public class GameController {
     private static GameController instance;

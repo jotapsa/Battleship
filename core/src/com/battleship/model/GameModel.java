@@ -2,6 +2,7 @@ package com.battleship.model;
 
 import com.battleship.controller.BoardController;
 import com.battleship.model.aux.GameType;
+import com.battleship.model.aux.Turn;
 
 /**
  * A model representing a game.

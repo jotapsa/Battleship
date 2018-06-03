@@ -1,5 +1,7 @@
 package com.battleship.model;
 
+import com.battleship.model.aux.Turn;
+
 public class Human extends Player{
     private boolean online;
 

@@ -1,8 +1,9 @@
 package com.battleship.model;
 
 
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.battleship.controller.BoardController;
+import com.battleship.model.aux.Orientation;
+import com.battleship.model.aux.Turn;
 
 import java.util.ArrayList;
 import java.util.Random;

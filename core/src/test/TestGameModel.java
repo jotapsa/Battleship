@@ -4,11 +4,11 @@ import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
-import com.battleship.model.Orientation;
+import com.battleship.model.aux.Orientation;
 import com.battleship.model.Ship;
 import com.battleship.model.aux.CellType;
 import com.battleship.model.aux.GameType;
-import com.battleship.model.Turn;
+import com.battleship.model.aux.Turn;
 
 import org.junit.Test;
 

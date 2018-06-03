@@ -1,7 +1,6 @@
 package com.battleship;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +9,7 @@ import com.battleship.model.aux.CellType;
 import com.battleship.model.GameModel;
 import com.battleship.model.aux.GameType;
 import com.battleship.model.aux.ShipType;
-import com.battleship.model.Turn;
+import com.battleship.model.aux.Turn;
 import com.battleship.networking.Server;
 import com.battleship.view.GameView;
 import com.battleship.view.MainMenuView;

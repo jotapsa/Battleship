@@ -1,5 +1,7 @@
 package com.battleship.model;
 
+import com.battleship.model.aux.Turn;
+
 import java.util.ArrayList;
 
 public class Player {
