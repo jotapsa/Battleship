@@ -50,18 +50,25 @@ public class GameController {
     /**
      * Returns a singleton instance of a board controller
      *
-     * @return the singleton instance
+     * @return singleton instance
      */
     public static GameController getInstance() {
         return instance;
     }
 
+    /**
+     * Game Controller update.
+     * @param delta
+     */
     public void update(float delta){
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();
         }
     }
 
+    /**
+     * Play if turn belongs to any computer.
+     */
     private void computerPlay() {
         Move move = null;
 
@@ -88,6 +95,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Check if target is valid and setup boardController.
+     * @param Coord target
+     * @return true if sucessful, false otherwise.
+     */
     public boolean isValidTarget(Coord target){
         if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
             boardController.setBoard(gameModel.getPlayerRedBoard());
@@ -99,7 +111,10 @@ public class GameController {
         return boardController.isValidTarget(target);
     }
 
-
+    /**
+     * Handles User Input.
+     * @param Coord target
+     */
     public void handleClick(Coord target){
         Move move = null;
 
@@ -127,6 +142,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Handles User Input in Multiplayer Mode.
+     * @param Coord target
+     */
     public void handleMultiplayerClick(Coord target){
         if(!isValidTarget(target)){
             return;
@@ -152,6 +171,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Send Move to Socket and returns CellType of board's cell.
+     * @param Board board
+     * @param Target target
+     * @return CellType cellType
+     */
     public CellType sendMove(Board board, Coord target){
         Socket socket;
 
@@ -202,18 +227,34 @@ public class GameController {
         return CellType.Free;
     }
 
+    /**
+     * Sets gameOver.
+     * @param boolean gameOver
+     */
     public void setGameOver(boolean gameOver){
         isGameOver = gameOver;
     }
 
+    /**
+     * Return gameOver.
+     * @return boolean gameOver
+     */
     public boolean isGameOver(){
         return isGameOver;
     }
 
+    /**
+     * Sets game winner.
+     * @param Turn winner
+     */
     public void setWinner(Turn winner){
         this.winner = winner;
     }
 
+    /**
+     * Return winner.
+     * @return Turn winner
+     */
     public Turn getWinner(){
         return winner;
     }

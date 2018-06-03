@@ -1,7 +1,5 @@
 package com.battleship.controller;
 
-import com.badlogic.gdx.math.Vector2;
-
 public class MainMenuController{
     /**
      * The singleton instance of this controller

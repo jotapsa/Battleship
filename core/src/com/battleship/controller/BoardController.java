@@ -28,7 +28,7 @@ public class BoardController {
     /**
      * Returns a singleton instance of a board controller
      *
-     * @return the singleton instance
+     * @return singleton instance
      */
     public static BoardController getInstance() {
         if (instance == null)
@@ -36,18 +36,41 @@ public class BoardController {
         return instance;
     }
 
+    /**
+     * Returns board of BoardController
+     *
+     * @return Board board
+     */
     public Board getBoard() {
         return board;
     }
 
+
+    /**
+     * Returns placesShips of board
+     *
+     * @return HashMap placedShips
+     */
     public HashMap<Ship, Coord> getPlacedShips(){
         return board.getPlacedShips();
     }
 
+
+    /**
+     * Set board of BoardController
+     *
+     * @param Board board
+     */
     public void setBoard(Board board){
         this.board = board;
     }
 
+    /**
+     * Place Ship in board if possible.
+     * @param Ship ship
+     * @param Coord pos
+     * @return true if sucessful, false otherwise.
+     */
     public boolean placeShip(Ship ship, Coord pos){
         if(ship == null){
             return false;
@@ -71,6 +94,12 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * Check if is possible to place Ship in Board
+     * @param Ship ship
+     * @param Coord pos
+     * @return true if sucessful, false otherwise.
+     */
     public boolean canPlaceShip(Ship ship, Coord pos){
         if (!isValidCoord(pos)){
             return false;
@@ -94,6 +123,10 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * Remove Ship from board's placedShips
+     * @param Ship ship
+     */
     public void removeShip(Ship ship){
         if(ship == null || !this.board.getPlacedShips().containsKey(ship)){
             return;
@@ -113,10 +146,18 @@ public class BoardController {
         this.board.getPlacedShips().remove(ship);
     }
 
+    /**
+     * Check if Coord is valid.
+     * @param Coord pos
+     * @return true if sucessful, false otherwise.
+     */
     public boolean isValidCoord(Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
     }
 
+    /**
+     * Place Random Ships on board.
+     */
     public void placeShipsRandomly(){
         Orientation orientation;
         int x, y;
@@ -135,6 +176,11 @@ public class BoardController {
         }
     }
 
+    /**
+     * Check if target is valid.
+     * @param Coord target
+     * @return true if sucessful, false otherwise.
+     */
     public boolean isValidTarget(Coord target){
         if(!isValidCoord(target)){
             return false;
@@ -147,6 +193,13 @@ public class BoardController {
         return true;
     }
 
+    /**
+     * Check if pos is inside any ship.
+     * @param Ship ship
+     * @param Coord shipPos
+     * @param Coord pos
+     * @return true if sucessful, false otherwise.
+     */
     public boolean insideShip(Ship ship, Coord shipPos, Coord pos){
         for(int i=0; i<ship.getShipType().getSize(); i++){
             if(ship.getOrientation() == Orientation.Vertical && pos.equals(new Coord(shipPos.getX(), shipPos.getY()-i))){
@@ -159,6 +212,11 @@ public class BoardController {
         return false;
     }
 
+    /**
+     * Returns ship if pos is inside any ship.
+     * @param Coord pos
+     * @return Ship
+     */
     public Ship getShip(Coord pos){
         for(Map.Entry<Ship, Coord> shipPlaced : getPlacedShips().entrySet()){
             if(insideShip(shipPlaced.getKey(), shipPlaced.getValue() ,pos)){
@@ -169,6 +227,12 @@ public class BoardController {
     }
 
     /* Shoot at */
+
+    /**
+     * Register move on board and returns CellType of board's cell.
+     * @param Move move
+     * @return CellType cellType
+     */
     public CellType doMove(Move move){
         switch(this.board.getCell(move.getTarget())){
             case Free:
@@ -190,6 +254,10 @@ public class BoardController {
         return this.board.getCell(move.getTarget());
     }
 
+    /**
+     * Check if all ships are sunk.
+     * @return true if sucessful, false otherwise.
+     */
     public boolean allSank(){
         boolean sank = true;
 
