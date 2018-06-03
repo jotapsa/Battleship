@@ -324,7 +324,7 @@ public class GameView extends ScreenAdapter {
     }
 
     public void gameOver(){
-        this.game.showMenu();
         dispose();
+        this.game.showMenu();
     }
 }

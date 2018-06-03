@@ -63,7 +63,9 @@ public class GameController {
             computerPlay();
         }
 
-        isGameOver = boardController.allSank();
+        if(gameModel.getGameType() != GameType.Multiplayer){
+            isGameOver = boardController.allSank();
+        }
     }
 
     private void computerPlay() {
@@ -179,11 +181,12 @@ public class GameController {
                     board.setCell(target, CellType.ShipHit);
                     return CellType.ShipHit;
                 }
-                else if(msgArgs[0].equals("GAMEOVER")){
-                    //GAMEOVER
-                    setGameOver(true);
-                    game.showMenu();
-                }
+            }
+            else if(msgArgs[0].equals("GAMEOVER")){
+                //GAMEOVER
+                board.setCell(target, CellType.ShipHit);
+                setGameOver(true);
+                return CellType.ShipHit;
             }
         }
         catch (IOException ex) {
