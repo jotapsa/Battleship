@@ -12,6 +12,7 @@ import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.Human;
 import com.battleship.model.Move;
+import com.battleship.model.aux.GameType;
 import com.battleship.model.aux.Turn;
 import com.battleship.model.aux.CellType;
 import com.battleship.networking.msg.MoveMessage;
