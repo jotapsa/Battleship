@@ -169,7 +169,7 @@ public class BoardController {
     }
 
     /* Shoot at */
-    public void doMove(Move move){
+    public CellType doMove(Move move){
         switch(this.board.getCell(move.getTarget())){
             case Free:
                 this.board.setCell(move.getTarget(), CellType.FreeHit);
@@ -186,6 +186,8 @@ public class BoardController {
         if(move.getHitShip() && getShip(move.getTarget()) != null){
             getShip(move.getTarget()).hit();
         }
+
+        return this.board.getCell(move.getTarget());
     }
 
     public boolean allSank(){

@@ -1,12 +1,24 @@
 package com.battleship.controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.battleship.model.Computer;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
 import com.battleship.model.Human;
 import com.battleship.model.Move;
 import com.battleship.model.Turn;
+import com.battleship.model.aux.GameType;
+import com.battleship.networking.msg.JoinMessage;
+import com.battleship.view.GameView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Random;
 
 public class GameController {
@@ -92,9 +104,52 @@ public class GameController {
 
         if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && !((Human) gameModel.getPlayerBlue()).isOnlinePlayer()){
             move = new Move(target, gameModel.getTurn());
+//            if(gameModel.getGameType() == GameType.Multiplayer){
+//                game.ipEnemy;
+//                Socket socket;
+//
+//                SocketHints socketHints = new SocketHints();
+//                socketHints.connectTimeout = 0;
+//
+//                try {
+//                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, ip, game.defaultPort, socketHints);
+//                    PrintWriter out = new PrintWriter(socket.getOutputStream());
+//                    out.write(msg.toString());
+//                    out.flush();
+//
+//                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//
+//                    String response = inFromServer.readLine();
+//                    System.out.println(response);
+//
+//                    String[] msgArgs = response.split(" ");
+//
+//                    if(msgArgs[0].equals("ACCEPT")){
+//                        dispose();
+//                        game.startPlacingView(Turn.Red);
+//                    }
+//
+////                    inFromServer.close();
+////                    out.close();
+//
+//                }
+//                catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//                catch(GdxRuntimeException ex){
+//                    System.out.println("Fail to open " + ip);
+//                    stage.setKeyboardFocus(ipInput);
+//                }
+//
+//                //send move.
+//            }
         }
         else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && !((Human) gameModel.getPlayerBlue()).isOnlinePlayer()){
             move = new Move(target, gameModel.getTurn());
+            if(gameModel.getGameType() == GameType.Multiplayer){
+                //send move.
+                //store received hit in board.
+            }
         }
 
         if(move != null){

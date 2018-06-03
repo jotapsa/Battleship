@@ -120,6 +120,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 String ip = ipInput.getText();
+                game.ipEnemy = ip;
                 Socket socket;
                 //TODO: validate IP
 
@@ -139,22 +140,16 @@ public class MultiplayerView extends ScreenAdapter{
                     String response = inFromServer.readLine();
                     System.out.println(response);
 
-                    if(response.equals("ACCEPT")){
-                        //PLACING VIEW ----> TURN RED
-                    }
+                    String[] msgArgs = response.split(" ");
 
+                    if(msgArgs[0].equals("ACCEPT")){
+                        dispose();
+                        game.startPlacingView(Turn.Red);
+                    }
 
 //                    inFromServer.close();
 //                    out.close();
-//                    switch(response){
-//                        case "ACCEPTED":
-//                            //START GAME
-//                            break;
-//                        case "DENIED":
-//                            break;
-//                        default:
-//                            break;
-//                    }
+
                 }
                 catch (IOException ex) {
                     ex.printStackTrace();
@@ -163,7 +158,6 @@ public class MultiplayerView extends ScreenAdapter{
                     System.out.println("Fail to open " + ip);
                     stage.setKeyboardFocus(ipInput);
                 }
-
 
             }
         });

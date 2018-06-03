@@ -18,7 +18,9 @@ import com.battleship.view.MultiplayerView;
 import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
+    public String ipEnemy;
     public int defaultPort = 5000;
+
     private Server gameServer;
     private Thread gameServerThread;
 
@@ -98,7 +100,11 @@ public class Battleship extends Game {
         setScreen(new MultiplayerView(this));
     }
 
-    public void startGameServer(){
+    public void startPlacingView(Turn turn){
+        setScreen(new PlacingView(this, turn));
+    }
+
+    private void startGameServer(){
         this.gameServer = new Server(this);
         this.gameServerThread = new Thread(gameServer);
         this.gameServerThread.start();
