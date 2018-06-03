@@ -4,7 +4,8 @@ public enum MsgType {
     JOIN("JOIN"),
     ACCEPT("ACCEPT"),
     MOVE("MOVE"),
-    HIT("HIT");
+    HIT("HIT"),
+    GAMEOVER("GAMEOVER");
 
 
     private String type;

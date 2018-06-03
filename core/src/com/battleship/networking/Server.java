@@ -14,6 +14,7 @@ import com.battleship.model.Move;
 import com.battleship.model.Turn;
 import com.battleship.model.aux.CellType;
 import com.battleship.networking.msg.AcceptMessage;
+import com.battleship.networking.msg.GameOverMessage;
 import com.battleship.networking.msg.HitMessage;
 import com.battleship.networking.msg.MsgType;
 
@@ -52,6 +53,10 @@ public class Server implements Runnable{
 
             try {
                 String response = inFromClient.readLine();
+                if(response == null){
+                    //CONNECTION FAILED
+                    game.showMenu();
+                }
                 System.out.println(response);
 
                 String[] msgArgs = response.split(" ");
@@ -94,8 +99,22 @@ public class Server implements Runnable{
                             game.getGameModel().nextTurn();
                         }
 
-                        out.write(new HitMessage(hit).toString());
-                        out.flush();
+                        if(BoardController.getInstance().allSank()){
+                            GameController.getInstance().setGameOver(true);
+                            out.write(new GameOverMessage().toString());
+                            out.flush();
+
+                            Gdx.app.postRunnable(new Runnable() {
+                                @Override
+                                public void run() {
+                                    game.showMenu();
+                                }
+                            });
+                        }
+                        else{
+                            out.write(new HitMessage(hit).toString());
+                            out.flush();
+                        }
                     }
                 }
 

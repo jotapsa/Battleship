@@ -159,6 +159,10 @@ public class GameView extends ScreenAdapter {
 
             Coord coord = new Coord(x, y);
 
+            if(gameController.isGameOver()){
+                return;
+            }
+
             //if coord is inside board and it's Ship/Free cell
             if(gameModel.getGameType() != GameType.Multiplayer
                     &&  this.gameController.isValidTarget(coord)){

@@ -163,6 +163,10 @@ public class GameController {
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String response = inFromServer.readLine();
+            if(response == null){
+                //CONNECTION FAILED
+                game.showMenu();
+            }
             System.out.println(response);
 
             String[] msgArgs = response.split(" ");
@@ -175,16 +179,25 @@ public class GameController {
                     board.setCell(target, CellType.ShipHit);
                     return CellType.ShipHit;
                 }
-                else if(msgArgs[1].equals("GAMEOVER")){
+                else if(msgArgs[0].equals("GAMEOVER")){
                     //GAMEOVER
+                    setGameOver(true);
+                    game.showMenu();
                 }
             }
         }
         catch (IOException ex) {
             ex.printStackTrace();
         }
+        catch(GdxRuntimeException ex){
+            game.showMenu();
+        }
 
         return CellType.Free;
+    }
+
+    public void setGameOver(boolean gameOver){
+        isGameOver = gameOver;
     }
 
     public boolean isGameOver(){
