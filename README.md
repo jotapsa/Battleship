@@ -93,4 +93,5 @@ Sometimes you lose :hankey:
 T2G05, 3/06/2018
 
 > Bernardo Manuel Costa Barbosa, up201503477@fe.up.pt
+
 > João Pedro Teixeira Pereira de Sá, up201506252@fe.up.pt
