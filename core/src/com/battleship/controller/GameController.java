@@ -30,6 +30,7 @@ public class GameController {
     private GameModel gameModel;
     private BoardController boardController;
     private boolean isGameOver;
+    private Turn winner = null;
 
     /**
      * Creates a new GameController of a certain GameModel.
@@ -84,6 +85,11 @@ public class GameController {
                 gameModel.nextTurn();
             }
         }
+
+        if(boardController.allSank()){
+            isGameOver = true;
+            setWinner(gameModel.getTurn());
+        }
     }
 
     public boolean isValidTarget(Coord target){
@@ -105,10 +111,10 @@ public class GameController {
             return;
         }
 
-        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && gameModel.getPlayerTurn() == Turn.Blue){
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
             move = new Move(target, gameModel.getTurn());
         }
-        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && gameModel.getPlayerTurn() == Turn.Red){
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human){
             move = new Move(target, gameModel.getTurn());
         }
 
@@ -119,7 +125,10 @@ public class GameController {
             }
         }
 
-        isGameOver = boardController.allSank();
+        if(boardController.allSank()){
+            isGameOver = true;
+            setWinner(gameModel.getTurn());
+        }
     }
 
     public void handleMultiplayerClick(Coord target){
@@ -183,6 +192,7 @@ public class GameController {
                 //GAMEOVER
                 board.setCell(target, CellType.ShipHit);
                 setGameOver(true);
+                winner = gameModel.getPlayerTurn();
                 return CellType.ShipHit;
             }
         }
@@ -202,5 +212,13 @@ public class GameController {
 
     public boolean isGameOver(){
         return isGameOver;
+    }
+
+    public void setWinner(Turn winner){
+        this.winner = winner;
+    }
+
+    public Turn getWinner(){
+        return winner;
     }
 }

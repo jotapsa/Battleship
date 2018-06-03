@@ -131,6 +131,10 @@ public class GameView extends ScreenAdapter {
 
         printBoards();
 
+        if(gameController.isGameOver()){
+            gameOver();
+        }
+
         game.getBatch().end();
     }
 
@@ -138,11 +142,6 @@ public class GameView extends ScreenAdapter {
         handleInputs(delta);
 
         GameController.getInstance().update(delta);
-
-        if(gameController.isGameOver()){
-            //GAMEOVER
-            gameOver();
-        }
 
         camera.update();
         renderer.setView(camera);
@@ -166,7 +165,7 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             if(gameController.isGameOver()){
-                return;
+                exit();
             }
 
             //if coord is inside board and it's Ship/Free cell
@@ -227,6 +226,9 @@ public class GameView extends ScreenAdapter {
 
                 //print red board map
                 printBoardMap(this.gameModel.getPlayerRedBoard(), false);
+
+                //print reverse red board map
+                printBoardMap(this.gameModel.getPlayerRedBoard(), true);
             }
             else{
                 // print blue board
@@ -234,8 +236,11 @@ public class GameView extends ScreenAdapter {
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
                 }
 
-                //print blue board map
+                //print reverse blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
+
+                //print blue board map
+                printBoardMap(this.gameModel.getPlayerBlueBoard(), false);
             }
 
         }
@@ -253,7 +258,7 @@ public class GameView extends ScreenAdapter {
                 //print red board map
                 printBoardMap(this.gameModel.getPlayerRedBoard(), true);
 
-                if(gameModel.getTurn() == Turn.Blue){
+                if(gameModel.getTurn() == Turn.Blue && !gameController.isGameOver()){
                     Label lbl = new Label("YOUR TURN", skin, "title");
                     lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
                     lbl.setFontScale(2,2);
@@ -273,7 +278,7 @@ public class GameView extends ScreenAdapter {
                 //print blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
 
-                if(gameModel.getTurn() == Turn.Red){
+                if(gameModel.getTurn() == Turn.Red && !gameController.isGameOver()){
                     Label lbl = new Label("YOUR TURN", skin, "title");
                     lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
                     lbl.setFontScale(2,2);
@@ -345,6 +350,20 @@ public class GameView extends ScreenAdapter {
     }
 
     public void gameOver(){
+        Label lbl;
+        if(gameModel.getPlayerTurn() == gameController.getWinner()){
+            lbl = new Label("YOU WIN!", skin, "title", "white");
+        }
+        else{
+            lbl = new Label("YOU LOSE!", skin, "title", "white");
+        }
+
+        lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+        lbl.setFontScale(2,2);
+        lbl.draw(game.getBatch(), 1);
+    }
+
+    public void exit(){
         dispose();
         this.game.showMenu();
     }

@@ -102,6 +102,12 @@ public class Server implements Runnable{
 
                         if(BoardController.getInstance().allSank()){
                             GameController.getInstance().setGameOver(true);
+                            if(game.getGameModel().getPlayerTurn() == Turn.Blue){
+                                GameController.getInstance().setWinner(Turn.Red);
+                            }
+                            else{
+                                GameController.getInstance().setWinner(Turn.Blue);
+                            }
                             out.write(new GameOverMessage().toString());
                             out.flush();
 
@@ -109,7 +115,6 @@ public class Server implements Runnable{
                                 @Override
                                 public void run() {
                                     closeServer();
-                                    game.showMenu();
                                 }
                             });
                             break;
