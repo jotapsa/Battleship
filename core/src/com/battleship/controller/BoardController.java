@@ -59,7 +59,7 @@ public class BoardController {
     /**
      * Set board of BoardController
      *
-     * @param Board board
+     * @param board Board
      */
     public void setBoard(Board board){
         this.board = board;
@@ -67,9 +67,9 @@ public class BoardController {
 
     /**
      * Place Ship in board if possible.
-     * @param Ship ship
-     * @param Coord pos
-     * @return true if sucessful, false otherwise.
+     * @param ship Ship
+     * @param pos Coord
+     * @return boolean true if successful, false otherwise.
      */
     public boolean placeShip(Ship ship, Coord pos){
         if(ship == null){
@@ -96,9 +96,9 @@ public class BoardController {
 
     /**
      * Check if is possible to place Ship in Board
-     * @param Ship ship
-     * @param Coord pos
-     * @return true if sucessful, false otherwise.
+     * @param ship Ship
+     * @param pos Coord
+     * @return boolean true if successful, false otherwise.
      */
     public boolean canPlaceShip(Ship ship, Coord pos){
         if (!isValidCoord(pos)){
@@ -125,7 +125,7 @@ public class BoardController {
 
     /**
      * Remove Ship from board's placedShips
-     * @param Ship ship
+     * @param ship Ship
      */
     public void removeShip(Ship ship){
         if(ship == null || !this.board.getPlacedShips().containsKey(ship)){
@@ -148,8 +148,8 @@ public class BoardController {
 
     /**
      * Check if Coord is valid.
-     * @param Coord pos
-     * @return true if sucessful, false otherwise.
+     * @param pos Coord
+     * @return boolean true if successful, false otherwise.
      */
     public boolean isValidCoord(Coord pos){
         return (pos.getX() >= 0 && pos.getX() < board.getSize()) && (pos.getY() >= 0 && pos.getY() < board.getSize());
@@ -178,8 +178,8 @@ public class BoardController {
 
     /**
      * Check if target is valid.
-     * @param Coord target
-     * @return true if sucessful, false otherwise.
+     * @param target Coord
+     * @return boolean true if successful, false otherwise.
      */
     public boolean isValidTarget(Coord target){
         if(!isValidCoord(target)){
@@ -195,9 +195,9 @@ public class BoardController {
 
     /**
      * Check if pos is inside any ship.
-     * @param Ship ship
-     * @param Coord shipPos
-     * @param Coord pos
+     * @param ship Ship
+     * @param shipPos Coord
+     * @param pos Coord
      * @return true if sucessful, false otherwise.
      */
     public boolean insideShip(Ship ship, Coord shipPos, Coord pos){
@@ -214,7 +214,7 @@ public class BoardController {
 
     /**
      * Returns ship if pos is inside any ship.
-     * @param Coord pos
+     * @param pos Coord
      * @return Ship
      */
     public Ship getShip(Coord pos){
@@ -230,7 +230,7 @@ public class BoardController {
 
     /**
      * Register move on board and returns CellType of board's cell.
-     * @param Move move
+     * @param move Move
      * @return CellType cellType
      */
     public CellType doMove(Move move){

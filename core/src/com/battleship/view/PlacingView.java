@@ -86,9 +86,6 @@ public class PlacingView extends ScreenAdapter{
     private Texture selected;
     private Texture rotate;
 
-    /**
-     * Creates this screen.
-     */
     public PlacingView(Battleship game, Turn playerTurn){
         this.game = game;
         this.gameModel = game.getGameModel();
@@ -121,7 +118,6 @@ public class PlacingView extends ScreenAdapter{
     /**
      * Creates the camera used to show the viewport.
      *
-     * @return the camera
      */
     private void createCamera() {
         this.camera = new OrthographicCamera(VIEWPORT_WIDTH * PPC, VIEWPORT_HEIGHT*PPC);

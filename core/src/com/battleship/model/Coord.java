@@ -1,33 +1,56 @@
 package com.battleship.model;
 
+/**
+ * A model representing a Coord.
+ */
 public class Coord {
     private int x;
 
     private int y;
-
+    
+    /**
+	 * Instantiates a new Coord with coordinates x and y.
+	 *
+	 * @param x int coordinate of the newly constructed Coord.
+	 * @param y int coordinate of the newly constructed Coord.
+	 */
     public Coord(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     /**
-     * @return int X component of a coordinate
-     */
+	 * Gets X coordinate.
+	 *
+	 * @return int x coordinate of this Coord.
+	 */
     public int getX() {
         return this.x;
     }
 
     /**
-     * @return int Y component of a coordinate
-     */
+	 * Gets Y coordinate.
+	 *
+	 * @return int y coordinate of this Coord.
+	 */
     public int getY() {
         return this.y;
     }
-
+    
+    /**
+	 * Sets X coordinate.
+	 *
+	 * @param x coordinate.
+	 */
     public void setX(int x) {
         this.x = x;
     }
-
+    
+    /**
+	 * Sets Y coordinate.
+	 *
+	 * @param y coordinate.
+	 */
     public void setY(int y) {
         this.y = y;
     }

@@ -68,9 +68,6 @@ public class GameView extends ScreenAdapter {
     private Skin skin;
 
 
-    /**
-     * Creates this screen.
-     */
     public GameView(Battleship game, GameController gameController){
         this.game = game;
         this.gameModel = game.getGameModel();
@@ -90,7 +87,6 @@ public class GameView extends ScreenAdapter {
     /**
      * Creates the camera used to show the viewport.
      *
-     * @return the camera
      */
     private void createCamera() {
         this.camera = new OrthographicCamera(VIEWPORT_WIDTH * PPC, VIEWPORT_HEIGHT*PPC);

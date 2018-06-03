@@ -20,6 +20,11 @@ public class Computer extends Player{
     private ArrayList<Move> moves;
 
 
+    /**
+     * Instantiates a new Computer Model.
+     *
+     * @param turnToPlay Turn
+     */
     public Computer(Turn turnToPlay) {
         super(turnToPlay);
 
@@ -30,6 +35,12 @@ public class Computer extends Player{
         this.moves = new ArrayList<Move>();
     }
 
+    /**
+     * Creates a new Move.
+     *
+     * @param enemyBoard Board
+     * @return Move move
+     */
     public Move createMove(Board enemyBoard){
         int x, y;
         Orientation orientation;

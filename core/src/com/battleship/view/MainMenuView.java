@@ -33,9 +33,6 @@ public class MainMenuView extends ScreenAdapter {
     private Texture background;
     private Texture title;
 
-    /**
-     * Creates this screen.
-     */
     public MainMenuView(Battleship game) {
         this.game = game;
 

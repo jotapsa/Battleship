@@ -35,6 +35,8 @@ public class GameController {
     /**
      * Creates a new GameController of a certain GameModel.
      *
+     * @param gameModel GameModel
+     * @param game Battleship
      */
     public GameController(GameModel gameModel, Battleship game) {
 
@@ -58,7 +60,7 @@ public class GameController {
 
     /**
      * Game Controller update.
-     * @param delta
+     * @param delta float
      */
     public void update(float delta){
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
@@ -97,7 +99,7 @@ public class GameController {
 
     /**
      * Check if target is valid and setup boardController.
-     * @param Coord target
+     * @param target Coord
      * @return true if sucessful, false otherwise.
      */
     public boolean isValidTarget(Coord target){
@@ -113,7 +115,7 @@ public class GameController {
 
     /**
      * Handles User Input.
-     * @param Coord target
+     * @param target Coord
      */
     public void handleClick(Coord target){
         Move move = null;
@@ -144,7 +146,7 @@ public class GameController {
 
     /**
      * Handles User Input in Multiplayer Mode.
-     * @param Coord target
+     * @param target Coord
      */
     public void handleMultiplayerClick(Coord target){
         if(!isValidTarget(target)){
@@ -173,8 +175,8 @@ public class GameController {
 
     /**
      * Send Move to Socket and returns CellType of board's cell.
-     * @param Board board
-     * @param Target target
+     * @param board Board
+     * @param target Target
      * @return CellType cellType
      */
     public CellType sendMove(Board board, Coord target){
@@ -229,7 +231,7 @@ public class GameController {
 
     /**
      * Sets gameOver.
-     * @param boolean gameOver
+     * @param gameOver boolean
      */
     public void setGameOver(boolean gameOver){
         isGameOver = gameOver;
@@ -245,7 +247,7 @@ public class GameController {
 
     /**
      * Sets game winner.
-     * @param Turn winner
+     * @param winner Turn
      */
     public void setWinner(Turn winner){
         this.winner = winner;

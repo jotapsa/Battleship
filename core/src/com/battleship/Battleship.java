@@ -26,6 +26,9 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * Class representing Battleship Game.
+ */
 public class Battleship extends Game {
     private String ipEnemy;
     public int defaultPort = 5000;
@@ -63,12 +66,17 @@ public class Battleship extends Game {
 		showMenu();
 	}
 
+	/**
+	 * Gets Battleship game model.
+	 *
+	 * @return the game model
+	 */
 	public GameModel getGameModel(){
 	    return this.gameModel;
     }
 
     /**
-     * Show menu.
+     * Show Battleship menu.
      */
     public void showMenu() {
         setScreen(new MainMenuView(this));
@@ -76,7 +84,7 @@ public class Battleship extends Game {
 
 
     /**
-     * Show Room.
+     * Show Create Room for Multiplayer Game.
      */
     public void showRoom() {
         this.roomView = new RoomView(this);
@@ -85,7 +93,7 @@ public class Battleship extends Game {
 
 
     /**
-     * Start GameModel.
+     * Start Singleplayer Game.
      */
     public void startSingleplayerGame() {
         this.gameModel = new GameModel(GameType.SinglePlayer);
@@ -94,7 +102,7 @@ public class Battleship extends Game {
     }
 
     /**
-     * Start GameModel.
+     * Start Local Multiplayer Game.
      */
     public void startMultiplayerLocal() {
         this.gameModel = new GameModel(GameType.Multiplayer_local);
@@ -103,7 +111,7 @@ public class Battleship extends Game {
     }
 
     /**
-     * Start GameModel.
+     * Start Multiplayer Game.
      */
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
@@ -111,16 +119,27 @@ public class Battleship extends Game {
         setScreen(new MultiplayerView(this));
     }
 
+    /**
+     * Start Placing View.
+     *
+     * @param turn Turn
+     */
     public void startPlacingView(Turn turn){
         setScreen(new PlacingView(this, turn));
     }
 
+    /**
+     * Start Battleship game server.
+     */
     public void startGameServer(){
         this.gameServer = new Server(this);
         this.gameServerThread = new Thread(gameServer);
         this.gameServerThread.start();
     }
 
+    /**
+     * Stop Battleship game server.
+     */
     public void stopGameServer(){
         if(this.gameServer != null){
             this.gameServer.closeServer();
@@ -129,11 +148,17 @@ public class Battleship extends Game {
     }
 
 
+    /**
+     * Render.
+     */
     @Override
 	public void render () {
 		super.render();
 	}
 	
+	/**
+	 * Dispose.
+	 */
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -143,7 +168,7 @@ public class Battleship extends Game {
     /**
      * Returns the asset manager used to load all textures and sounds.
      *
-     * @return the asset manager
+     * @return AssetManager asset manager
      */
     public AssetManager getAssetManager() {
         return assetManager;
@@ -152,12 +177,15 @@ public class Battleship extends Game {
     /**
      * Returns the sprite batch used to improve drawing performance.
      *
-     * @return the sprite batch
+     * @return SpriteBatch sprite batch
      */
     public SpriteBatch getBatch() {
         return batch;
     }
 
+    /**
+     * Load Ship Textures.
+     */
     public void loadAssets(){
         this.carrier = new Texture("carrier.png");
         this.battleship = new Texture("battleship_ship.png");
@@ -168,6 +196,12 @@ public class Battleship extends Game {
         this.shipHit = new Texture("shipHit.png");
     }
 
+    /**
+     * Gets Texture of ShipType.
+     *
+     * @param shipType ShipType
+     * @return Texture ship texture
+     */
     public Texture getShipTexture(ShipType shipType){
         switch(shipType){
             case Carrier:
@@ -183,6 +217,12 @@ public class Battleship extends Game {
         }
     }
 
+    /**
+     * Gets Texture of CellType.
+     *
+     * @param cellType CellType
+     * @return Texture cell texture
+     */
     public Texture getCellTexture(CellType cellType){
         switch(cellType){
             case FreeHit:
@@ -194,23 +234,48 @@ public class Battleship extends Game {
         }
     }
 
+    /**
+     * Start Game View.
+     *
+     * @param playerTurn Turn
+     */
     public void startGameView(Turn playerTurn){
         this.gameModel.setPlayerTurn(playerTurn);
         setScreen(new GameView(this, this.gameController));
     }
 
+    /**
+     * Gets Room view.
+     *
+     * @return room view
+     */
     public RoomView getRoomView() {
         return roomView;
     }
 
+    /**
+     * Gets IP enemy.
+     *
+     * @return String IP enemy
+     */
     public String getIpEnemy() {
         return ipEnemy;
     }
 
+    /**
+     * Sets IP enemy.
+     *
+     * @param ipEnemy String
+     */
     public void setIpEnemy(String ipEnemy) {
         this.ipEnemy = ipEnemy;
     }
 
+    /**
+     * Gets User IP.
+     *
+     * @return List IP
+     */
     public List<String> getIP(){
         // The following code loops through the available network interfaces
         // Keep in mind, there can be multiple interfaces per device, for example

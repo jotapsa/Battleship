@@ -3,6 +3,9 @@ package com.battleship.model;
 import com.battleship.model.aux.Orientation;
 import com.battleship.model.aux.Turn;
 
+/**
+ * A model representing a Move.
+ */
 public class Move {
     private boolean processed;
     public boolean processedVerticalPos;
@@ -18,6 +21,12 @@ public class Move {
     private Coord target;
     private boolean hitShip;
 
+    /**
+     * Instantiates a new Move.
+     *
+     * @param target Coord
+     * @param turn Turn
+     */
     public Move(Coord target, Turn turn){
         this.processed = false;
         this.processedVerticalPos = false;
@@ -30,6 +39,13 @@ public class Move {
         this.hitShip = false; //default
     }
 
+    /**
+     * Instantiates a new Move.
+     *
+     * @param target Coord
+     * @param turn Turn
+     * @param processed boolean
+     */
     public Move(Coord target, Turn turn, boolean processed){
         this.processed = processed;
         this.processedVerticalPos = processed;
@@ -42,30 +58,63 @@ public class Move {
         this.hitShip = false; //default
     }
 
+    /**
+     * Checks if is processed.
+     *
+     * @return boolean true, if is processed, false otherwise.
+     */
     public boolean isProcessed(){
         return this.processed;
     }
 
+    /**
+     * Gets move orientation.
+     *
+     * @return Orientation orientation
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * Gets way multiplier.
+     *
+     * @return int way multiplier
+     */
     public int getWayMultiplier(){
         return wayMultiplier;
     }
 
+    /**
+     * Gets move turn.
+     *
+     * @return Turn turn
+     */
     public Turn getTurn(){
         return this.turn;
     }
 
+    /**
+     * Gets move target.
+     *
+     * @return Coord target
+     */
     public Coord getTarget(){
         return target;
     }
 
+    /**
+     * Checks if move hit any ship.
+     *
+     * @return boolean hit ship
+     */
     public boolean getHitShip(){
         return hitShip;
     }
 
+    /**
+     * Flip orientation.
+     */
     public void flipOrientation() {
         switch(orientation){
             case Vertical:
@@ -79,6 +128,9 @@ public class Move {
         }
     }
 
+    /**
+     * Flip.
+     */
     public void flip(){
         switch(orientation){
             case Horizontal:
@@ -118,12 +170,20 @@ public class Move {
         }
     }
 
+    /**
+     * Check End of processing.
+     */
     public void checkEofProcessing(){
         if(this.processedVerticalPos && this.processedVerticalNeg && this.processedHorizontalNeg && this.processedHorizontalPos){
             this.processed = true;
         }
     }
 
+    /**
+     * Sets hit ship.
+     *
+     * @param hitShip boolean
+     */
     public void setHitShip(boolean hitShip){
         this.hitShip = hitShip;
     }

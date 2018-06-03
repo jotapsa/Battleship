@@ -1,0 +1,8 @@
+com.battleship
+com.battleship.controller
+com.battleship.model
+com.battleship.model.aux
+com.battleship.networking
+com.battleship.networking.msg
+com.battleship.view
+test
