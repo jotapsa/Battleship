@@ -63,7 +63,7 @@ public class Computer extends Player{
                                         m.flip();
                                         break;
                                     default:
-                                        move = new Move(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()), getTurnToPlay(), true);
+                                        move = new Move(new Coord(m.getTarget().getX()+distanceFromTarget*m.getWayMultiplier(), m.getTarget().getY()), getTurnToPlay());
                                         moves.add(move);
                                         return move;
                                 }
@@ -84,7 +84,7 @@ public class Computer extends Player{
                                         m.flip();
                                         break;
                                     default:
-                                        move = new Move(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()), getTurnToPlay(), true);
+                                        move = new Move(new Coord(m.getTarget().getX(), m.getTarget().getY()+distanceFromTarget*m.getWayMultiplier()), getTurnToPlay());
                                         moves.add(move);
                                         return move;
                                 }
