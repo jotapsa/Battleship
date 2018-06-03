@@ -108,7 +108,6 @@ public class Battleship extends Game {
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
         this.gameController = new GameController(gameModel, this);
-        startGameServer();
         setScreen(new MultiplayerView(this));
     }
 
@@ -116,15 +115,16 @@ public class Battleship extends Game {
         setScreen(new PlacingView(this, turn));
     }
 
-    private void startGameServer(){
+    public void startGameServer(){
         this.gameServer = new Server(this);
         this.gameServerThread = new Thread(gameServer);
         this.gameServerThread.start();
     }
 
-    private void stopGameServer(){
+    public void stopGameServer(){
         if(this.gameServer != null){
             this.gameServer.closeServer();
+            this.gameServer = null;
         }
     }
 

@@ -26,11 +26,11 @@ public class Server implements Runnable{
 
     private boolean listen;
     private ServerSocket serverSocket;
+    private Socket socket;
 
     public Server(Battleship game){
         this.game = game;
         this.listen = true;
-
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Server implements Runnable{
 
         while(listen){
             // Create a socket
-            Socket socket = serverSocket.accept(null);
+            socket = serverSocket.accept(null);
 
             // Read data from the socket into a BufferedReader
             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -105,11 +105,10 @@ public class Server implements Runnable{
                             out.write(new GameOverMessage().toString());
                             out.flush();
 
-                            closeServer();
-
                             Gdx.app.postRunnable(new Runnable() {
                                 @Override
                                 public void run() {
+                                    closeServer();
                                     game.showMenu();
                                 }
                             });

@@ -70,8 +70,9 @@ public class RoomView extends ScreenAdapter{
 
     public void handleInputs(float delta){
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)){
-            game.startMultiplayer();
             dispose();
+            game.stopGameServer();
+            game.startMultiplayer();
         }
     }
 

@@ -252,6 +252,14 @@ public class GameView extends ScreenAdapter {
 
                 //print red board map
                 printBoardMap(this.gameModel.getPlayerRedBoard(), true);
+
+                if(gameModel.getTurn() == Turn.Blue){
+                    Label lbl = new Label("YOUR TURN", skin, "title");
+                    lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+                    lbl.setFontScale(2,2);
+                    lbl.setColor(0,0,1,1);
+                    lbl.draw(game.getBatch(), 1);
+                }
             }
             else{
                 // print red board
@@ -264,23 +272,15 @@ public class GameView extends ScreenAdapter {
 
                 //print blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
-            }
 
-            if(gameModel.getTurn() == Turn.Blue){
-                Label lbl = new Label("PLAYER 1 TURN", skin, "title");
-                lbl.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
-                lbl.setFontScale(2,2);
-                lbl.setColor(0,0,1,1);
-                lbl.draw(game.getBatch(), 1);
+                if(gameModel.getTurn() == Turn.Red){
+                    Label lbl = new Label("YOUR TURN", skin, "title");
+                    lbl.setPosition(2*(DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+                    lbl.setFontScale(2,2);
+                    lbl.setColor(1,0,0,1);
+                    lbl.draw(game.getBatch(), 1);
+                }
             }
-            else{
-                Label lbl = new Label("PLAYER 2 TURN", skin, "title");
-                lbl.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
-                lbl.setFontScale(2,2);
-                lbl.setColor(1,0,0,1);
-                lbl.draw(game.getBatch(), 1);
-            }
-
         }
     }
 

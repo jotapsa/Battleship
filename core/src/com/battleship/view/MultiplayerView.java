@@ -74,6 +74,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 dispose();
+                game.startGameServer();
                 game.showRoom();
             }
         });
@@ -84,6 +85,7 @@ public class MultiplayerView extends ScreenAdapter{
         joinRoomBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
+                game.startGameServer();
                 showJoinRoomDialog();
             }
         });
@@ -164,6 +166,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 joinRoomDialog.setVisible(false);
+                game.stopGameServer();
             }
         });
 
