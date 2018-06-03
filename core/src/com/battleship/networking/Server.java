@@ -24,20 +24,23 @@ import java.io.PrintWriter;
 public class Server implements Runnable{
     private Battleship game;
 
+    private boolean listen;
+    private ServerSocket serverSocket;
+
     public Server(Battleship game){
         this.game = game;
+        this.listen = true;
+
     }
 
     @Override
     public void run() {
-        boolean listen = true;
-
         ServerSocketHints serverSocketHint = new ServerSocketHints();
         // 0 means no timeout.  Probably not the greatest idea in production!
         serverSocketHint.acceptTimeout = 0;
 
         // Create the socket server using TCP protocol and listening on game.defaultPort
-        ServerSocket serverSocket = Gdx.net.newServerSocket(Net.Protocol.TCP, game.defaultPort, serverSocketHint);
+        serverSocket = Gdx.net.newServerSocket(Net.Protocol.TCP, game.defaultPort, serverSocketHint);
 
         while(listen){
             // Create a socket
@@ -102,12 +105,15 @@ public class Server implements Runnable{
                             out.write(new GameOverMessage().toString());
                             out.flush();
 
+                            closeServer();
+
                             Gdx.app.postRunnable(new Runnable() {
                                 @Override
                                 public void run() {
                                     game.showMenu();
                                 }
                             });
+                            break;
                         }
                         else{
                             out.write(new HitMessage(hit).toString());
@@ -126,6 +132,7 @@ public class Server implements Runnable{
     }
 
     public void closeServer(){
-
+        listen = false;
+        serverSocket.dispose();
     }
 }

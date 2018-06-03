@@ -122,6 +122,12 @@ public class Battleship extends Game {
         this.gameServerThread.start();
     }
 
+    private void stopGameServer(){
+        if(this.gameServer != null){
+            this.gameServer.closeServer();
+        }
+    }
+
 
     @Override
 	public void render () {
