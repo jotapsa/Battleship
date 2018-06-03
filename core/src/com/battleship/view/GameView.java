@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
@@ -63,6 +65,8 @@ public class GameView extends ScreenAdapter {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    private Skin skin;
+
 
     /**
      * Creates this screen.
@@ -71,6 +75,8 @@ public class GameView extends ScreenAdapter {
         this.game = game;
         this.gameModel = game.getGameModel();
         this.gameController = gameController;
+
+        this.skin = new Skin(Gdx.files.internal("skin/quantum-horizon/quantum-horizon-ui.json"));
 
         loadAssets();
 
@@ -258,6 +264,21 @@ public class GameView extends ScreenAdapter {
 
                 //print blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
+            }
+
+            if(gameModel.getTurn() == Turn.Blue){
+                Label lbl = new Label("PLAYER 1 TURN", skin, "title");
+                lbl.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+                lbl.setFontScale(2,2);
+                lbl.setColor(0,0,1,1);
+                lbl.draw(game.getBatch(), 1);
+            }
+            else{
+                Label lbl = new Label("PLAYER 2 TURN", skin, "title");
+                lbl.setPosition((DISPLAY_WIDTH/VIEWPORT_WIDTH), (float) 10*(DISPLAY_HEIGHT/VIEWPORT_HEIGHT) + (DISPLAY_HEIGHT/VIEWPORT_HEIGHT)/4);
+                lbl.setFontScale(2,2);
+                lbl.setColor(1,0,0,1);
+                lbl.draw(game.getBatch(), 1);
             }
 
         }
