@@ -15,10 +15,10 @@ Just clone this git repository and import the graddle project to your favorite I
 ### 2. Architecture Design
 #### 2.1 UML
 ##### Package structure:
-![UML](img/uml/package_overview.png "Battleship UML")
+<img src="img/uml/package_overview.png" width="500" title="Battleship UML">
 
 ##### Type Hierarchy
-![UML](img/uml/type_hierarchy.png "Battleship UML")
+<img src="img/uml/type_hierarchy.png" width="500" title="Battleship UML">
 
 #### 2.2 Design Patterns
 *   [Singleton Pattern](https://en.wikipedia.org/wiki/Singleton_pattern) - Avoid creating more than one intance of a object.
@@ -30,7 +30,7 @@ Just clone this git repository and import the graddle project to your favorite I
 *   [MVC Design Pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) - Software architectural pattern
 
 ### 2.4 Major Difficulties
-Since we are both 3rd year students who attend LBAW class, we only had 4 days to do this project, so the biggest difficulty was time.
+Since we are both 3rd year students who attend LBAW class, we only had 4 days to do this project, so the biggest difficulty was time. :trophy: :pray:
 
 ### 2.5 Distribution among team members
 The work was shared equally.
@@ -38,13 +38,11 @@ The work was shared equally.
 ### 3. User Manual
 The game starts on the main menu where you can choose Singleplayer (vs Computer), Local Multiplayer (on the same device), Multiplayer (over lan).
 
-![Menu](img/MainMenu.png "Game Menu")
+<img src="img/MainMenu.png" height="500" title="Game Menu">
 
 If you choose Singleplayer you are taken to the Placing Screen where you can place your ships.
 
-![PlacingViewSinglePlayer1](img/PlacingViewSinglePlayer1.png "PlacingViewSinglePlayer1")
-
-![PlacingViewSinglePlayer2](img/PlacingViewSinglePlayer2.png "PlacingViewSinglePlayer2")
+<img src="img/PlacingViewSinglePlayer1.png" height="500" title="PlacingViewSinglePlayer1"> <img src="img/PlacingViewSinglePlayer2.png" height="500" title="PlacingViewSinglePlayer2">
 
 After placing your ships, press on the screen again and you are taken to the Game Screen, to play just press a cell to choose your target.
 
