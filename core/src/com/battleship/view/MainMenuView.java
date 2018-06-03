@@ -83,6 +83,10 @@ public class MainMenuView extends ScreenAdapter {
         multiplayerBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
+                if(game.getIP().size() < 2){
+                    return;
+                }
+
                 dispose();
                 game.startMultiplayer();
             }

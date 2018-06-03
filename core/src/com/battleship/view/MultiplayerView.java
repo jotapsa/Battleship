@@ -77,7 +77,6 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 dispose();
-                GameController.getInstance().setPlayerOnline(Turn.Red);
                 game.showRoom();
             }
         });
@@ -122,10 +121,9 @@ public class MultiplayerView extends ScreenAdapter{
                 String ip = ipInput.getText();
                 game.setIpEnemy(ip);
                 Socket socket;
-                //TODO: validate IP
 
                 //join room and go to game
-                JoinMessage msg = new JoinMessage();
+                JoinMessage msg = new JoinMessage(game.getIP().get(1));
                 SocketHints socketHints = new SocketHints();
                 socketHints.connectTimeout = 0;
 

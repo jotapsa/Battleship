@@ -160,7 +160,8 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             //if coord is inside board and it's Ship/Free cell
-            if(this.gameController.isValidTarget(coord)){
+            if(gameModel.getGameType() != GameType.Multiplayer
+                    &&  this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
                 this.gameController.handleClick(coord);
@@ -169,6 +170,10 @@ public class GameView extends ScreenAdapter {
                         && turn != gameModel.getTurn()){
                     camera.rotate(180);
                 }
+            }
+            else{
+                // ----  Multiplayer Connection ----
+                this.gameController.handleMultiplayerClick(coord);
             }
         }
 
@@ -232,6 +237,9 @@ public class GameView extends ScreenAdapter {
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
                 }
 
+                //print blue board map
+                printBoardMap(this.gameModel.getPlayerBlueBoard(), false);
+
                 //print red board map
                 printBoardMap(this.gameModel.getPlayerRedBoard(), true);
             }
@@ -240,6 +248,9 @@ public class GameView extends ScreenAdapter {
                 for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
                     printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
                 }
+
+                //print red board map
+                printBoardMap(this.gameModel.getPlayerRedBoard(), false);
 
                 //print blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);

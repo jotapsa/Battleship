@@ -6,6 +6,7 @@ import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.battleship.Battleship;
+import com.battleship.model.Board;
 import com.battleship.model.Computer;
 import com.battleship.model.Coord;
 import com.battleship.model.GameModel;
@@ -57,10 +58,6 @@ public class GameController {
         return instance;
     }
 
-    public BoardController getBoardController() {
-        return boardController;
-    }
-
     public void update(float delta){
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();
@@ -109,73 +106,11 @@ public class GameController {
             return;
         }
 
-        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && !((Human) gameModel.getPlayerBlue()).isOnlinePlayer()){
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && gameModel.getPlayerTurn() == Turn.Blue){
             move = new Move(target, gameModel.getTurn());
-            if(gameModel.getGameType() == GameType.Multiplayer){
-                Socket socket;
-
-                SocketHints socketHints = new SocketHints();
-                socketHints.connectTimeout = 0;
-
-                try {
-                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
-                    PrintWriter out = new PrintWriter(socket.getOutputStream());
-                    out.write(new MoveMessage(target).toString());
-                    out.flush();
-
-                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                    String response = inFromServer.readLine();
-                    System.out.println(response);
-
-                    String[] msgArgs = response.split(" ");
-
-                    if(msgArgs[0].equals("HIT")){
-                        if(msgArgs[1].equals("FREEHIT")){
-                            gameModel.getPlayerRedBoard().setCell(target, CellType.Free);
-                        }else if(msgArgs[1].equals("SHIPHIT")){
-                            gameModel.getPlayerRedBoard().setCell(target, CellType.Ship);
-                        }
-                    }
-                }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
-        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && !((Human) gameModel.getPlayerRed()).isOnlinePlayer()){
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && gameModel.getPlayerTurn() == Turn.Red){
             move = new Move(target, gameModel.getTurn());
-            if(gameModel.getGameType() == GameType.Multiplayer){
-                Socket socket;
-
-                SocketHints socketHints = new SocketHints();
-                socketHints.connectTimeout = 0;
-
-                try {
-                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
-                    PrintWriter out = new PrintWriter(socket.getOutputStream());
-                    out.write(new MoveMessage(target).toString());
-                    out.flush();
-
-                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-                    String response = inFromServer.readLine();
-                    System.out.println(response);
-
-                    String[] msgArgs = response.split(" ");
-
-                    if(msgArgs[0].equals("HIT")){
-                        if(msgArgs[1].equals("FREEHIT")){
-                            gameModel.getPlayerBlueBoard().setCell(target, CellType.Free);
-                        }else if(msgArgs[1].equals("SHIPHIT")){
-                            gameModel.getPlayerBlueBoard().setCell(target, CellType.Ship);
-                        }
-                    }
-                }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
 
         if(move != null){
@@ -188,21 +123,68 @@ public class GameController {
         isGameOver = boardController.allSank();
     }
 
-    public void setPlayerOnline(Turn turn){
-        switch (turn){
-            case Blue:
-                if(gameModel.getPlayerBlue() instanceof Human){
-                    ((Human) gameModel.getPlayerBlue()).setOnlinePlayer(true);
-                }
-                break;
-            case Red:
-                if(gameModel.getPlayerBlue() instanceof Human){
-                    ((Human) gameModel.getPlayerRed()).setOnlinePlayer(true);
-                }
-                break;
-            default:
-                break;
+    public void handleMultiplayerClick(Coord target){
+        if(!isValidTarget(target)){
+            return;
         }
+
+        Move move = null;
+        CellType cellType = null;
+
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && gameModel.getPlayerTurn() == Turn.Blue){
+            move = new Move(target, gameModel.getTurn());
+            cellType = sendMove(gameModel.getPlayerRedBoard(), target);
+        }
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && gameModel.getPlayerTurn() == Turn.Red){
+            move = new Move(target, gameModel.getTurn());
+            cellType = sendMove(gameModel.getPlayerBlueBoard(), target);
+        }
+
+        if(move != null){
+            move.setHitShip(cellType == CellType.ShipHit);
+            if(!move.getHitShip()){
+                gameModel.nextTurn();
+            }
+        }
+    }
+
+    public CellType sendMove(Board board, Coord target){
+        Socket socket;
+
+        SocketHints socketHints = new SocketHints();
+        socketHints.connectTimeout = 0;
+
+        try {
+            socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out.write(new MoveMessage(target).toString());
+            out.flush();
+
+            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String response = inFromServer.readLine();
+            System.out.println(response);
+
+            String[] msgArgs = response.split(" ");
+
+            if(msgArgs[0].equals("HIT")){
+                if(msgArgs[1].equals("FREEHIT")){
+                    board.setCell(target, CellType.FreeHit);
+                    return CellType.FreeHit;
+                }else if(msgArgs[1].equals("SHIPHIT")){
+                    board.setCell(target, CellType.ShipHit);
+                    return CellType.ShipHit;
+                }
+                else if(msgArgs[1].equals("GAMEOVER")){
+                    //GAMEOVER
+                }
+            }
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return CellType.Free;
     }
 
     public boolean isGameOver(){

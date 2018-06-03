@@ -9,6 +9,7 @@ import com.battleship.Battleship;
 import com.battleship.controller.BoardController;
 import com.battleship.controller.GameController;
 import com.battleship.model.Coord;
+import com.battleship.model.Human;
 import com.battleship.model.Move;
 import com.battleship.model.Turn;
 import com.battleship.model.aux.CellType;
@@ -55,7 +56,8 @@ public class Server implements Runnable{
 
                 String[] msgArgs = response.split(" ");
 
-                if(msgArgs[0].equals("JOIN")){
+                if(msgArgs[0].equals("JOIN") && msgArgs.length > 1 && msgArgs[1].length() != 0){
+                    game.setIpEnemy(msgArgs[1]);
 
                     //accept
                     out.write(new AcceptMessage().toString());
@@ -74,13 +76,27 @@ public class Server implements Runnable{
                 }
                 else if(msgArgs[0].equals("MOVE")){
                     Coord target = new Coord(Integer.parseInt(msgArgs[1]), Integer.parseInt(msgArgs[2]));
-                    Move move = new Move(target, Turn.Red);
+                    Move move = null;
+
+                    if(game.getGameModel().getPlayerTurn() == Turn.Blue){
+                        move = new Move(target, Turn.Blue);
+                        BoardController.getInstance().setBoard(game.getGameModel().getPlayerBlueBoard());
+                    }
+                    else{
+                        move = new Move(target, Turn.Red);
+                        BoardController.getInstance().setBoard(game.getGameModel().getPlayerRedBoard());
+                    }
 //                      process move
-                    BoardController.getInstance().setBoard(game.getGameModel().getPlayerBlueBoard());
-                    CellType hit = BoardController.getInstance().doMove(move);
-//
-                    out.write(new HitMessage(hit).toString());
-                    out.flush();
+
+                    if(move != null){
+                        CellType hit = BoardController.getInstance().doMove(move);
+                        if(!move.getHitShip()){
+                            game.getGameModel().nextTurn();
+                        }
+
+                        out.write(new HitMessage(hit).toString());
+                        out.flush();
+                    }
                 }
 
 //                out.close();

@@ -44,25 +44,7 @@ public class RoomView extends ScreenAdapter{
         this.group = new Group();
         this.stage.addActor(group);
 
-
-        // The following code loops through the available network interfaces
-        // Keep in mind, there can be multiple interfaces per device, for example
-        // one per NIC, one per active wireless and the loopback
-        // In this case we only care about IPv4 address ( x.x.x.x format )
-        List<String> addresses = new ArrayList<String>();
-        try {
-            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-            for(NetworkInterface ni : Collections.list(interfaces)){
-                for(InetAddress address : Collections.list(ni.getInetAddresses()))
-                {
-                    if(address instanceof Inet4Address){
-                        addresses.add(address.getHostAddress());
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+        List<String> addresses = game.getIP();
 
         // Print the contents of our array to a string.  Yeah, should have used StringBuilder
         String ipAddress = new String("");
