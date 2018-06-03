@@ -10,7 +10,7 @@ Just clone this git repository and import the graddle project to your favorite I
 
 #### 1.2 Instalation
 
-[Download APK](http://web.fe.up.pt/~up201503477/battleship.apk) :robot:
+[Download APK](http://web.fe.up.pt/~up201503477/battleship.apk) :iphone:
 
 ### 2. Architecture Design
 #### 2.1 UML
@@ -46,57 +46,51 @@ If you choose Singleplayer you are taken to the Placing Screen where you can pla
 
 After placing your ships, press on the screen again and you are taken to the Game Screen, to play just press a cell to choose your target.
 
-![GameViewSinglePlayer1](img/GameViewSinglePlayer1.png "GameViewSinglePlayer1")
+<img src="img/GameViewSinglePlayer1.png" height="500" title="GameViewSinglePlayer1"> <img src="img/GameViewSinglePlayer2.png" height="500" title="GameViewSinglePlayer2">
 
-![GameViewSinglePlayer2](img/GameViewSinglePlayer2.png "GameViewSinglePlayer2")
+If you choose Multiplayer Local you are taken to the Placing screen for the "blue" player.
 
-If you choose Multiplayer Local you are taken to the Placing screen for the "blue" player
+<img src="img/PlacingViewMultiplayerLocal1.png" height="500" title="PlacingViewMultiplayerLocal1">
 
-![PlacingViewMultiplayerLocal1](img/PlacingViewMultiplayerLocal1.png "PlacingViewMultiplayerLocal1")
+Then to the Placing screen for the "red" player.
 
-Then to the Placing screen for the "red" player
-
-![PlacingViewMultiplayerLocal2](img/PlacingViewMultiplayerLocal2.png "PlacingViewMultiplayerLocal2")
+<img src="img/PlacingViewMultiplayerLocal2.png" height="500" title="PlacingViewMultiplayerLocal2">
 
 The screen then rotates accordingly to the turn.
 
-![GameViewMultiPlayerLocal1](img/GameViewMultiPlayerLocal1.png "GameViewMultiPlayerLocal1")
+<img src="img/GameViewMultiPlayerLocal1.png" height="500" title="GameViewMultiPlayerLocal1"> <img src="img/GameViewMultiPlayerLocal2.png" height="500" title="GameViewMultiPlayerLocal2">
 
-![GameViewMultiPlayerLocal2](img/GameViewMultiPlayerLocal2.png "GameViewMultiPlayerLocal2")
+If you choose Multiplayer you are taken to the MultiplayerMenu.
 
-If you choose Multiplayer you are taken to the MultiplayerMenu
+<img src="img/MultiplayerView.png" height="500" title="MultiplayerView">
 
-![MultiplayerView](img/MultiplayerView.png "MultiplayerView")
+Click Create Room (you become the blue player) and shows your IP adress so that the other player can connect.
 
-Click create room (you become the blue player). shows your ip so that the other player can connect
+<img src="img/CreateRoomView.png" height="500" title="CreateRoomView">
 
-![CreateRoomView](img/CreateRoomView.png "CreateRoomView")
+Click Join Room and a dialog asking for Room IP adress shows up.
 
-Click Join room and a dialog asking for ip shows up.
+<img src="img/JoinRoomDialog.png" height="500" title="JoinRoomDialog">
 
-![JoinRoomDialog](img/JoinRoomDialog.png "JoinRoomDialog")
+When the connection is established, each player is taken to their respective Placing screens.
 
-When the connection is established each player is taken to their respective Placing screens
-
-![PlacingViewMultiplayer](img/PlacingViewMultiplayer.png "PlacingViewMultiplayer")
+<img src="img/PlacingViewMultiplayer.png" height="500" title="PlacingViewMultiplayer">
 
 Then the fun starts!
 
-![GamePlayerMultiplayer1](img/GamePlayerMultiplayer1.png "GamePlayerMultiplayer1")
-![GamePlayerMultiplayer2](img/GamePlayerMultiplayer2.png "GamePlayerMultiplayer2")
-![GamePlayerMultiplayer3](img/GamePlayerMultiplayer3.png "GamePlayerMultiplayer3")
+<img src="img/GamePlayerMultiplayer1.png" height="500" title="GamePlayerMultiplayer1"> <img src="img/GamePlayerMultiplayer2.png" height="500" title="GamePlayerMultiplayer2"> <img src="img/GamePlayerMultiplayer3.png" height="500" title="GamePlayerMultiplayer3">
 
-Sometimes you win :)
+Sometimes you win :trophy:
 
-![GamePlayerMultiplayerWin](img/GamePlayerMultiplayerWin.png "GamePlayerMultiplayerWin")
+<img src="img/GamePlayerMultiplayerWin.png" height="500" title="GamePlayerMultiplayerWin">
 
-Sometimes you lose :(
+Sometimes you lose :hankey:
 
-![GamePlayerMultiplayerLost](img/GamePlayerMultiplayerLost.png "GamePlayerMultiplayerLost")
+<img src="img/GamePlayerMultiplayerLost.png" height="500" title="GamePlayerMultiplayerLost">
 
 ----
 
-GROUP1743, 29/04/2018
+T2G05, 3/06/2018
 
 > Bernardo Manuel Costa Barbosa, up201503477@fe.up.pt
 > João Pedro Teixeira Pereira de Sá, up201506252@fe.up.pt
