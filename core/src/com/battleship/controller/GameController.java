@@ -60,10 +60,6 @@ public class GameController {
         if(gameModel.getPlayerBlue() instanceof Computer || gameModel.getPlayerRed() instanceof Computer){
             computerPlay();
         }
-
-        if(gameModel.getGameType() != GameType.Multiplayer){
-            isGameOver = boardController.allSank();
-        }
     }
 
     private void computerPlay() {
