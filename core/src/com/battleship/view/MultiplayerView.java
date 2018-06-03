@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.battleship.Battleship;
 import com.battleship.controller.GameController;
 import com.battleship.networking.msg.AcceptMessage;
+import com.battleship.model.Turn;
 import com.battleship.networking.msg.JoinMessage;
 
 import java.io.BufferedReader;
@@ -76,6 +77,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 dispose();
+                GameController.getInstance().setPlayerOnline(Turn.Red);
                 game.showRoom();
             }
         });
@@ -137,7 +139,6 @@ public class MultiplayerView extends ScreenAdapter{
                     String response = inFromServer.readLine();
                     System.out.println(response);
 
-
                     if(response.equals("ACCEPT")){
                         //PLACING VIEW ----> TURN RED
                     }
@@ -145,7 +146,15 @@ public class MultiplayerView extends ScreenAdapter{
 
 //                    inFromServer.close();
 //                    out.close();
-
+//                    switch(response){
+//                        case "ACCEPTED":
+//                            //START GAME
+//                            break;
+//                        case "DENIED":
+//                            break;
+//                        default:
+//                            break;
+//                    }
                 }
                 catch (IOException ex) {
                     ex.printStackTrace();

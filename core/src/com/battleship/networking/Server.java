@@ -64,6 +64,19 @@ public class Server implements Runnable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+//            switch (msgArgs[0]){
+//                case "JOIN":
+//                    //accept
+//                    //PLACING VIEW DO BLUE
+//                    break;
+//                case "MOVE":
+//                    //process move
+//                    //return hit cell
+//                    break;
+//                default:
+//                    break;
+//            }
         }
     }
 

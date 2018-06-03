@@ -90,10 +90,10 @@ public class GameController {
             return;
         }
 
-        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human){
+        if(gameModel.getTurn() == Turn.Blue && gameModel.getPlayerBlue() instanceof Human && !((Human) gameModel.getPlayerBlue()).isOnlinePlayer()){
             move = new Move(target, gameModel.getTurn());
         }
-        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human){
+        else if (gameModel.getTurn() == Turn.Red && gameModel.getPlayerRed() instanceof Human && !((Human) gameModel.getPlayerBlue()).isOnlinePlayer()){
             move = new Move(target, gameModel.getTurn());
         }
 
@@ -105,6 +105,23 @@ public class GameController {
         }
 
         isGameOver = boardController.allSank();
+    }
+
+    public void setPlayerOnline(Turn turn){
+        switch (turn){
+            case Blue:
+                if(gameModel.getPlayerBlue() instanceof Human){
+                    ((Human) gameModel.getPlayerBlue()).setOnlinePlayer(true);
+                }
+                break;
+            case Red:
+                if(gameModel.getPlayerBlue() instanceof Human){
+                    ((Human) gameModel.getPlayerRed()).setOnlinePlayer(true);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public boolean isGameOver(){
