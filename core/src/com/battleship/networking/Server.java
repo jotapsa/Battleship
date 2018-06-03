@@ -56,11 +56,23 @@ public class Server implements Runnable{
                 String[] msgArgs = response.split(" ");
 
                 if(msgArgs[0].equals("JOIN")){
+
                     //accept
                     out.write(new AcceptMessage().toString());
-                    //dispose room view
-                    game.startPlacingView(Turn.Blue);
-                }else if(msgArgs[0].equals("MOVE")){
+                    out.flush();
+
+//                    dispose room view
+                    game.getRoomView().dispose();
+
+//                    placing view
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            game.startPlacingView(Turn.Blue);
+                        }
+                    });
+                }
+                else if(msgArgs[0].equals("MOVE")){
                     Coord target = new Coord(Integer.parseInt(msgArgs[1]), Integer.parseInt(msgArgs[2]));
                     Move move = new Move(target, Turn.Red);
 //                      process move
@@ -68,8 +80,8 @@ public class Server implements Runnable{
                     CellType hit = BoardController.getInstance().doMove(move);
 //
                     out.write(new HitMessage(hit).toString());
+                    out.flush();
                 }
-                out.flush();
 
 //                out.close();
 //                inFromClient.close();

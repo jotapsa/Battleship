@@ -1,6 +1,7 @@
 package com.battleship;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +19,7 @@ import com.battleship.view.MultiplayerView;
 import com.battleship.view.RoomView;
 
 public class Battleship extends Game {
-    public String ipEnemy;
+    private String ipEnemy;
     public int defaultPort = 5000;
 
     private Server gameServer;
@@ -37,6 +38,8 @@ public class Battleship extends Game {
 
     private Texture freeHit;
     private Texture shipHit;
+
+    private RoomView roomView;
 
     /**
      * Creates the game. Initializes the sprite batch and asset manager.
@@ -68,7 +71,8 @@ public class Battleship extends Game {
      * Show Room.
      */
     public void showRoom() {
-        setScreen(new RoomView(this));
+        this.roomView = new RoomView(this);
+        setScreen(roomView);
     }
 
 
@@ -179,5 +183,17 @@ public class Battleship extends Game {
     public void startGameView(Turn playerTurn){
         this.gameModel.setPlayerTurn(playerTurn);
         setScreen(new GameView(this, this.gameController));
+    }
+
+    public RoomView getRoomView() {
+        return roomView;
+    }
+
+    public String getIpEnemy() {
+        return ipEnemy;
+    }
+
+    public void setIpEnemy(String ipEnemy) {
+        this.ipEnemy = ipEnemy;
     }
 }

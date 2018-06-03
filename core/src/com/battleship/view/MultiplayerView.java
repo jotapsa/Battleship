@@ -120,7 +120,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 String ip = ipInput.getText();
-                game.ipEnemy = ip;
+                game.setIpEnemy(ip);
                 Socket socket;
                 //TODO: validate IP
 
@@ -147,8 +147,8 @@ public class MultiplayerView extends ScreenAdapter{
                         game.startPlacingView(Turn.Red);
                     }
 
-//                    inFromServer.close();
-//                    out.close();
+                    inFromServer.close();
+                    out.close();
 
                 }
                 catch (IOException ex) {

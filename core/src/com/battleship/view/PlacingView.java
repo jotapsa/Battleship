@@ -81,7 +81,6 @@ public class PlacingView extends ScreenAdapter{
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    private SpriteBatch batch;
     private BitmapFont font;
 
     private Texture arrow;
@@ -113,7 +112,6 @@ public class PlacingView extends ScreenAdapter{
 
 
         //FONTS
-        this.batch = new SpriteBatch();
         this.font = new BitmapFont();
         this.font.setColor(Color.BLUE);
         this.arrow = new Texture("arrow.png");

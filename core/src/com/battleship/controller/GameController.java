@@ -118,7 +118,7 @@ public class GameController {
                 socketHints.connectTimeout = 0;
 
                 try {
-                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.ipEnemy, game.defaultPort, socketHints);
+                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
                     PrintWriter out = new PrintWriter(socket.getOutputStream());
                     out.write(new MoveMessage(target).toString());
                     out.flush();
@@ -152,7 +152,7 @@ public class GameController {
                 socketHints.connectTimeout = 0;
 
                 try {
-                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.ipEnemy, game.defaultPort, socketHints);
+                    socket = Gdx.net.newClientSocket(Net.Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
                     PrintWriter out = new PrintWriter(socket.getOutputStream());
                     out.write(new MoveMessage(target).toString());
                     out.flush();

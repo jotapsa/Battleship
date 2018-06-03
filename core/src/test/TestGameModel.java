@@ -25,7 +25,7 @@ public class TestGameModel {
     @Test
     public void testGameModel(){
         gameModel = new GameModel(GameType.SinglePlayer);
-        gameController = new GameController(gameModel);
+        gameController = new GameController(gameModel, null);
 
         assertEquals(gameModel.getGameType(), GameType.SinglePlayer);
 
@@ -41,7 +41,7 @@ public class TestGameModel {
     @Test
     public void testFillBoard(){
         gameModel = new GameModel(GameType.SinglePlayer);
-        gameController = new GameController(gameModel);
+        gameController = new GameController(gameModel, null);
         boardController = BoardController.getInstance();
 
         boardController.setBoard(gameModel.getPlayerBlueBoard());
@@ -73,7 +73,7 @@ public class TestGameModel {
     @Test
     public void testSingleplayerGame(){
         gameModel = new GameModel(GameType.SinglePlayer);
-        gameController = new GameController(gameModel);
+        gameController = new GameController(gameModel, null);
         boardController = BoardController.getInstance();
         boardController.setBoard(gameModel.getPlayerBlueBoard());
         boardController.placeShipsRandomly();

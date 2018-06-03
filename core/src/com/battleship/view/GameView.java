@@ -160,8 +160,7 @@ public class GameView extends ScreenAdapter {
             Coord coord = new Coord(x, y);
 
             //if coord is inside board and it's Ship/Free cell
-            if(gameModel.getGameType() != GameType.Multiplayer
-                    &&  this.gameController.isValidTarget(coord)){
+            if(this.gameController.isValidTarget(coord)){
                 turn = gameModel.getTurn(); // save turn before Move
 
                 this.gameController.handleClick(coord);
@@ -170,10 +169,6 @@ public class GameView extends ScreenAdapter {
                         && turn != gameModel.getTurn()){
                     camera.rotate(180);
                 }
-            }
-            else if(gameModel.getPlayerTurn() == gameModel.getTurn()
-                     && this.gameController.isValidTarget(coord)){
-                // ----  Multiplayer Connection ----
             }
         }
 
@@ -190,7 +185,7 @@ public class GameView extends ScreenAdapter {
     }
 
     public void printBoards(){
-        if(this.gameModel.getGameType() != GameType.Multiplayer_local){
+        if(this.gameModel.getGameType() == GameType.SinglePlayer){
             //blue board
             for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
                 printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
@@ -207,7 +202,7 @@ public class GameView extends ScreenAdapter {
             //red board map
             printBoardMap(this.gameModel.getPlayerRedBoard(), true);
         }
-        else{
+        else if(this.gameModel.getGameType() == GameType.Multiplayer_local){
 
             if(this.gameModel.getTurn() == Turn.Blue){
                 //print reverse red board
@@ -227,6 +222,29 @@ public class GameView extends ScreenAdapter {
                 //print blue board map
                 printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
             }
+
+        }
+        else{
+
+            if(this.gameModel.getPlayerTurn() == Turn.Blue){
+                // print blue board
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerBlueBoard().getPlacedShips().entrySet()){
+                    printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
+                }
+
+                //print red board map
+                printBoardMap(this.gameModel.getPlayerRedBoard(), true);
+            }
+            else{
+                // print red board
+                for(Map.Entry<Ship, Coord> shipBoard : this.gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
+                    printShipBoard(shipBoard.getKey(), shipBoard.getValue(), false);
+                }
+
+                //print blue board map
+                printBoardMap(this.gameModel.getPlayerBlueBoard(), true);
+            }
+
         }
     }
 
