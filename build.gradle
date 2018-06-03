@@ -9,7 +9,11 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.3'
+        classpath 'com.google.gms:google-services:3.3.1'
+
     }
 }
 
