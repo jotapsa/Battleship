@@ -77,7 +77,7 @@ public class Battleship extends Game {
      */
     public void startSingleplayerGame() {
         this.gameModel = new GameModel(GameType.SinglePlayer);
-        this.gameController = new GameController(gameModel);
+        this.gameController = new GameController(gameModel, this);
         setScreen(new PlacingView(this, Turn.Blue));
     }
 
@@ -86,7 +86,7 @@ public class Battleship extends Game {
      */
     public void startMultiplayerLocal() {
         this.gameModel = new GameModel(GameType.Multiplayer_local);
-        this.gameController = new GameController(gameModel);
+        this.gameController = new GameController(gameModel, this);
         setScreen(new PlacingView(this, Turn.Blue));
     }
 
@@ -95,7 +95,7 @@ public class Battleship extends Game {
      */
     public void startMultiplayer() {
         this.gameModel = new GameModel(GameType.Multiplayer);
-        this.gameController = new GameController(gameModel);
+        this.gameController = new GameController(gameModel, this);
         startGameServer();
         setScreen(new MultiplayerView(this));
     }
