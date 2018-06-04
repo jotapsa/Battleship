@@ -13,6 +13,7 @@ import com.battleship.model.aux.Turn;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -21,6 +22,7 @@ public class TestGameModel {
     private GameModel gameModel;
     private GameController gameController;
     private BoardController boardController;
+    private Random generator = new Random(System.currentTimeMillis());
 
     @Test
     public void testGameModel(){
@@ -39,46 +41,58 @@ public class TestGameModel {
     }
 
     @Test
-    public void testFillBoard(){
+    public void testHitShip(){
         gameModel = new GameModel(GameType.SinglePlayer);
         gameController = new GameController(gameModel, null);
         boardController = BoardController.getInstance();
 
         boardController.setBoard(gameModel.getPlayerBlueBoard());
-        assertEquals(6, boardController.getBoard().getShips().size());
-        assertEquals(0, boardController.getPlacedShips().size());
-
         boardController.placeShipsRandomly();
 
-        assertEquals(6, boardController.getPlacedShips().size());
-
-        for(Map.Entry<Ship, Coord> shipBoard : boardController.getPlacedShips().entrySet() ){
+        for(Map.Entry<Ship, Coord> shipBoard : gameModel.getPlayerRedBoard().getPlacedShips().entrySet()){
             Ship ship = shipBoard.getKey();
-            Coord shipPos = shipBoard.getValue();
-            Coord pos;
+            Coord pos = shipBoard.getValue(), shipPos;
 
-            for(int i=0; i<ship.getShipType().getSize(); i++){
+            for(int i=0; i < ship.getShipType().getSize(); i++){
                 if(ship.getOrientation() == Orientation.Vertical){
-                    pos = new Coord(shipPos.getX(), shipPos.getY()-i);
+                    shipPos = new Coord(pos.getX(), pos.getY()-i);
                 }
                 else{
-                    pos = new Coord(shipPos.getX()+i, shipPos.getY());
+                    shipPos = new Coord(pos.getX()+i, pos.getY());
                 }
 
-                assertEquals(boardController.getBoard().getCell(pos), CellType.Ship);
+                gameController.handleClick(shipPos);
+
+                assertEquals(CellType.ShipHit, gameModel.getPlayerRedBoard().getCell(shipPos));
             }
+
+            assertTrue(ship.isSank());
         }
+
+        assertTrue(gameController.isGameOver());
     }
 
     @Test
-    public void testSingleplayerGame(){
+    public void testFreeHit(){
+        Coord pos;
         gameModel = new GameModel(GameType.SinglePlayer);
         gameController = new GameController(gameModel, null);
         boardController = BoardController.getInstance();
+
         boardController.setBoard(gameModel.getPlayerBlueBoard());
         boardController.placeShipsRandomly();
 
-        gameController.handleClick(new Coord(0, 5));
+        do{
+            int x = generator.nextInt(10);
+            int y = generator.nextInt(10);
+            pos = new Coord(x, y);
+
+        }while(boardController.getBoard().getCell(pos) != CellType.Free);
+
+        gameController.handleClick(pos);
+
+        assertEquals(CellType.FreeHit, gameModel.getPlayerRedBoard().getCell(pos));
+
     }
 
 

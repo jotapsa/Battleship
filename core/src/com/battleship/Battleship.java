@@ -63,6 +63,9 @@ public class Battleship extends Game {
 
 		loadAssets();
 
+		gameServer = null;
+        this.ipEnemy = "0.0.0.0";
+
 		showMenu();
 	}
 
@@ -132,6 +135,9 @@ public class Battleship extends Game {
      * Start Battleship game server.
      */
     public void startGameServer(){
+        if(gameServer != null){
+            return;
+        }
         this.gameServer = new Server(this);
         this.gameServerThread = new Thread(gameServer);
         this.gameServerThread.start();
