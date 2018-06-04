@@ -62,8 +62,6 @@ public class MultiplayerView extends ScreenAdapter{
 
         setupButtons();
         addButtons();
-
-
     }
 
     private void setupButtons() {
@@ -108,7 +106,7 @@ public class MultiplayerView extends ScreenAdapter{
         joinRoomDialog.getTitleLabel().setColor(1,1,1,1);
         joinRoomDialog.setColor(0, 0, (float) 0.7, 1);
 
-        final TextField ipInput = new TextField("0.0.0.0", skinDialog, "default");
+        final TextField ipInput = new TextField(game.getIpEnemy(), skinDialog, "default");
         ipInput.setColor(1,1,1,1);
         joinRoomDialog.getContentTable().add(ipInput).size(200, 50);
 
@@ -117,8 +115,8 @@ public class MultiplayerView extends ScreenAdapter{
         joinBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                String ip = ipInput.getText();
-                game.setIpEnemy(ip);
+                String IP = ipInput.getText();
+                game.setIpEnemy(IP);
                 Socket socket;
 
                 //join room and go to game
@@ -127,7 +125,7 @@ public class MultiplayerView extends ScreenAdapter{
                 socketHints.connectTimeout = 0;
 
                 try {
-                    socket = Gdx.net.newClientSocket(Protocol.TCP, ip, game.defaultPort, socketHints);
+                    socket = Gdx.net.newClientSocket(Protocol.TCP, game.getIpEnemy(), game.defaultPort, socketHints);
                     PrintWriter out = new PrintWriter(socket.getOutputStream());
                     out.write(msg.toString());
                     out.flush();
@@ -152,7 +150,7 @@ public class MultiplayerView extends ScreenAdapter{
                     ex.printStackTrace();
                 }
                 catch(GdxRuntimeException ex){
-                    System.out.println("Fail to open " + ip);
+                    System.out.println("Fail to open " + game.getIpEnemy());
                     stage.setKeyboardFocus(ipInput);
                 }
 
@@ -166,7 +164,7 @@ public class MultiplayerView extends ScreenAdapter{
             @Override
             public void clicked(InputEvent e, float x, float y) {
                 joinRoomDialog.setVisible(false);
-                game.stopGameServer();
+//                game.stopGameServer();
             }
         });
 

@@ -57,6 +57,15 @@ public class Ship {
     }
 
     /**
+     * Gets ship isPlaced.
+     *
+     * @return boolean
+     */
+    public boolean IsPlaced(){
+        return this.isPlaced;
+    }
+
+    /**
      * Sets ship isPlaced.
      *
      * @param placed boolean

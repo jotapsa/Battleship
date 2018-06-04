@@ -144,6 +144,7 @@ public class BoardController {
         }
 
         this.board.getPlacedShips().remove(ship);
+        ship.setIsPlaced(false);
     }
 
     /**

@@ -22,7 +22,7 @@ public class Board {
      *
      * @param size int
      */
-    Board(int size){
+    public Board(int size){
         this.size = size;
         this.map = new CellType[size][size];
         this.fillMap(CellType.Free);
